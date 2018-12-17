@@ -26,6 +26,30 @@ namespace PayPadAdministrator
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Css/bootstrap.css"
                       ));
+
+
+            bundles.Add(new StyleBundle("~/Content/Login").Include(
+                     "~/Content/Css/bootstrap.css",
+                     "~/Content/Css/core.css",
+                     "~/Content/Css/components.css",
+                     "~/Content/Css/icons.css",
+                     "~/Content/Css/pages.css",
+                     "~/Content/Css/responsive.css"
+                    ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Login").Include(
+                  "~/Scripts/bootstrap.min.js",
+                  "~/Scripts/detect.js",
+                  "~/Scripts/fastclick.js",
+                  "~/Scripts/jquery.slimscroll.js",
+                  "~/Scripts/jquery.blockUI.js",
+                  "~/Scripts/waves.js",
+                  "~/Scripts/wow.min.js",
+                  "~/Scripts/jquery.nicescroll.js",
+                  "~/Scripts/jquery.scrollTo.min.js",
+                  "~/Scripts/jquery.core.js",
+                  "~/Scripts/jquery.app.js"
+                  ));
         }
     }
 }

@@ -142,10 +142,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SessionHelper.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\UserSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +172,7 @@
     <Content Include="Content\fonts\Simple-Line-Icons.svg" />
     <Content Include="Content\fonts\themify.svg" />
     <Content Include="Content\fonts\weathericons-regular-webfont.svg" />
+    <Content Include="Content\Images\login-logo.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -2168,10 +2173,11 @@
     <Content Include="Scripts\plugins\tinymce\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="Scripts\plugins\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="Scripts\plugins\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Classes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

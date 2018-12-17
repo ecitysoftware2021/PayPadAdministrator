@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PayPadAdministrator.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,13 @@ namespace PayPadAdministrator.Controllers
     {
         public ActionResult Index()
         {
+            if (Session["User"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var user = SessionHelper.GetUser(Session["User"].ToString());
+
             return View();
         }
 
