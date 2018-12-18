@@ -9,7 +9,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    @if (Session["User"] != null)
+    @if (User.Identity.IsAuthenticated)
     {
         <div id="wrapper">
             <!-- Top Bar Start -->
@@ -143,7 +143,7 @@
                                     <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen"></i></a>
                                 </li>
                                 <li class="dropdown">
-                                    <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="~/Content/Images/login-logo.png" alt="user-img" class="img-circle"> </a>
+                                    <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="~/Content/Images/User_Generic_1.png" alt="user-img" class="img-circle"> </a>
                                     <ul class="dropdown-menu">
                                         <li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
                                         <li><a href="javascript:void(0)"><i class="ti-settings m-r-5"></i> Settings</a></li>
@@ -203,13 +203,28 @@
                             <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="ti-user"></i> <span> Usuarios </span> </a>
                                 <ul class="list-unstyled">
-                                    <li class="active"><a href="index.html">Administradores</a></li>
+                                    <li class="active"><a href="dashboard_2.html">Super Administradores</a></li>
+                                    <li><a href="index.html">Administradores</a></li>
                                     <li><a href="dashboard_2.html">Responsables</a></li>
-                                    <li><a href="dashboard_2.html">Super Administradores</a></li>
                                     <li><a href="dashboard_2.html">Crear Usuarios</a></li>
                                 </ul>
                             </li>
 
+                            <li class="has_sub">
+                                <a href="#" class="waves-effect"><i class="ti-user"></i> <span> Menús </span> </a>
+                                <ul class="list-unstyled">
+                                    <li class="active"><a href="dashboard_2.html">Menu</a></li>
+                                    <li><a href="index.html">Crear Menú</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="#" class="waves-effect"><i class="ti-user"></i> <span> Trámites </span> </a>
+                                <ul class="list-unstyled">
+                                    <li class="active"><a href="dashboard_2.html">Tramites</a></li>
+                                    <li><a href="index.html">Crear Tramite</a></li>
+                                </ul>
+                            </li>
                         </ul>
                         <div class="clearfix"></div>
                     </div>

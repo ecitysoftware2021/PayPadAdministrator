@@ -1,4 +1,6 @@
-﻿using PayPadAdministrator.Helpers;
+﻿using Newtonsoft.Json;
+using PayPadAdministrator.CustomAuthentication;
+using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Models;
 using System;
 using System.Collections.Generic;
@@ -6,18 +8,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace PayPadAdministrator.Controllers
 {
     public class AccountController : Controller
     {
 
-        public ActionResult Login()
+        public ActionResult Login(string ReturnUrl = "")
         {
-            if (Session["User"] != null)
+            if (User.Identity.IsAuthenticated)
             {
-                Session["User"] = null;
+                return LogOut();
             }
+
+            ViewBag.ReturnUrl = ReturnUrl;
 
             return View();
         }
@@ -32,20 +37,52 @@ namespace PayPadAdministrator.Controllers
                 return View(model);
             }
 
-            UserSession userSession = new UserSession
+            if (Membership.ValidateUser(model.UserName, model.Password))
             {
-                Customer_ID = 1,
-                Email = "brandon-377@hotmail.com",
-                Identification = "1036660391",
-                Phone = "3126104754",
-                Role_ID = 1,
-                StateId = 1,
-                UserName = model.UserName,
-                User_ID = 1
-            };
+                var user = (CustomMembershipUser)Membership.GetUser(model.UserName, false);
+                if (user != null)
+                {
+                    CustomSerializeModel userModel = new Models.CustomSerializeModel()
+                    {
+                        UserId = user.UserId,
+                        User_Name = user.User_Name,
+                        LastName = user.LastName,
+                        Roles = user.Roles.Select(r => r.RoleName).ToList()
+                    };
 
-            Session["User"] = SessionHelper.SaveUser(userSession);
-            return RedirectToAction("index", "Home");
+                    string userData = JsonConvert.SerializeObject(userModel);
+                    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket
+                        (
+                        1, model.UserName, DateTime.Now, DateTime.Now.AddMinutes(15), false, userData
+                        );
+
+                    string enTicket = FormsAuthentication.Encrypt(authTicket);
+                    HttpCookie faCookie = new HttpCookie("Cookie1", enTicket);
+                    Response.Cookies.Add(faCookie);
+                }
+
+                if (Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            ModelState.AddModelError("", "Something Wrong : Username or Password invalid ^_^ ");
+            return View(model);
+
+        }
+
+        public ActionResult LogOut()
+        {
+            HttpCookie cookie = new HttpCookie("Cookie1", "");
+            cookie.Expires = DateTime.Now.AddYears(-1);
+            Response.Cookies.Add(cookie);
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "Account", null);
         }
     }
 }

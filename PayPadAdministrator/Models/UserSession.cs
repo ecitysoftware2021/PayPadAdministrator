@@ -11,8 +11,6 @@ namespace PayPadAdministrator.Models
 
         public int Customer_ID { get; set; }
 
-        public int Role_ID { get; set; }
-
         public string Identification { get; set; }
 
         public string UserName { get; set; }
@@ -22,5 +20,8 @@ namespace PayPadAdministrator.Models
         public string Phone { get; set; }
 
         public int StateId { get; set; }
+
+        public List<Role> Roles { get; set; }
+
     }
 }

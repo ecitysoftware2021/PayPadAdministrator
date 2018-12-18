@@ -144,11 +144,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="CustomAuthentication\CustomAuthorizeAttribute.cs" />
+    <Compile Include="CustomAuthentication\CustomMembership.cs" />
+    <Compile Include="CustomAuthentication\CustomMembershipUser.cs" />
+    <Compile Include="CustomAuthentication\CustomPrincipal.cs" />
+    <Compile Include="CustomAuthentication\CustomRole.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\CustomSerializeModel.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\UserSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -173,6 +180,7 @@
     <Content Include="Content\fonts\themify.svg" />
     <Content Include="Content\fonts\weathericons-regular-webfont.svg" />
     <Content Include="Content\Images\login-logo.png" />
+    <Content Include="Content\Images\User_Generic_1.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

@@ -4,22 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PayPadAdministrator.CustomAuthentication;
 
 namespace PayPadAdministrator.Controllers
 {
     public class HomeController : Controller
     {
+        [CustomAuthorize]
         public ActionResult Index()
         {
-            if (Session["User"] == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            var user = SessionHelper.GetUser(Session["User"].ToString());
-
+         
             return View();
         }
+
+        [CustomAuthorize(Roles ="Admin")]
 
         public ActionResult About()
         {
@@ -28,6 +26,7 @@ namespace PayPadAdministrator.Controllers
             return View();
         }
 
+        [CustomAuthorize(Roles = "SuperAdmin")]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
