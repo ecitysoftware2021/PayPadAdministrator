@@ -143,6 +143,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="CustomAuthentication\CustomAuthorizeAttribute.cs" />
     <Compile Include="CustomAuthentication\CustomMembership.cs" />
@@ -181,6 +183,8 @@
     <Content Include="Content\fonts\weathericons-regular-webfont.svg" />
     <Content Include="Content\Images\login-logo.png" />
     <Content Include="Content\Images\User_Generic_1.png" />
+    <Content Include="Content\Logos\1200px-Davivienda_logo.svg.png" />
+    <Content Include="Content\Logos\Logo_Bancolombia2.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -238,6 +242,37 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr.min.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\pages\chartjs.init.js" />
+    <Content Include="Scripts\pages\datatables.editable.init.js" />
+    <Content Include="Scripts\pages\easy-pie-chart.init.js" />
+    <Content Include="Scripts\pages\form-validation-init.js" />
+    <Content Include="Scripts\pages\jquery.bs-table.js" />
+    <Content Include="Scripts\pages\jquery.c3-chart.init.js" />
+    <Content Include="Scripts\pages\jquery.chartist.init.js" />
+    <Content Include="Scripts\pages\jquery.charts-sparkline.js" />
+    <Content Include="Scripts\pages\jquery.chat.js" />
+    <Content Include="Scripts\pages\jquery.dashboard.js" />
+    <Content Include="Scripts\pages\jquery.dashboard_2.js" />
+    <Content Include="Scripts\pages\jquery.dashboard_3.js" />
+    <Content Include="Scripts\pages\jquery.dashboard_crm.js" />
+    <Content Include="Scripts\pages\jquery.dashboard_ecommerce.js" />
+    <Content Include="Scripts\pages\jquery.flot.init.js" />
+    <Content Include="Scripts\pages\jquery.footable.js" />
+    <Content Include="Scripts\pages\jquery.fullcalendar.js" />
+    <Content Include="Scripts\pages\jquery.gmaps.js" />
+    <Content Include="Scripts\pages\jquery.leads.init.js" />
+    <Content Include="Scripts\pages\jquery.nvd3.init.js" />
+    <Content Include="Scripts\pages\jquery.opportunities.init.js" />
+    <Content Include="Scripts\pages\jquery.peity.init.js" />
+    <Content Include="Scripts\pages\jquery.sweet-alert.init.js" />
+    <Content Include="Scripts\pages\jquery.todo.js" />
+    <Content Include="Scripts\pages\jquery.ui-sliders.js" />
+    <Content Include="Scripts\pages\jquery.widgets.js" />
+    <Content Include="Scripts\pages\jquery.wizard-init.js" />
+    <Content Include="Scripts\pages\jquery.xeditable.js" />
+    <Content Include="Scripts\pages\jvectormap.init.js" />
+    <Content Include="Scripts\pages\morris.init.js" />
+    <Content Include="Scripts\pages\nestable.js" />
     <Content Include="Scripts\plugins\animate.less\animate.css" />
     <Content Include="Scripts\plugins\animate.less\animate.min.css" />
     <Content Include="Scripts\plugins\animate.less\css\animated.css" />
@@ -2182,6 +2217,10 @@
     <Content Include="Scripts\plugins\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="Scripts\plugins\tinymce\skins\lightgray\fonts\tinymce.woff" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Clients\Index.cshtml" />
+    <Content Include="Views\Clients\SponsorCustomers.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\Customers\SponsorCustomers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

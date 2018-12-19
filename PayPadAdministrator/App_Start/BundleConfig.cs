@@ -20,11 +20,29 @@ namespace PayPadAdministrator
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                   "~/Scripts/bootstrap.min.js",
+                  "~/Scripts/detect.js",
+                  "~/Scripts/fastclick.js",
+                  "~/Scripts/jquery.slimscroll.js",
+                  "~/Scripts/jquery.blockUI.js",
+                  "~/Scripts/waves.js",
+                  "~/Scripts/wow.min.js",
+                  "~/Scripts/jquery.nicescroll.js",
+                  "~/Scripts/jquery.scrollTo.min.js",
+                  "~/Scripts/jquery.core.js",
+                  "~/Scripts/jquery.app.js",
+                  "~/Scripts/plugins/bootstrap-table/dist/bootstrap-table.min.js",
+                  "~/Scripts/pages/jquery.bs-table.js"
+                  ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/Css/bootstrap.css"
+                "~/Scripts/plugins/bootstrap-table/dist/bootstrap-table.min.css",
+                     "~/Content/Css/bootstrap.css",
+                     "~/Content/Css/core.css",
+                     "~/Content/Css/components.css",
+                     "~/Content/Css/icons.css",
+                     "~/Content/Css/pages.css",
+                     "~/Content/Css/responsive.css"
                       ));
 
 

@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Clientes Patrocinadores";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<!--Basic Columns-->
+<!--===================================================-->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="m-t-0 header-title"><b>Basic Columns</b></h4>
+            <p class="text-muted font-18">
+                Example of basic columns (Your text goes here).
+            </p>
+
+            <table data-toggle="table"
+                   data-show-columns="false"
+                   data-page-list="[5, 10, 20]"
+                   data-page-size="5"
+                   data-pagination="true" data-show-pagination-switch="true" class="table-bordered ">
+                <thead>
+                    <tr>
+                        <th data-field="id" data-switchable="false">ID</th>
+                        <th data-field="name" data-switchable="false">Nombre</th>
+                        <th data-field="nit">NIT</th>
+                        <th data-field="image">Imagen</th>
+                        <th data-field="email">Email</th>
+                        <th data-field="client-status" class="text-center">Estado</th>
+                        <th data-field="user-status" class="text-center">Estado</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Bancolombia</td>
+                        <td>123456789</td>
+                        <td><img src="~/Content/Logos/Logo_Bancolombia2.png" style="width:100px;height:150px;max-width: 100%; height: auto;" /></td>
+                        <td>bancolombia@bancolombia.com</td>
+                        <td><span class="label label-table label-success">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Davivienda</td>
+                        <td>987654321</td>
+                        <td><img src="~/Content/Logos/1200px-Davivienda_logo.svg.png" style="width:100px;height:150px;max-width: 100%; height: auto;" /></td>
+                        <td>Davivienda@Davivienda.co</td>
+                        <td><span class="label label-table label-danger">Suspended</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

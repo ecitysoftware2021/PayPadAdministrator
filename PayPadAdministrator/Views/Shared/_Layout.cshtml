@@ -5,7 +5,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
-    @Styles.Render("~/Content/Login")
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Styles.Render("~/Content/css")
+    }
+    else
+    {
+        @Styles.Render("~/Content/Login")
+    }
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -32,8 +39,6 @@
                                 </button>
                                 <span class="clearfix"></span>
                             </div>
-
-
                             <ul class="nav navbar-nav navbar-right pull-right">
                                 <li class="dropdown hidden-xs">
                                     <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
@@ -177,8 +182,8 @@
                             <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class=" ti-server"></i> <span> Clientes </span> </a>
                                 <ul class="list-unstyled">
-                                    <li class="active"><a href="index.html">Clientes Patrocinadores</a></li>
-                                    <li><a href="dashboard_2.html">Clientes</a></li>
+                                    <li class="active"><a href="@Url.Action("SponsorCustomers","Clients")">Clientes Patrocinadores</a></li>
+                                    <li><a href="@Url.Action("Index","Clients")">Clientes</a></li>
                                     <li><a href="dashboard_2.html">Crear Cliente</a></li>
                                 </ul>
                             </li>
@@ -249,10 +254,20 @@
         @RenderBody()
     }
 
-
-
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/Login")
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Scripts.Render("~/bundles/bootstrap")
+
+    }
+    else
+    {
+        @Scripts.Render("~/bundles/Login")
+    }
+
+    <script>
+            var resizefunc = [];
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
