@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "Denominaciones";
+}
+
+<link href="~/Scripts/plugins/nestable/jquery.nestable.css" rel="stylesheet" />
+<h2>@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="text-left" id="nestable_list_menu">
+            <button type="button" class="btn btn-pink waves-effect waves-light" data-action="expand-all">Expandir Todos</button>
+            <button type="button" class="btn btn-purple waves-effect waves-light" data-action="collapse-all">Contraer Todos</button>
+        </div>
+    </div>
+</div>
+<!-- End row -->
+
+<br>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="m-t-0"><b>Denomaciones Colombianas</b></h4>
+                    <p class="text-muted m-b-30 font-13">
+                        Drag & drop hierarchical list with mouse and touch compatibility (jQuery plugin).
+                    </p>
+
+                    <div class="custom-dd dd" id="nestable_list_1">
+                        <ol class="dd-list">
+                            <li class="dd-item" data-id="2">
+                                <div class="dd-handle">
+                                    <img src="~/Content/Logos/Flag_of_Colombia.png" style="width:20px;" /> Colombia
+                                </div>
+                                <ol class="dd-list">
+                                    <li class="dd-item" data-id="1">
+                                        <div class="dd-handle">
+                                            <img src="~/Content/Denominations/nueva_100_sello_235.png" style="width:80px;" />
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Editar"><i class="fa fa-edit fa-lg"></i></a>
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Eliminar"><i class="fa fa-trash fa-lg"></i></a>
+                                        </div>
+                                    </li>
+                                    <li class="dd-item" data-id="2">
+                                        <div class="dd-handle">
+                                            <img src="~/Content/Denominations/nueva_200_sello_235.png" style="width:80px;" />
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Editar"><i class="fa fa-edit fa-lg"></i></a>
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Eliminar"><i class="fa fa-trash fa-lg"></i></a>
+                                        </div>
+                                    </li>
+                                    <li class="dd-item" data-id="3">
+                                        <div class="dd-handle">
+                                            <img src="~/Content/Denominations/nueva_500_sello_235.png" style="width:80px;" />
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Editar"><i class="fa fa-edit fa-lg"></i></a>
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Eliminar"><i class="fa fa-trash fa-lg"></i></a>
+                                        </div>
+                                    </li>
+                                    <li class="dd-item" data-id="4">
+                                        <div class="dd-handle">
+                                            <img src="~/Content/Denominations/billete-de-1000-pesos-colombianos.jpeg" style="width:80px;" />
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Editar"><i class="fa fa-edit fa-lg"></i></a>
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Eliminar"><i class="fa fa-trash fa-lg"></i></a>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>
+                </div><!-- end col -->
+                <div class="col-md-6">
+                    <h4 class="m-t-0"><b>Denominaciones Mexicanas</b></h4>
+                    <p class="text-muted m-b-30 font-13">
+                        Drag & drop hierarchical list with mouse and touch compatibility (jQuery plugin).
+                    </p>
+
+                    <div class="custom-dd dd" id="nestable_list_2">
+                        <ol class="dd-list">
+                            <li class="dd-item" data-id="2">
+                                <div class="dd-handle">
+                                    <img src="~/Content/Logos/mexico.png" style="width:20px;" /> México
+                                </div>
+                                <ol class="dd-list">
+                                    <li class="dd-item" data-id="1">
+                                        <div class="dd-handle">
+
+                                            <img src="~/Content/Denominations/2pesosmexicanos.jpg" style="width:80px;" />
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Editar"><i class="fa fa-edit fa-lg"></i></a>
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Eliminar"><i class="fa fa-trash fa-lg"></i></a>
+
+
+                                        </div>
+                                    </li>
+                                    <li class="dd-item" data-id="2">
+                                        <div class="dd-handle">
+                                            <img src="~/Content/Denominations/5-Pesos.jpg" style="width:80px;" />
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Editar"><i class="fa fa-edit fa-lg"></i></a>
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Eliminar"><i class="fa fa-trash fa-lg"></i></a>
+                                        </div>
+                                    </li>
+                                    <li class="dd-item" data-id="3">
+                                        <div class="dd-handle">
+                                            <img src="~/Content/Denominations/descarga (2).jpg" style="width:80px;" />
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Editar"><i class="fa fa-edit fa-lg"></i></a>
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Eliminar"><i class="fa fa-trash fa-lg"></i></a>
+                                        </div>
+                                    </li>
+                                    <li class="dd-item" data-id="4">
+                                        <div class="dd-handle">
+                                            <img src="~/Content/Denominations/1200px-Anverso_de_billete_de_50_pesos_mexicanos_2012.jpeg" style="width:80px;" />
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Editar"><i class="fa fa-edit fa-lg"></i></a>
+                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Eliminar"><i class="fa fa-trash fa-lg"></i></a>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>
+                </div><!-- end col -->
+            </div> <!-- end row -->
+        </div> <!-- end card-box -->
+    </div> <!-- end col -->
+</div>
+<!-- end Row -->
+
+@Scripts.Render("~/bundles/Nestable")

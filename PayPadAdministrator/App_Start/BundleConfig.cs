@@ -45,6 +45,11 @@ namespace PayPadAdministrator
                 "~/Scripts/PayPad.js"
                 ));
 
+            bundles.Add(new ScriptBundle("~/bundles/Nestable").Include(
+                "~/Scripts/plugins/nestable/jquery.nestable.js",
+                "~/Scripts/pages/nestable.js"
+                ));
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Scripts/plugins/bootstrap-table/dist/bootstrap-table.min.css",
