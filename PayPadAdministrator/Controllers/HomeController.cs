@@ -13,7 +13,7 @@ namespace PayPadAdministrator.Controllers
         [CustomAuthorize]
         public ActionResult Index()
         {
-         
+
             return View();
         }
 

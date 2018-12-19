@@ -85,21 +85,22 @@ namespace PayPadAdministrator.CustomAuthentication
         {
             UserSession userSession = new UserSession
             {
-                Customer_ID = 1,
-                Email = "brandon-377@hotmail.com",
-                Identification = "1036660391",
-                Phone = "3126104754",
-                StateId = 1,
-                UserName = username,    
+                CUSTOMER_ID = 1,
+                EMAIL = "brandon-377@hotmail.com",
+                IDENTIFICATION = "1036660391",
+                PHONE = "3126104754",
+                STATE = 1,
+                USERNAME = username,    
                 Roles = new List<Role>()
                 {
                     new Role
                     {
-                        RoleId = 1,
-                        RoleName = "SuperAdmin",                        
+                        ROLE_ID = 1,
+                        DESCRIPTION = "SuperAdmin",                        
                     }
                 },
-                User_ID = 1
+                USER_ID = 1,
+                NAME = "brandon steven montoya",                
             };
 
             var selectedUser = new CustomMembershipUser(userSession);

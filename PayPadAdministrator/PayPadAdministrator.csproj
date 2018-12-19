@@ -143,9 +143,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PayPadsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="CustomAuthentication\CustomAuthorizeAttribute.cs" />
     <Compile Include="CustomAuthentication\CustomMembership.cs" />
     <Compile Include="CustomAuthentication\CustomMembershipUser.cs" />
@@ -157,9 +158,11 @@
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\CustomSerializeModel.cs" />
+    <Compile Include="Models\RequestAuthentication.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\UserSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ApiService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Css\bootstrap-theme.css" />
@@ -181,6 +184,7 @@
     <Content Include="Content\fonts\Simple-Line-Icons.svg" />
     <Content Include="Content\fonts\themify.svg" />
     <Content Include="Content\fonts\weathericons-regular-webfont.svg" />
+    <Content Include="Content\Images\camara y comercio.jpg" />
     <Content Include="Content\Images\login-logo.png" />
     <Content Include="Content\Images\User_Generic_1.png" />
     <Content Include="Content\Logos\1200px-Davivienda_logo.svg.png" />
@@ -273,6 +277,7 @@
     <Content Include="Scripts\pages\jvectormap.init.js" />
     <Content Include="Scripts\pages\morris.init.js" />
     <Content Include="Scripts\pages\nestable.js" />
+    <Content Include="Scripts\PayPad.js" />
     <Content Include="Scripts\plugins\animate.less\animate.css" />
     <Content Include="Scripts\plugins\animate.less\animate.min.css" />
     <Content Include="Scripts\plugins\animate.less\css\animated.css" />
@@ -2217,10 +2222,13 @@
     <Content Include="Scripts\plugins\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="Scripts\plugins\tinymce\skins\lightgray\fonts\tinymce.woff" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Clients\Index.cshtml" />
-    <Content Include="Views\Clients\SponsorCustomers.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\SponsorCustomers.cshtml" />
+    <Content Include="Views\Users\SuperAdministrators.cshtml" />
+    <Content Include="Views\Users\Administrators.cshtml" />
+    <Content Include="Views\Users\Responsible.cshtml" />
+    <Content Include="Views\Account\Locations.cshtml" />
+    <Content Include="Views\PayPads\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

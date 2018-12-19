@@ -7,8 +7,12 @@ namespace PayPadAdministrator.Models
 {
     public class Role
     {
-        public int RoleId { get; set; }
-        public string RoleName { get; set; }
+        public int ROLE_ID { get; set; }
+
+        public string DESCRIPTION { get; set; }
+
+        public int STATE { get; set; }
+
         public virtual ICollection<UserSession> Users { get; set; }
     }
 }

@@ -32,8 +32,19 @@ namespace PayPadAdministrator
                   "~/Scripts/jquery.core.js",
                   "~/Scripts/jquery.app.js",
                   "~/Scripts/plugins/bootstrap-table/dist/bootstrap-table.min.js",
-                  "~/Scripts/pages/jquery.bs-table.js"
+                  "~/Scripts/pages/jquery.bs-table.js",
+                  "~/Scripts/plugins/custombox/dist/custombox.min.js",
+                  "~/Scripts/pages/legacy.min.js",
+                  "~/Scripts/PayPad.js"
                   ));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/PopUp").Include(
+                "~/Scripts/plugins/isotope/dist/isotope.pkgd.min.js",
+                "~/Scripts/plugins/magnific-popup/dist/jquery.magnific-popup.min.js",
+                "~/Scripts/PayPad.js"
+                ));
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Scripts/plugins/bootstrap-table/dist/bootstrap-table.min.css",

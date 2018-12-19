@@ -2,6 +2,7 @@
 using PayPadAdministrator.CustomAuthentication;
 using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Models;
+using PayPadAdministrator.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,46 @@ namespace PayPadAdministrator.Controllers
                 return View(model);
             }
 
+            //var response = await apiService.Login(model.UserName, model.Password);
+            //if (response == null)
+            //{
+            //    ModelState.AddModelError(string.Empty, "Something Wrong : Username or Password invalid ^_^ ");
+            //    return View(model);
+            //}
+
+            //var user = new CustomMembershipUser(response);
+            //if (user != null)
+            //{
+            //    CustomSerializeModel userModel = new Models.CustomSerializeModel()
+            //    {
+            //        UserId = user.UserId,
+            //        User_Name = user.User_Name,
+            //        CustomerId = user.CustomerId,
+            //        Email = user.Email,
+            //        Image = user.Image,
+            //        Name = user.Name,
+            //        Roles = user.Roles.Select(r => r.DESCRIPTION).ToList()
+            //    };
+
+            //    string userData = JsonConvert.SerializeObject(userModel);
+            //    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, model.UserName,
+            //                                            DateTime.Now, DateTime.Now.AddMinutes(15),
+            //                                            false,
+            //                                            userData);
+
+            //    string enTicket = FormsAuthentication.Encrypt(authTicket);
+            //    HttpCookie faCookie = new HttpCookie("Cookie1", enTicket);
+            //    Response.Cookies.Add(faCookie);
+            //    if (Url.IsLocalUrl(returnUrl))
+            //    {
+            //        return Redirect(returnUrl);
+            //    }
+            //    else
+            //    {
+            //        return RedirectToAction("Index", "Home");
+            //    }
+            //}
+
             if (Membership.ValidateUser(model.UserName, model.Password))
             {
                 var user = (CustomMembershipUser)Membership.GetUser(model.UserName, false);
@@ -46,8 +87,11 @@ namespace PayPadAdministrator.Controllers
                     {
                         UserId = user.UserId,
                         User_Name = user.User_Name,
-                        LastName = user.LastName,
-                        Roles = user.Roles.Select(r => r.RoleName).ToList()
+                        CustomerId = user.CustomerId,
+                        Email = user.Email,
+                        Image = user.Image,
+                        Name = user.Name,                        
+                        Roles = user.Roles.Select(r => r.DESCRIPTION).ToList()
                     };
 
                     string userData = JsonConvert.SerializeObject(userModel);
@@ -71,7 +115,7 @@ namespace PayPadAdministrator.Controllers
                 }
             }
 
-            ModelState.AddModelError("", "Something Wrong : Username or Password invalid ^_^ ");
+            ModelState.AddModelError(string.Empty, "Something Wrong : Username or Password invalid ^_^ ");
             return View(model);
 
         }
@@ -83,6 +127,11 @@ namespace PayPadAdministrator.Controllers
             Response.Cookies.Add(cookie);
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Account", null);
+        }
+
+        public ActionResult Locations()
+        {
+            return View();
         }
     }
 }

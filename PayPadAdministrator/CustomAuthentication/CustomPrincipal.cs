@@ -11,9 +11,15 @@ namespace PayPadAdministrator.CustomAuthentication
         #region Identity Properties  
 
         public int UserId { get; set; }
+
         public string UserName { get; set; }
+
         public string Email { get; set; }
+
+        public string Name { get; set; }
+
         public string[] Roles { get; set; }
+
         #endregion
 
         public IIdentity Identity
@@ -35,7 +41,7 @@ namespace PayPadAdministrator.CustomAuthentication
 
         public CustomPrincipal(string username)
         {
-            Identity = new GenericIdentity(username);
+            Identity = new GenericIdentity(username);                    
         }
     }
 }

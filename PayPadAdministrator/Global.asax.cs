@@ -31,11 +31,14 @@ namespace PayPadAdministrator
 
                 var serializeModel = JsonConvert.DeserializeObject<CustomSerializeModel>(authTicket.UserData);
 
-                CustomPrincipal principal = new CustomPrincipal(authTicket.Name);
-
-                principal.UserId = serializeModel.UserId;
-                principal.UserName = serializeModel.User_Name;
-                principal.Roles = serializeModel.Roles.ToArray<string>();
+                CustomPrincipal principal = new CustomPrincipal(authTicket.Name)
+                {
+                    UserId = serializeModel.UserId,
+                    UserName = serializeModel.User_Name,
+                    Roles = serializeModel.Roles.ToArray<string>(),
+                    Email = serializeModel.Email,
+                    Name = serializeModel.Name,
+                };
 
                 HttpContext.Current.User = principal;
             }

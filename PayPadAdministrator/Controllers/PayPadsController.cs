@@ -6,15 +6,10 @@ using System.Web.Mvc;
 
 namespace PayPadAdministrator.Controllers
 {
-    public class ClientsController : Controller
+    public class PayPadsController : Controller
     {
-        // GET: Clients
+        // GET: PayPads
         public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult SponsorCustomers()
         {
             return View();
         }
