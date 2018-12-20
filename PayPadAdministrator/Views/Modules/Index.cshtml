@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "Mapa del Dashboard";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="m-t-0 header-title"><b>Mapa del Dashboard</b></h4>
+            <p class="text-muted m-b-20 font-13">
+                Decripción del sitio
+            </p>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="sitemap-wrapper">
+                        <h5><a href="#"><i class="md md-home"></i>Dashboard</a></h5>
+                        <ul class="list-unstyled">
+                            <li><a href="index.html">Dashboard 1</a></li>
+                            <li><a href="dashboard_2.html">Dashboard 2</a></li>
+                            <li><a href="dashboard_3.html">Dashboard 3</a></li>
+                        </ul>
+                        <h5><a href="#"><i class="ti-server"></i>Clientes</a></h5>
+                        <ul class="list-unstyled">
+                            <li><a href="@Url.Action("SponsorCustomers","Customers")">Patrocinadores</a></li>
+                            <li><a href="@Url.Action("SponsorCustomers","Customers")">Crear Cliente</a></li>
+                        </ul>
+
+                        <h5><a href="#"><i class="md md-smartphone"></i> Corresponsales </a></h5>
+
+                        <ul class="list-unstyled">
+                            <li><a href="@Url.Action("Index","PayPads")">Pay +</a></li>
+                            <li><a href="@Url.Action("Index","PayPads")">Crear Pay+</a></li>
+                        </ul>
+
+                        <h5><a href="#"><i class="md md-attach-money"></i> Denominaciones </a></h5>
+
+                        <ul class="list-unstyled">
+                            <li><a href="@Url.Action("Index","Denominations")">Denominaciones</a></li>
+                            <li><a href="@Url.Action("Index","Denominations")">Crear Denominaciones</a></li>
+                            <li><a href="@Url.Action("Index","Denominations")">Billetero y Monedero</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="sitemap-wrapper">
+
+                        <h5><a href="#"><i class="md md-account-box"></i> Usuarios </a></h5>
+
+                        <ul class="list-unstyled">
+                            <li><a href="@Url.Action("SuperAdministrators","Users")">Super Administradores</a></li>
+                            <li><a href="@Url.Action("Administrators","Users")">Administradores</a></li>
+                            <li><a href="@Url.Action("Responsible","Users")">Responsables</a></li>
+                            <li><a href="@Url.Action("Responsible","Users")">Crear Usuario</a></li>
+                        </ul>
+
+
+                        <h5><a href="#"><i class="md md-menu"></i> Módulos </a></h5>
+
+                        <ul class="list-unstyled">
+                            <li><a href="@Url.Action("Index","Modules")">Menús</a></li>
+                            <li><a href="@Url.Action("Index","Modules")">Crear Menú</a></li>
+                        </ul>
+
+
+                        <h5><a href="#"><i class="md md-poll"></i> Charts </a></h5>
+
+                        <ul class="list-unstyled">
+                            <li><a href="chart-flot.html">Flot Chart</a></li>
+                            <li><a href="chart-morris.html">Morris Chart</a></li>
+                            <li><a href="chart-chartjs.html">Chartjs</a></li>
+                            <li><a href="chart-peity.html">Peity Charts</a></li>
+                            <li><a href="chart-chartist.html">Chartist Charts</a></li>
+                            <li><a href="chart-c3.html">C3 Charts</a></li>
+                            <li><a href="chart-nvd3.html"> Nvd3 Charts</a></li>
+                            <li><a href="chart-sparkline.html">Sparkline charts</a></li>
+                            <li><a href="chart-radial.html">Radial charts</a></li>
+                            <li><a href="chart-other.html">Other Chart</a></li>
+                        </ul>
+
+
+                        <h5><a href="#"><i class="md md-place"></i> Maps </a></h5>
+
+                        <ul class="list-unstyled">
+                            <li><a href="map-google.html"> Google Map</a></li>
+                            <li><a href="map-vector.html"> Vector Map</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="sitemap-wrapper">
+
+                        <h5><a href="#"><i class="md md-pages"></i> Pages </a></h5>
+
+                        <ul class="list-unstyled">
+                            <li><a href="page-starter.html">Starter Page</a></li>
+                            <li><a href="page-login.html">Login</a></li>
+                            <li><a href="page-login-v2.html">Login v2</a></li>
+                            <li><a href="page-register.html">Register</a></li>
+                            <li><a href="page-register-v2.html">Register v2</a></li>
+                            <li><a href="page-signup-signin.html">Signin - Signup</a></li>
+                            <li><a href="page-recoverpw.html">Recover Password</a></li>
+                            <li><a href="page-lock-screen.html">Lock Screen</a></li>
+                            <li><a href="page-400.html">Error 400</a></li>
+                            <li><a href="page-403.html">Error 403</a></li>
+                            <li><a href="page-404.html">Error 404</a></li>
+                            <li><a href="page-404_alt.html">Error 404-alt</a></li>
+                            <li><a href="page-500.html">Error 500</a></li>
+                            <li><a href="page-503.html">Error 503</a></li>
+                        </ul>
+
+
+                        <h5><a href="#"><i class="md md-share"></i> Extras </a></h5>
+
+                        <ul class="list-unstyled">
+                            <li><a href="extra-profile.html">Profile</a></li>
+                            <li><a href="extra-timeline.html">Timeline</a></li>
+                            <li><a href="extra-sitemap.html">Site map</a></li>
+                            <li><a href="extra-invoice.html">Invoice</a></li>
+                            <li><a href="extra-email-template.html">Email template</a></li>
+                            <li><a href="extra-maintenance.html">Maintenance</a></li>
+                            <li><a href="extra-coming-soon.html">Coming-soon</a></li>
+                            <li><a href="extra-faq.html">FAQ</a></li>
+                            <li><a href="extra-search-result.html">Search result</a></li>
+                            <li><a href="extra-gallery.html">Gallery</a></li>
+                            <li><a href="extra-pricing.html">Pricing</a></li>
+                        </ul>
+
+
+                        <h5><a href="#"><i class="md md-share"></i> Apps </a></h5>
+
+                        <ul class="list-unstyled">
+                            <li><a href="apps-inbox.html"> Email</a></li>
+                            <li><a href="apps-calendar.html"> Calendar</a></li>
+                            <li><a href="apps-contact.html"> Contact</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+                    </div> <!-- container -->

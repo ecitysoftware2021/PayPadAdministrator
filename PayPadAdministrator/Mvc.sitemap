@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Dashboard" controller="Home" action="Index">    
+    <mvcSiteMapNode title="Patrocinadores" action="SponsorCustomers" controller="Customers">
+      <mvcSiteMapNode title="Clientes" controller="Customers" action="Index" />
+      <mvcSiteMapNode title="Crear Cliente" controller="Customers" action="Create" />
+      <mvcSiteMapNode title="Detalles" controller="Customers" action="Details" preservedRouteParameters="id" />
+      <mvcSiteMapNode title="Editar" controller="Customers" action="Edit" preservedRouteParameters="id"  />      
+    </mvcSiteMapNode>      
+  <mvcSiteMapNode title="Pay +" action="Index" controller="PayPads">      
+      <mvcSiteMapNode title="Crear Pay +" controller="PayPads" action="Create" />
+      <mvcSiteMapNode title="Detalles" controller="PayPads" action="Details" preservedRouteParameters="id" />
+      <mvcSiteMapNode title="Editar" controller="PayPads" action="Edit" preservedRouteParameters="id"  />      
+    </mvcSiteMapNode>  
+    <mvcSiteMapNode title="Denominaciones" action="Index" controller="Denominations">      
+      <mvcSiteMapNode title="Crear Denominaciones" controller="Denominations" action="Create" />
+      <mvcSiteMapNode title="Detalles" controller="Denominations" action="Details" preservedRouteParameters="id" />
+      <mvcSiteMapNode title="Editar" controller="Denominations" action="Edit" preservedRouteParameters="id"  />      
+    </mvcSiteMapNode>  
+    <mvcSiteMapNode title="Usuarios" action="Index" controller="Users" />              
+    <mvcSiteMapNode title="Super Administradores" action="SuperAdministrators" controller="Users" />              
+    <mvcSiteMapNode title="Administradores" action="Administrators" controller="Users" />              
+    <mvcSiteMapNode title="Módulos" action="Index" controller="Modules" />   
+      <mvcSiteMapNode title="Denominaciones" action="Index" controller="Modules">      
+      <mvcSiteMapNode title="Crear Denominaciones" controller="Modules" action="Create" />
+      <mvcSiteMapNode title="Detalles" controller="Modules" action="Details" preservedRouteParameters="id" />
+      <mvcSiteMapNode title="Editar" controller="Modules" action="Edit" preservedRouteParameters="id"  />      
+    </mvcSiteMapNode> 
+</mvcSiteMapNode>
+
+</mvcSiteMap>

@@ -183,7 +183,7 @@
                             <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class=" ti-server"></i> <span> Clientes </span> </a>
                                 <ul class="list-unstyled">
-                                    <li class="active"><a href="@Url.Action("SponsorCustomers","Customers")">Clientes Patrocinadores</a></li>
+                                    <li class="active"><a href="@Url.Action("SponsorCustomers","Customers")">Patrocinadores</a></li>
                                     <li><a href="@Url.Action("Index","Customers")">Clientes</a></li>
                                     <li><a href="dashboard_2.html">Crear Cliente</a></li>
                                 </ul>
@@ -217,18 +217,10 @@
                             </li>
 
                             <li class="has_sub">
-                                <a href="#" class="waves-effect"><i class="ti-layers-alt"></i> <span> Menús </span> </a>
+                                <a href="#" class="waves-effect"><i class="ti-layers-alt"></i> <span> Módulos </span> </a>
                                 <ul class="list-unstyled">
-                                    <li class="active"><a href="dashboard_2.html">Menu</a></li>
+                                    <li class="active"><a href="@Url.Action("Index","Modules")">Menús</a></li>                                    
                                     <li><a href="index.html">Crear Menú</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect"><i class="ti-bookmark-alt"></i> <span> Trámites </span> </a>
-                                <ul class="list-unstyled">
-                                    <li class="active"><a href="dashboard_2.html">Tramites</a></li>
-                                    <li><a href="index.html">Crear Tramite</a></li>
                                 </ul>
                             </li>
 
@@ -236,6 +228,7 @@
                                 <a href="#" class="waves-effect"><i class="ti-widget"></i> <span> Administación </span> </a>
                                 <ul class="list-unstyled">
                                     <li class="active"><a href="dashboard_2.html">Roles</a></li>
+                                    <li class="active"><a href="dashboard_2.html">Trámites</a></li>
                                     <li><a href="@Url.Action("Locations","Account")">Regiones</a></li>
                                 </ul>
                             </li>
@@ -250,6 +243,16 @@
             <!-- Start content -->
             <div class="content">
                 <div class="container">
+                    <!-- Page-Title -->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4 class="page-title">@ViewBag.Title</h4>
+                            @Html.MvcSiteMap().SiteMapPath("Breadcrumbs")
+                        </div>
+                    </div>
+
+                    <!-- Contenido -->
+
                     @RenderBody()
                 </div>
             </div>
