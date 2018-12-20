@@ -1,0 +1,12 @@
+﻿@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { id = "logoutForm",}))
+    {
+        @Html.AntiForgeryToken()
+
+        <a href="javascript:document.getElementById('logoutForm').submit()">
+            <i class="ti-power-off m-r-5"></i>Cerrar Sesión
+        </a>
+
+    }
+}
