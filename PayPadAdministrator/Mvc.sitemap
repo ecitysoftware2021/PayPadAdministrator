@@ -9,6 +9,7 @@
       <mvcSiteMapNode title="Crear Cliente" controller="Customers" action="Create" />
       <mvcSiteMapNode title="Detalles" controller="Customers" action="Details" preservedRouteParameters="id" />
       <mvcSiteMapNode title="Editar" controller="Customers" action="Edit" preservedRouteParameters="id"  />      
+      <mvcSiteMapNode title="Tipo de Clientes" controller="Customers" action="TypeCustomers" preservedRouteParameters="id"  />      
     </mvcSiteMapNode>      
   <mvcSiteMapNode title="Pay +" action="Index" controller="PayPads">      
       <mvcSiteMapNode title="Crear Pay +" controller="PayPads" action="Create" />

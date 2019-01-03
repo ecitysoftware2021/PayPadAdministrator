@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PayPadAdministrator.Classes;
 using PayPadAdministrator.Models;
 using System;
 using System.Collections.Generic;
@@ -13,13 +14,17 @@ namespace PayPadAdministrator.Services
 {
     public class ApiService
     {
+
         string userAPi = string.Empty;
+
+        string urlApi = string.Empty;
 
         string passwordAPi = string.Empty;
 
         public ApiService()
         {
-            userAPi = "dfg";
+            userAPi = Utilities.GetConfiguration("UrlApi");
+            urlApi = Utilities.GetConfiguration("UrlApi");
             passwordAPi = "34";
         }
 
@@ -55,6 +60,39 @@ namespace PayPadAdministrator.Services
             catch (Exception)
             {
                 return null;
+            }
+        }
+
+        public async Task<Response> InsertPost<T>(T model, string controller)
+        {
+            try
+            {
+                var request = JsonConvert.SerializeObject(model);
+                var content = new StringContent(request, Encoding.UTF8, "Application/json");
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(urlApi);
+                var url = Utilities.GetConfiguration(controller);
+                var response = await client.PostAsync(url, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        CodeError = 100,
+                        Message = response.ReasonPhrase,
+                    };
+                }
+
+                var result = await response.Content.ReadAsStringAsync();
+                var responseApi = JsonConvert.DeserializeObject<Response>(result);
+                return responseApi;
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    CodeError = 300,
+                    Message = ex.Message,
+                };
             }
         }
     }
