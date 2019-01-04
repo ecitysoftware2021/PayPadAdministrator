@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<PayPadAdministrator.Models.Customer>
 @{
     ViewBag.Title = "Patrocinadores";
 }
@@ -28,30 +28,56 @@
                         <th data-field="nit">NIT</th>
                         <th data-field="image">Imagen</th>
                         <th data-field="email">Email</th>
+                        <th data-field="country">Pais</th>
                         <th data-field="client-status" class="text-center">Estado</th>
                         <th data-field="administrator" class="text-center">Adminitración</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Bancolombia</td>
-                        <td>123456789</td>
-                        <td><img src="~/Content/Logos/Logo_Bancolombia2.png" style="width:100px;height:150px;max-width: 100%; height: auto;" /></td>
-                        <td>bancolombia@bancolombia.com</td>
-                        <td><span class="label label-table label-success">Active</span></td>
-                        <td><i class="fa fa-pencil"></i><i class="fa fa-trash-o"></i></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Davivienda</td>
-                        <td>987654321</td>
-                        <td><img src="~/Content/Logos/1200px-Davivienda_logo.svg.png" style="width:100px;height:150px;max-width: 100%; height: auto;" /></td>
-                        <td>Davivienda@Davivienda.co</td>
-                        <td><span class="label label-table label-danger">Suspended</span></td>
-                        <td><i class="fa fa-pencil"></i><i class="fa fa-trash-o"></i></td>
-                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.CUSTOMER_ID)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NAME)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NIT)</td>
+                            <td>
+                                @if (item.ICON != null)
+                                {
+                                    var base64 = Convert.ToBase64String(item.ICON);
+                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                    <img src="@imgSrc" alt="Image" style="width:100px;height:150px;max-width: 100%; height: auto;" />
+                                }
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.EMAIL)</td>
+                            <td>
+                                @if (item.LOCATION_ID == 1)
+                                {
+                                    <img src="~/Content/Logos/Flag_of_Colombia.png" alt="Image" style="width:40px;max-width: 100%" />
+                                }
+                                else
+                                {
+                                    <img src="~/Content/Logos/mexico.png" alt="Image" style="width:40px;max-width: 100%" />
+                                }
+                            </td>
+
+                            <td>
+                                @if (item.STATE)
+                                {
+                                    <span class="label label-table label-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="label label-table label-danger">Suspended</span>
+                                }
+                            </td>
+                            <td>
+                                <a href="@Url.Action("SponsorToClients",new { id = item.CUSTOMER_ID})">
+                                    <i class="fa fa-pencil"></i><i class="fa fa-trash-o"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

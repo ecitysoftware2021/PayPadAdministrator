@@ -156,6 +156,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DenominationsController.cs" />
+    <Compile Include="Controllers\GenericController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\PayPadsController.cs" />
@@ -178,6 +179,8 @@
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\RequestAuthentication.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Sponsor.cs" />
+    <Compile Include="Models\SponsorToClientViewModel.cs" />
     <Compile Include="Models\UserSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiService.cs" />
@@ -2291,9 +2294,12 @@
     <Content Include="Views\Customers\CreateTypeCustomers.cshtml" />
     <Content Include="Views\Account\Locations.cshtml" />
     <Content Include="Views\Customers\CreateCustomer.cshtml" />
+    <Content Include="Views\Customers\SponsorToClients.cshtml" />
+    <Content Include="Views\Customers\AssingClient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Generic\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

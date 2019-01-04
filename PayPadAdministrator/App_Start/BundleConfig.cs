@@ -35,6 +35,7 @@ namespace PayPadAdministrator
                   "~/Scripts/pages/jquery.bs-table.js",
                   "~/Scripts/plugins/custombox/dist/custombox.min.js",
                   "~/Scripts/pages/legacy.min.js",
+                  "~/Scripts/plugins/sweetalert/dist/sweetalert.min.js",
                   "~/Scripts/PayPad.js"
                   ));
 
@@ -58,7 +59,8 @@ namespace PayPadAdministrator
                      "~/Content/Css/components.css",
                      "~/Content/Css/icons.css",
                      "~/Content/Css/pages.css",
-                     "~/Content/Css/responsive.css"
+                     "~/Content/Css/responsive.css",
+                     "~/Scripts/plugins/sweetalert/dist/sweetalert.css"
                       ));
 
 

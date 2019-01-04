@@ -37,3 +37,14 @@ $(document).ready(function() {
         }
     });
 });
+
+
+function ModalError(message) {
+    swal("Error",
+        message,
+        "warning");
+}
+
+function ModalSuccess(message) {
+    swal("¡Buen trabajo!", message, "success");
+}

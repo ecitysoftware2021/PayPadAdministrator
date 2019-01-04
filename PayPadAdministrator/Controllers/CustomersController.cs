@@ -56,6 +56,90 @@ namespace PayPadAdministrator.Controllers
             return View(clients);
         }
 
+        public async Task<ActionResult> SponsorToClients(int id)
+        {
+            SponsorToClientViewModel sponsor = new SponsorToClientViewModel();
+            var request = new GetRequest
+            {
+                Parameter = id.ToString(),
+                Type = 2
+            };
+
+            var responseSponsor = await apiService.InsertPost(request, "GetCustomers");
+            if (responseSponsor.CodeError == 200)
+            {
+                var dd = JsonConvert.DeserializeObject<List<Customer>>(responseSponsor.Data.ToString());
+                sponsor.Sponsor = dd[0];
+                var data = new Sponsor
+                {
+                    SPONSOR_CUSTOMER_ID = id
+                };
+
+                var responseClient = await apiService.InsertPost(data, "GetClientsFromSponsor");
+                if (responseClient.CodeError == 200)
+                {
+                    sponsor.Clients = JsonConvert.DeserializeObject<List<Customer>>(responseClient.Data.ToString());
+                }
+            }
+
+            List<SponsorToClientViewModel> sponsorToClientViews = new List<SponsorToClientViewModel>();
+            sponsorToClientViews.Add(sponsor);
+            return View(sponsorToClientViews);
+        }
+
+        public async Task<ActionResult> AssingClient(int id)
+        {
+            SponsorToClientViewModelV2 sponsor = new SponsorToClientViewModelV2();
+            var request = new GetRequest
+            {
+                Parameter = id.ToString(),
+                Type = 2
+            };
+
+            var responseSponsor = await apiService.InsertPost(request, "GetCustomers");
+            if (responseSponsor.CodeError == 200)
+            {
+                var dd = JsonConvert.DeserializeObject<List<Customer>>(responseSponsor.Data.ToString());
+                sponsor.Sponsor = dd[0];
+                var data = new Sponsor
+                {
+                    SPONSOR_CUSTOMER_ID = id
+                };
+
+                var responseClient = await apiService.InsertPost(data, "GetClientsFromSponsor");
+
+                if (responseClient.CodeError == 200)
+                {
+                    sponsor.ClientsAssined = JsonConvert.DeserializeObject<List<Customer>>(responseClient.Data.ToString());
+                }
+
+                var requestClients = new GetRequest
+                {
+                    Parameter = "2",
+                    Type = 4
+                };
+
+                var responseSponso = await apiService.InsertPost(requestClients, "GetCustomers");
+                if (responseSponso.CodeError == 200)
+                {
+                    sponsor.Clients = new List<Customer>();
+                    var clients = JsonConvert.DeserializeObject<List<Customer>>(responseSponso.Data.ToString());
+                    foreach (var item in clients)
+                    {
+                        var client = sponsor.ClientsAssined.Where(c => c.CUSTOMER_ID == item.CUSTOMER_ID).FirstOrDefault();
+                        if (client == null)
+                        {
+                            sponsor.Clients.Add(item);
+                        }
+                    }
+                }
+            }
+
+            List<SponsorToClientViewModelV2> sponsorToClientViews = new List<SponsorToClientViewModelV2>();
+            sponsorToClientViews.Add(sponsor);
+            return View(sponsorToClientViews);
+        }
+
         public async Task<ActionResult> CreateCustomer()
         {
             ViewBag.TYPE_CUSTOMER_ID = new SelectList(await ComboHelper.GetTypeCustomers(),

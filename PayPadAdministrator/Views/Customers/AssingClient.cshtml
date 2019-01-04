@@ -1,0 +1,122 @@
+﻿@model List<PayPadAdministrator.Models.SponsorToClientViewModelV2>
+
+@{
+    ViewBag.Title = "SponsorToClients";
+}
+
+
+@if (Model.Count > 0)
+{
+
+    <p>
+        <a href="@Url.Action("AssingClient", new { id =  Model[0].Sponsor.CUSTOMER_ID})" class="btn btn-default waves-effect waves-light">
+            <i class="fa fa-mail-reply m-r-5"></i> <span>Átras</span>
+        </a>
+    </p>
+    <div class="row">
+        <div class="col-lg-4">
+            @if (Model[0].Sponsor.ICON != null)
+            {
+                var base64 = Convert.ToBase64String(Model[0].Sponsor.ICON);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                <img src="@imgSrc" alt="img" class=" m-r-15" width="300" />
+            }
+        </div>
+        <div class="col-lg-4">
+            <h1>@Model[0].Sponsor.NAME</h1>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-6">
+            <h3>Clientes no asignados</h3>
+            @foreach (var item in Model[0].Clients)
+            {
+                <div class="card-box m-b-10">
+                    <div class="table-box opport-box">
+                        <div class="table-detail">
+                            @if (item.ICON != null)
+                            {
+                                var base64 = Convert.ToBase64String(item.ICON);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                <img src="@imgSrc" alt="img" class="img-circle m-r-15" width="100" />
+                            }
+                        </div>
+
+                        <div class="table-detail">
+                            <div class="member-info">
+                                <h4 class="m-t-0"><b>@item.NAME </b></h4>
+                                <p class="text-dark m-b-5"><b>Nit: </b> <span class="text-muted">@item.NIT</span></p>
+                                <p class="text-dark m-b-5"><b>Email: </b> <span class="text-muted">@item.EMAIL</span></p>
+                            </div>
+                        </div>
+
+                        <div class="table-detail table-actions-bar">
+                            <a href="javascript:void(0)" onclick="AssingCustomerToSponsor('@Model[0].Sponsor.CUSTOMER_ID','@item.CUSTOMER_ID')" class="btn btn-sm btn-primary waves-effect waves-light">Añadir</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <div class="col-lg-6">
+            <h3>Clientes asignados</h3>
+            @foreach (var item in Model[0].ClientsAssined)
+            {
+                <div class="card-box m-b-10">
+                    <div class="table-box opport-box">
+                        <div class="table-detail">
+                            @if (item.ICON != null)
+                            {
+                                var base64 = Convert.ToBase64String(item.ICON);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                <img src="@imgSrc" alt="img" class="img-circle m-r-15" width="100" />
+                            }
+                        </div>
+
+                        <div class="table-detail">
+                            <div class="member-info">
+                                <h4 class="m-t-0"><b>@item.NAME </b></h4>
+                                <p class="text-dark m-b-5"><b>Nit: </b> <span class="text-muted">@item.NIT</span></p>
+                                <p class="text-dark m-b-5"><b>Email: </b> <span class="text-muted">@item.EMAIL</span></p>
+                            </div>
+                        </div>
+
+                        <div class="table-detail table-actions-bar">
+                            <a href="#" class="btn btn-sm btn-primary waves-effect waves-light">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/PopUp")
+    <script type="text/javascript">
+    function AssingCustomerToSponsor(sponsor, client) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AssingCustomerToSponsor","Generic")',
+                dataType: 'json',
+                data: { sponsor: sponsor, client: client},
+                success: function (data) {
+                    if (data.CodeError == 200){
+                        ModalSuccess("Se añadio correctamente");
+                        location.reload();
+                    }
+                    else{
+                        ModalError(data.Message);
+                    }
+                },
+                error: function (ex) {
+                    ModalError(ex);
+                    //ModalMessageError("Error", 'Failed ' + ex.statusText);
+                }
+            });
+    }
+    </script>
+}
