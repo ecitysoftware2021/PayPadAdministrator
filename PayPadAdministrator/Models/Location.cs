@@ -6,17 +6,22 @@ using System.Web;
 
 namespace PayPadAdministrator.Models
 {
-    public class CustomerType
+    public class Location
     {
         [Display(Name ="ID")]
-        public int CUSTOMER_TYPE_ID { get; set; }
+        public int LOCATION_ID { get; set; }
+
+        [Display(Name = "País")]
+        public string NAME { get; set; }
 
         [Display(Name = "Descripción")]
-        [StringLength(30, ErrorMessage =
-            "El campo {0} puede contener un máximo de {1} y un mínimo de {2} caracteres",
-            MinimumLength = 3)]
-        [Required(ErrorMessage = "Debes ingresar una {0}")]
         public string DESCRIPTION { get; set; }
+
+        [Display(Name = "Longitud")]
+        public decimal LONGITUDE { get; set; }
+
+        [Display(Name = "latitud")]
+        public decimal LATITUDE { get; set; }
 
         [Display(Name = "Estado")]
         public bool STATE { get; set; }

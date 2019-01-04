@@ -168,11 +168,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ComboHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerType.cs" />
     <Compile Include="Models\CustomSerializeModel.cs" />
     <Compile Include="Models\GetRequest.cs" />
+    <Compile Include="Models\Location.cs" />
     <Compile Include="Models\RequestAuthentication.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\UserSession.cs" />
@@ -2271,7 +2274,6 @@
     <Content Include="Views\Users\SuperAdministrators.cshtml" />
     <Content Include="Views\Users\Administrators.cshtml" />
     <Content Include="Views\Users\Responsible.cshtml" />
-    <Content Include="Views\Account\Locations.cshtml" />
     <Content Include="Views\PayPads\Index.cshtml" />
     <Content Include="Views\Denominations\Index.cshtml" />
     <Content Include="Views\Modules\Index.cshtml" />
@@ -2286,6 +2288,9 @@
     <Content Include="Views\Shared\DisplayTemplates\Breadcrumbs.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Customers\TypeCustomers.cshtml" />
+    <Content Include="Views\Customers\CreateTypeCustomers.cshtml" />
+    <Content Include="Views\Account\Locations.cshtml" />
+    <Content Include="Views\Customers\CreateCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

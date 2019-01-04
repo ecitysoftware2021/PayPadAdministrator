@@ -16,6 +16,8 @@ namespace PayPadAdministrator.Controllers
     public class AccountController : Controller
     {
 
+        ApiService apiService = new ApiService();
+
         public ActionResult Login(string ReturnUrl = "")
         {
             if (User.Identity.IsAuthenticated)
@@ -129,8 +131,20 @@ namespace PayPadAdministrator.Controllers
             return RedirectToAction("Login", "Account", null);
         }
 
-        public ActionResult Locations()
+        public async Task<ActionResult> Locations()
         {
+            List<Location> locations = new List<Location>();
+            var request = new GetRequest
+            {
+                Parameter = string.Empty,
+                Type = 1
+            };
+            var response = await apiService.InsertPost(request, "GetLocations");
+            if (response.CodeError == 100)
+            {
+                locations = JsonConvert.DeserializeObject<List<Location>>(response.Data.ToString());
+            }
+
             return View();
         }
     }

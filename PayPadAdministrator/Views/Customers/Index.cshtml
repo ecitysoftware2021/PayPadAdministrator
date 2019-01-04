@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<PayPadAdministrator.Models.Customer>
 @{
     ViewBag.Title = "Clientes";
 }
@@ -13,7 +13,9 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
             <p class="text-muted font-18">
-                Example of basic columns (Your text goes here).
+                <a href="@Url.Action("CreateTypeCustomers")" class="btn btn-default waves-effect waves-light">
+                    <i class="fa fa-plus-circle m-r-5"></i> <span>Crear Nuevo</span>
+                </a>
             </p>
 
             <table data-toggle="table"
@@ -33,28 +35,37 @@
                         <th data-field="administrator" class="text-center">Adminitración</th>
                     </tr>
                 </thead>
-
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Alcaldía de Copacabana</td>
-                        <td>123456789</td>
-                        <td><img src="~/Content/Logos/Logo_Bancolombia2.png" style="width:100px;height:150px;max-width: 100%; height: auto;" /></td>
-                        <td>bancolombia@bancolombia.com</td>
-                        <td>Bancolombia</td>
-                        <td><span class="label label-table label-success">Active</span></td>
-                        <td><i class="fa fa-pencil"></i><i class="fa fa-trash-o"></i></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Alcadía de Bello</td>
-                        <td>987654321</td>
-                        <td><img src="~/Content/Logos/1200px-Davivienda_logo.svg.png" style="width:100px;height:150px;max-width: 100%; height: auto;" /></td>
-                        <td>Davivienda@Davivienda.co</td>
-                        <td>Davivienda</td>
-                        <td><span class="label label-table label-danger">Suspended</span></td>
-                        <td><i class="fa fa-pencil"></i><i class="fa fa-trash-o"></i></td>
-                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.CUSTOMER_ID)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NAME)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NIT)</td>
+                            <td>
+                                @if (item.ICON != null)
+                                {
+                                    var base64 = Convert.ToBase64String(item.ICON);
+                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                    <img src="@imgSrc" alt="Image" style="width:100px;height:150px;max-width: 100%; height: auto;" />
+                                }
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.EMAIL)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CT_DESCRIPTION)</td>
+                            <td>
+                                @if (item.STATE)
+                                {
+                                    <span class="label label-table label-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="label label-table label-danger">Suspended</span>
+                                }
+                            </td>
+                            <td><i class="fa fa-pencil"></i><i class="fa fa-trash-o"></i></td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
