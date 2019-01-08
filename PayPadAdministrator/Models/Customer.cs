@@ -25,9 +25,17 @@ namespace PayPadAdministrator.Models
         public string L_NAME { get; set; }
 
         [Display(Name = "Nit")]
+        [StringLength(30, ErrorMessage =
+            "El campo {0} puede contener un máximo de {1} y un mínimo de {2} caracteres",
+            MinimumLength = 3)]
+        [Required(ErrorMessage = "Debes ingresar una {0}")]
         public string NIT { get; set; }
 
         [Display(Name = "Nombre")]
+        [StringLength(30, ErrorMessage =
+            "El campo {0} puede contener un máximo de {1} y un mínimo de {2} caracteres",
+            MinimumLength = 3)]
+        [Required(ErrorMessage = "Debes ingresar una {0}")]
         public string NAME { get; set; }
 
         [Display(Name = "ICono")]
@@ -41,9 +49,17 @@ namespace PayPadAdministrator.Models
         public HttpPostedFileBase ImagePathFile { get; set; }
 
         [Display(Name = "Correo")]
+        [StringLength(30, ErrorMessage =
+            "El campo {0} puede contener un máximo de {1} y un mínimo de {2} caracteres",
+            MinimumLength = 3)]
+        [Required(ErrorMessage = "Debes ingresar una {0}")]
         public string EMAIL { get; set; }
 
         [Display(Name = "Télefono")]
+        [StringLength(30, ErrorMessage =
+            "El campo {0} puede contener un máximo de {1} y un mínimo de {2} caracteres",
+            MinimumLength = 3)]
+        [Required(ErrorMessage = "Debes ingresar una {0}")]
         public decimal PHONE { get; set; }
 
         [Display(Name = "Estado")]

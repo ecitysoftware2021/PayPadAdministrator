@@ -140,6 +140,54 @@ namespace PayPadAdministrator.Controllers
             return View(sponsorToClientViews);
         }
 
+        public async Task<ActionResult> ShowOfficeForCustomer(int id)
+        {
+            var customer = new Customer
+            {
+                CUSTOMER_ID = id
+            };
+
+            List<Office> offices = new List<Office>();
+            var response = await apiService.InsertPost(customer, "GetOfficesForClient");
+            if (response.CodeError == 200)
+            {
+                offices = JsonConvert.DeserializeObject<List<Office>>(response.Data.ToString());
+            }
+
+            ViewBag.CustomerId = id;
+            return View(offices);
+        }
+
+
+        public ActionResult CreateOffice(int id)
+        {
+            var office = new Office
+            {
+                CUSTOMER_ID = id
+            };
+
+            return View(office);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateOffice(Office office)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(office);
+            }
+
+            var response = await apiService.InsertPost(office, "CreateOfficeForClient");
+            if (response.CodeError != 200)
+            {
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View(office);
+            }
+
+            return RedirectToAction("ShowOfficeForCustomer", new { id = office.CUSTOMER_ID, Message = "Se creó el cliente correctamente" });
+        }
+
         public async Task<ActionResult> CreateCustomer()
         {
             ViewBag.TYPE_CUSTOMER_ID = new SelectList(await ComboHelper.GetTypeCustomers(),

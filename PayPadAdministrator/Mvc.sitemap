@@ -11,10 +11,13 @@
       <mvcSiteMapNode title="Editar" controller="Customers" action="Edit" preservedRouteParameters="id"  />      
       <mvcSiteMapNode title="Tipo de Clientes" controller="Customers" action="TypeCustomers" preservedRouteParameters="id"  />      
       <mvcSiteMapNode title="Crear Tipo de Clientes" controller="Customers" action="CreateTypeCustomers" preservedRouteParameters="id"  />      
-      <mvcSiteMapNode title="Clientes del patrocinador" controller="Customers" action="SponsorToClients" preservedRouteParameters="id"  />      
+      <mvcSiteMapNode title="Clientes del patrocinador" controller="Customers" action="SponsorToClients" preservedRouteParameters="id"  />
+      <mvcSiteMapNode title="Sucursales" controller="Customers" action="ShowOfficeForCustomer" preservedRouteParameters="id" >
+        <mvcSiteMapNode title="Crear Sucursales" controller="Customers" action="CreateOffice" preservedRouteParameters="id"  />
+       </mvcSiteMapNode>
     </mvcSiteMapNode>      
   <mvcSiteMapNode title="Pay +" action="Index" controller="PayPads">      
-      <mvcSiteMapNode title="Crear Pay +" controller="PayPads" action="Create" />
+      <mvcSiteMapNode title="Crear Pay +" controller="PayPads" action="CreatePayPad" />
       <mvcSiteMapNode title="Detalles" controller="PayPads" action="Details" preservedRouteParameters="id" />
       <mvcSiteMapNode title="Editar" controller="PayPads" action="Edit" preservedRouteParameters="id"  />      
     </mvcSiteMapNode>  

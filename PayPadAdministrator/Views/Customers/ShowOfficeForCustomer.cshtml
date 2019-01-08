@@ -1,0 +1,72 @@
+﻿@model IEnumerable<PayPadAdministrator.Models.Office>
+
+@{
+    ViewBag.Title = "Sucursales";
+}
+
+<p>
+    <a href="@Url.Action("CreateOffice",new { id = ViewBag.CustomerId })" class="btn btn-default waves-effect waves-light">
+        <i class="fa fa-plus-circle m-r-5"></i> <span>Crear Nuevo</span>
+    </a>
+</p>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
+
+            <table data-toggle="table"
+                   data-show-columns="false"
+                   data-page-list="[5, 10, 20]"
+                   data-page-size="5"
+                   data-pagination="true" data-show-pagination-switch="true" class="table-bordered ">
+                <thead>
+                    <tr>
+                        <th data-field="id" data-switchable="false">@Html.DisplayNameFor(model => model.OFFICE_ID)</th>
+                        <th data-field="nit">@Html.DisplayNameFor(model => model.CODE)</th>
+                        <th data-field="image">@Html.DisplayNameFor(model => model.NAME)</th>
+                        <th data-field="email">@Html.DisplayNameFor(model => model.ADDRESS)</th>
+                        <th data-field="patrocinador">@Html.DisplayNameFor(model => model.STATE)</th>
+                        <th data-field="administrator" class="text-center">Adminitración</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OFFICE_ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CODE)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NAME)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ADDRESS)
+                            </td>
+                            <td>
+                                @if (item.STATE)
+                                {
+                                    <span class="label label-table label-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="label label-table label-danger">Suspended</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>

@@ -95,5 +95,36 @@ namespace PayPadAdministrator.Services
                 };
             }
         }
+
+        public async Task<Response> GetData(string controller)
+        {
+            try
+            {                               
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(urlApi);
+                var url = Utilities.GetConfiguration(controller);
+                var response = await client.GetAsync(url);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        CodeError = 100,
+                        Message = response.ReasonPhrase,
+                    };
+                }
+
+                var result = await response.Content.ReadAsStringAsync();
+                var responseApi = JsonConvert.DeserializeObject<Response>(result);
+                return responseApi;
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    CodeError = 300,
+                    Message = ex.Message,
+                };
+            }
+        }
     }
 }

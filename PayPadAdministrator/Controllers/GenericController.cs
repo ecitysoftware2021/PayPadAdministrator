@@ -1,4 +1,6 @@
-﻿using PayPadAdministrator.Models;
+﻿using PayPadAdministrator.Classes;
+using PayPadAdministrator.Helpers;
+using PayPadAdministrator.Models;
 using PayPadAdministrator.Services;
 using System;
 using System.Collections.Generic;
@@ -20,7 +22,6 @@ namespace PayPadAdministrator.Controllers
 
         public async Task<JsonResult> AssingCustomerToSponsor(int sponsor, int client)
         {
-            bool flag = false;
             var request = new Sponsor
             {
                 CUSTOMER_ID = client,
@@ -29,6 +30,27 @@ namespace PayPadAdministrator.Controllers
 
             var response = await apiService.InsertPost(request, "AssingCustomerToSponsor");
             return Json(response);
+        }
+
+        public async Task<JsonResult> GetOffice(int customerId)
+        {
+            try
+            {
+                var offices = await ComboHelper.GetOffices(customerId);
+                return Json(new Response
+                {
+                    CodeError = 200,
+                    Data = offices
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new Response
+                {
+                    CodeError = 300,
+                    Message = ex.Message
+                });
+            }
         }
     }
 }

@@ -172,11 +172,15 @@
     <Compile Include="Helpers\ComboHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Currency.cs" />
+    <Compile Include="Models\Currency_Denomination.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerType.cs" />
     <Compile Include="Models\CustomSerializeModel.cs" />
     <Compile Include="Models\GetRequest.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\Office.cs" />
+    <Compile Include="Models\PayPad.cs" />
     <Compile Include="Models\RequestAuthentication.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Sponsor.cs" />
@@ -2296,6 +2300,12 @@
     <Content Include="Views\Customers\CreateCustomer.cshtml" />
     <Content Include="Views\Customers\SponsorToClients.cshtml" />
     <Content Include="Views\Customers\AssingClient.cshtml" />
+    <Content Include="Views\Customers\ShowOfficeForCustomer.cshtml" />
+    <Content Include="Views\Customers\CreateOffice.cshtml" />
+    <Content Include="Views\PayPads\CreatePayPad.cshtml" />
+    <Content Include="Views\Denominations\Currencies.cshtml" />
+    <Content Include="Views\Denominations\CreateCurrency.cshtml" />
+    <Content Include="Views\Denominations\CreateDenominationForCurrency.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

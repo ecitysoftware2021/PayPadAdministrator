@@ -63,7 +63,11 @@
                                     <span class="label label-table label-danger">Suspended</span>
                                 }
                             </td>
-                            <td><i class="fa fa-pencil"></i><i class="fa fa-trash-o"></i></td>
+                            <td>
+                                <a href="@Url.Action("ShowOfficeForCustomer",new { id=item.CUSTOMER_ID })"><i class="fa fa-industry fa-2x"></i></a>
+
+                                <a href="@Url.Action("ShowOfficeForCustomer",new { id=item.CUSTOMER_ID })"><i class="fa fa-trash-o fa-2x"></i></a>                                
+                            </td>
                         </tr>
                     }
                 </tbody>
