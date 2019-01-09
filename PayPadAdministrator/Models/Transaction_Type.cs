@@ -5,14 +5,12 @@ using System.Web;
 
 namespace PayPadAdministrator.Models
 {
-    public class Role
+    public class Transaction_Type
     {
-        public int ROLE_ID { get; set; }
+        public int TRANSACTION_TYPE_ID { get; set; }
 
         public string DESCRIPTION { get; set; }
 
         public bool STATE { get; set; }
-
-        public virtual ICollection<UserSession> Users { get; set; }
     }
 }

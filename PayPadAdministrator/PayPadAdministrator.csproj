@@ -161,6 +161,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\PayPadsController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\TransactController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="CustomAuthentication\CustomAuthorizeAttribute.cs" />
     <Compile Include="CustomAuthentication\CustomMembership.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Sponsor.cs" />
     <Compile Include="Models\SponsorToClientViewModel.cs" />
+    <Compile Include="Models\Transaction_Type.cs" />
     <Compile Include="Models\UserSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiService.cs" />
@@ -2311,6 +2314,10 @@
     <Content Include="Views\Devices\Index.cshtml" />
     <Content Include="Views\Devices\CreateDevice.cshtml" />
     <Content Include="Views\PayPads\GetDeviceForPayPad.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\CreateRole.cshtml" />
+    <Content Include="Views\Transact\Index.cshtml" />
+    <Content Include="Views\Transact\CreateTransact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

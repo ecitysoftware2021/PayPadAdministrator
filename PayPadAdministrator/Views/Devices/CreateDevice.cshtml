@@ -11,8 +11,8 @@
                 <div class="col-md-6">
                     <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
 
-                    @using (Html.BeginForm("CreateDevice", "Devices", new { }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
+                    @using (Html.BeginForm("CreateDevice", "Devices", new { }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                    {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

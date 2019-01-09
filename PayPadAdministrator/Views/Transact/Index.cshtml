@@ -1,7 +1,7 @@
-﻿@model IEnumerable<PayPadAdministrator.Models.Device>
+﻿@model IEnumerable<PayPadAdministrator.Models.Transaction_Type>
 
 @{
-    ViewBag.Title = "Dispositivos";
+    ViewBag.Title = "Trámites";
 }
 
 <div class="row">
@@ -9,11 +9,10 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
             <p class="text-muted font-18">
-                <a href="@Url.Action("CreateDevice")" class="btn btn-default waves-effect waves-light">
+                <a href="@Url.Action("CreateTransact")" class="btn btn-default waves-effect waves-light">
                     <i class="fa fa-plus-circle m-r-5"></i> <span>Crear Nuevo</span>
                 </a>
             </p>
-
             <table data-toggle="table"
                    data-show-columns="false"
                    data-page-list="[5, 10, 20]"
@@ -21,25 +20,16 @@
                    data-pagination="true" data-show-pagination-switch="true" class="table-bordered ">
                 <thead>
                     <tr>
-                        <th data-field="id">
-                            @Html.DisplayNameFor(model => model.DEVICE_ID)
+                        <th>
+                            @Html.DisplayNameFor(model => model.TRANSACTION_TYPE_ID)
                         </th>
-                        <th data-field="Serial">
-                            @Html.DisplayNameFor(model => model.SERIAL)
-                        </th>
-                        <th data-field="Name">
-                            @Html.DisplayNameFor(model => model.NAME)
-                        </th>
-                        <th data-field="description">
+                        <th>
                             @Html.DisplayNameFor(model => model.DESCRIPTION)
                         </th>
-                        <th data-field="Brand">
-                            @Html.DisplayNameFor(model => model.BRAND)
-                        </th>
-                        <th data-field="Estado">
+                        <th>
                             @Html.DisplayNameFor(model => model.STATE)
                         </th>
-                        <th data-field="administrator" class="text-center">Adminitración</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,19 +37,10 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.DEVICE_ID)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SERIAL)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NAME)
+                                @Html.DisplayFor(modelItem => item.TRANSACTION_TYPE_ID)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.DESCRIPTION)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.BRAND)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.STATE)

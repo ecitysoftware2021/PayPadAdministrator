@@ -3,38 +3,47 @@
             xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
             xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
 
-  <mvcSiteMapNode title="Dashboard" controller="Home" action="Index">    
+  <mvcSiteMapNode title="Dashboard" controller="Home" action="Index">
     <mvcSiteMapNode title="Patrocinadores" action="SponsorCustomers" controller="Customers">
       <mvcSiteMapNode title="Clientes" controller="Customers" action="Index" />
       <mvcSiteMapNode title="Crear Cliente" controller="Customers" action="CreateCustomer" />
       <mvcSiteMapNode title="Detalles" controller="Customers" action="Details" preservedRouteParameters="id" />
-      <mvcSiteMapNode title="Editar" controller="Customers" action="Edit" preservedRouteParameters="id"  />      
-      <mvcSiteMapNode title="Tipo de Clientes" controller="Customers" action="TypeCustomers" preservedRouteParameters="id"  />      
-      <mvcSiteMapNode title="Crear Tipo de Clientes" controller="Customers" action="CreateTypeCustomers" preservedRouteParameters="id"  />      
+      <mvcSiteMapNode title="Editar" controller="Customers" action="Edit" preservedRouteParameters="id"  />
+      <mvcSiteMapNode title="Tipo de Clientes" controller="Customers" action="TypeCustomers" preservedRouteParameters="id"  />
+      <mvcSiteMapNode title="Crear Tipo de Clientes" controller="Customers" action="CreateTypeCustomers" preservedRouteParameters="id"  />
       <mvcSiteMapNode title="Clientes del patrocinador" controller="Customers" action="SponsorToClients" preservedRouteParameters="id"  />
       <mvcSiteMapNode title="Sucursales" controller="Customers" action="ShowOfficeForCustomer" preservedRouteParameters="id" >
         <mvcSiteMapNode title="Crear Sucursales" controller="Customers" action="CreateOffice" preservedRouteParameters="id"  />
-       </mvcSiteMapNode>
-    </mvcSiteMapNode>      
-  <mvcSiteMapNode title="Pay +" action="Index" controller="PayPads">      
+      </mvcSiteMapNode>
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Pay +" action="Index" controller="PayPads">
       <mvcSiteMapNode title="Crear Pay +" controller="PayPads" action="CreatePayPad" />
       <mvcSiteMapNode title="Detalles" controller="PayPads" action="Details" preservedRouteParameters="id" />
-      <mvcSiteMapNode title="Editar" controller="PayPads" action="Edit" preservedRouteParameters="id"  />      
-    </mvcSiteMapNode>  
-    <mvcSiteMapNode title="Denominaciones" action="Index" controller="Denominations">      
+      <mvcSiteMapNode title="Editar" controller="PayPads" action="Edit" preservedRouteParameters="id"  />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Denominaciones" action="Index" controller="Denominations">
       <mvcSiteMapNode title="Crear Denominaciones" controller="Denominations" action="Create" />
       <mvcSiteMapNode title="Detalles" controller="Denominations" action="Details" preservedRouteParameters="id" />
-      <mvcSiteMapNode title="Editar" controller="Denominations" action="Edit" preservedRouteParameters="id"  />      
-    </mvcSiteMapNode>  
-    <mvcSiteMapNode title="Usuarios" action="Index" controller="Users" />              
-    <mvcSiteMapNode title="Super Administradores" action="SuperAdministrators" controller="Users" />              
-    <mvcSiteMapNode title="Administradores" action="Administrators" controller="Users" />              
-    <mvcSiteMapNode title="Módulos" action="Index" controller="Modules" />   
-      <mvcSiteMapNode title="Denominaciones" action="Index" controller="Modules">      
+      <mvcSiteMapNode title="Editar" controller="Denominations" action="Edit" preservedRouteParameters="id"  />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Roles" action="Index" controller="Roles" >
+      <mvcSiteMapNode title="Crear Roles" action="CreateRole" controller="Roles" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Trámites" action="Index" controller="Transact" >
+      <mvcSiteMapNode title="Crear trámite" action="CreateTransact" controller="Transact" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Dispositivos" action="Index" controller="Devices" >
+      <mvcSiteMapNode title="Crear Dispositivo" action="CreateDevice" controller="Devices" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Usuarios" action="Index" controller="Users" />
+    <mvcSiteMapNode title="Super Administradores" action="SuperAdministrators" controller="Users" />
+    <mvcSiteMapNode title="Administradores" action="Administrators" controller="Users" />
+    <mvcSiteMapNode title="Módulos" action="Index" controller="Modules" />
+    <mvcSiteMapNode title="Denominaciones" action="Index" controller="Modules">
       <mvcSiteMapNode title="Crear Denominaciones" controller="Modules" action="Create" />
       <mvcSiteMapNode title="Detalles" controller="Modules" action="Details" preservedRouteParameters="id" />
-      <mvcSiteMapNode title="Editar" controller="Modules" action="Edit" preservedRouteParameters="id"  />      
-    </mvcSiteMapNode> 
-</mvcSiteMapNode>
+      <mvcSiteMapNode title="Editar" controller="Modules" action="Edit" preservedRouteParameters="id"  />
+    </mvcSiteMapNode>
+  </mvcSiteMapNode>
 
 </mvcSiteMap>
