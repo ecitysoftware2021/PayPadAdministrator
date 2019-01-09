@@ -22,4 +22,11 @@ namespace PayPadAdministrator.Models
         public string Password { get; set; }
 
     }
+
+    public class DevicesForPayPadViewModel
+    {
+        public PayPad PayPad { get; set; }
+
+        public List<Device> Devices { get; set; }
+    }
 }

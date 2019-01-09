@@ -29,7 +29,7 @@ namespace PayPadAdministrator.Controllers
                 currencies = JsonConvert.DeserializeObject<List<Currency>>(response.Data.ToString());
             }
 
-            return View();
+            return View(currencies);
         }
 
         public ActionResult CreateCurrency()

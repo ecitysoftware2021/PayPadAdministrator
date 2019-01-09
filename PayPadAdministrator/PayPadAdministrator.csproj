@@ -156,6 +156,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DenominationsController.cs" />
+    <Compile Include="Controllers\DevicesController.cs" />
     <Compile Include="Controllers\GenericController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerType.cs" />
     <Compile Include="Models\CustomSerializeModel.cs" />
+    <Compile Include="Models\Device.cs" />
     <Compile Include="Models\GetRequest.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Office.cs" />
@@ -2306,6 +2308,9 @@
     <Content Include="Views\Denominations\Currencies.cshtml" />
     <Content Include="Views\Denominations\CreateCurrency.cshtml" />
     <Content Include="Views\Denominations\CreateDenominationForCurrency.cshtml" />
+    <Content Include="Views\Devices\Index.cshtml" />
+    <Content Include="Views\Devices\CreateDevice.cshtml" />
+    <Content Include="Views\PayPads\GetDeviceForPayPad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

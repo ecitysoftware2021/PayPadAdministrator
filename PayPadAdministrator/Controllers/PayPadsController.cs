@@ -105,5 +105,26 @@ namespace PayPadAdministrator.Controllers
 
             return RedirectToAction("Index", new { Message = "Se creó correctamente" });
         }
+
+        public async Task<ActionResult> GetDeviceForPayPad(int id)
+        {
+            DevicesForPayPadViewModel viewModel = new DevicesForPayPadViewModel();
+
+            var responsePaypad = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetPayPadForId"), id));
+            if (responsePaypad.CodeError == 200)
+            {
+                viewModel.PayPad = JsonConvert.DeserializeObject<PayPad>(responsePaypad.Data.ToString());
+            }
+
+            List<Device> devices = new List<Device>();
+            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetDenominationsForCurrency"), id));
+            if (response.CodeError == 200)
+            {
+                devices = JsonConvert.DeserializeObject<List<Device>>(response.Data.ToString());
+            }
+
+            viewModel.Devices = devices;
+            return View(viewModel);
+        }
     }
 }

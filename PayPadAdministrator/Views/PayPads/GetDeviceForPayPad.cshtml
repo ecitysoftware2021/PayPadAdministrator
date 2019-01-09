@@ -1,18 +1,21 @@
-﻿@model IEnumerable<PayPadAdministrator.Models.Currency>
+﻿@model PayPadAdministrator.Models.DevicesForPayPadViewModel
 
 @{
-    ViewBag.Title = "Monedas";
+
+    ViewBag.Title = "Dispositivo por Pay+";
 }
+
 
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box">
-            <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
+            <h4 class="m-t-0 header-title"><b>@Model.PayPad.NAME</b></h4>
             <p class="text-muted font-18">
-                <a href="@Url.Action("CreateCurrency")" class="btn btn-default waves-effect waves-light">
-                    <i class="fa fa-plus-circle m-r-5"></i> <span>Crear Nuevo</span>
+                <a href="@Url.Action("CreateTypeCustomers")" class="btn btn-default waves-effect waves-light">
+                    <i class="fa fa-plus-circle m-r-5"></i> <span>Asignar Nuevo</span>
                 </a>
             </p>
+
             <table data-toggle="table"
                    data-show-columns="false"
                    data-page-list="[5, 10, 20]"
@@ -20,25 +23,45 @@
                    data-pagination="true" data-show-pagination-switch="true" class="table-bordered ">
                 <thead>
                     <tr>
-                        <th data-field="id" data-switchable="false">ID</th>
-                        <th data-field="name" data-switchable="false">Descripción</th>
-                        <th data-field="nit">Simbolo</th>
-                        <th data-field="nit">Estado</th>
+                        <th data-field="id">
+                           ID
+                        </th>
+                        <th data-field="Serial">
+                           Serial
+                        </th>
+                        <th data-field="Name">
+                            Nombre
+                        </th>
+                        <th data-field="description">
+                            Descripción
+                        </th>
+                        <th data-field="Brand">
+                            Marca
+                        </th>
+                        <th data-field="Estado">
+                            Estado
+                        </th>
                         <th data-field="administrator" class="text-center">Adminitración</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Devices)
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.CURRENCY_ID)
+                                @Html.DisplayFor(modelItem => item.DEVICE_ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SERIAL)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NAME)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.DESCRIPTION)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.SYMBOL)
+                                @Html.DisplayFor(modelItem => item.BRAND)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.STATE)
@@ -52,8 +75,6 @@
                     }
                 </tbody>
             </table>
-
-
         </div>
     </div>
 </div>
