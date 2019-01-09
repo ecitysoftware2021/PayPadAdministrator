@@ -12,45 +12,67 @@
                     <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
 
                     @using (Html.BeginForm("CreateDevice", "Devices", new { }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.SERIAL, htmlAttributes: new { @class = "col-sm-3 control-label" })
-                            <div class="col-sm-9">
-                                @Html.EditorFor(model => model.SERIAL, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.SERIAL, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SERIAL, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.SERIAL, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SERIAL, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NAME, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DESCRIPTION, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.DESCRIPTION, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DESCRIPTION, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BRAND, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.BRAND, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.BRAND, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        @Html.LabelFor(model => model.ImagePathFile, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                        <div class="col-sm-9">
+                            <div class="file-input-new">
+                                <div class="input-group">
+                                    <div tabindex="500" class="form-control file-caption">
+                                        <div class="file-caption-name" id="NombreArchivoResponse">
+                                        </div>
+                                    </div>
+                                    <div class="input-group-btn" style="height:auto">
+                                        <div tabindex="500" class="btn btn-info btn-file">
+                                            <i class="glyphicon glyphicon-folder-open"></i>
+                                            File Search...
+                                            @Html.TextBoxFor(modelo => modelo.ImagePathFile, new { type = "file", id = "ImagePathFile" })
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NAME, htmlAttributes: new { @class = "col-sm-3 control-label" })
-                            <div class="col-sm-9">
-                                @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.DESCRIPTION, htmlAttributes: new { @class = "col-sm-3 control-label" })
-                            <div class="col-sm-9">
-                                @Html.EditorFor(model => model.DESCRIPTION, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.DESCRIPTION, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.BRAND, htmlAttributes: new { @class = "col-sm-3 control-label" })
-                            <div class="col-sm-9">
-                                @Html.EditorFor(model => model.BRAND, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.BRAND, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group m-b-0">
-                            <div class="col-sm-offset-3 col-sm-9">
-                                <button type="submit" class="btn btn-info waves-effect waves-light">Crear</button>
-                                @Html.ActionLink("Back to List", "Index")
-                            </div>
-                        </div>
-                    }
+                    </div>
+                </div>
+                <div class="form-group m-b-0">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button type="submit" class="btn btn-info waves-effect waves-light">Crear</button>
+                        @Html.ActionLink("Back to List", "Index")
+                    </div>
+                </div>
+}
 
                 </div>
             </div>

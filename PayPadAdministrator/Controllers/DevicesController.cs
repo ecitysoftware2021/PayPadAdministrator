@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PayPadAdministrator.Classes;
 using PayPadAdministrator.Models;
 using PayPadAdministrator.Services;
 using System;
@@ -37,14 +38,22 @@ namespace PayPadAdministrator.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(device);
             }
 
+            if (device.ImagePathFile == null)
+            {
+                ModelState.AddModelError(string.Empty, "Debe ingresar una imagen");
+                return View(device);
+            }
+
+            device.IMAGE = Utilities.GenerateByteArray(device.ImagePathFile.InputStream);
+            device.ImagePathFile = null;
             var response = await apiService.InsertPost(device, "CreateDevice");
             if (response.CodeError != 200)
             {
                 ModelState.AddModelError(string.Empty, response.Message);
-                return View();
+                return View(device);
             }
 
             return RedirectToAction("Index");
