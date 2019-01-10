@@ -36,6 +36,7 @@ namespace PayPadAdministrator
                   "~/Scripts/plugins/custombox/dist/custombox.min.js",
                   "~/Scripts/pages/legacy.min.js",
                   "~/Scripts/plugins/sweetalert/dist/sweetalert.min.js",
+                  "~/Scripts/ModalGeneric.js",
                   "~/Scripts/PayPad.js"
                   ));
 

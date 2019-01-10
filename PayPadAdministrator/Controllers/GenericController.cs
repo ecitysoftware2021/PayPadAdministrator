@@ -20,12 +20,13 @@ namespace PayPadAdministrator.Controllers
             return View();
         }
 
-        public async Task<JsonResult> AssingCustomerToSponsor(int sponsor, int client)
+        public async Task<JsonResult> AssingCustomerToSponsor(int sponsor, int client, bool state)
         {
             var request = new Sponsor
             {
                 CUSTOMER_ID = client,
-                SPONSOR_CUSTOMER_ID = sponsor
+                SPONSOR_CUSTOMER_ID = sponsor,
+                STATE = state
             };
 
             var response = await apiService.InsertPost(request, "AssingCustomerToSponsor");
@@ -51,6 +52,19 @@ namespace PayPadAdministrator.Controllers
                     Message = ex.Message
                 });
             }
+        }
+
+        public async Task<JsonResult> UpdateModuleToUser(int moduleId, int userId, bool state)
+        {
+            var userModule = new UserModule
+            {
+                MODULE_ID = moduleId,
+                USER_ID = userId,
+                STATE = state
+            };
+
+            var response = await apiService.InsertPost(userModule, "AssingModuleToUser");            
+            return Json(response);
         }
     }
 }

@@ -50,5 +50,36 @@ namespace PayPadAdministrator.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public async Task<ActionResult> EditTransact(int id)
+        {
+            Transaction_Type transaction_Type = new Transaction_Type();
+            var response = await apiService.GetData(string.Concat(Utilities.GetConfiguration("GetTransact"), id));
+            if (response.CodeError == 200)
+            {
+                transaction_Type = JsonConvert.DeserializeObject<Transaction_Type>(response.Data.ToString());
+            }
+
+            return View(transaction_Type);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditTransact(Transaction_Type transaction_Type)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(transaction_Type);
+            }
+
+            var response = await apiService.InsertPost(transaction_Type, "EditTransact");
+            if (response.CodeError != 200)
+            {
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View(transaction_Type);
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -9,7 +9,7 @@
 {
 
     <p>
-        <a href="@Url.Action("AssingClient", new { id =  Model[0].Sponsor.CUSTOMER_ID})" class="btn btn-default waves-effect waves-light">
+        <a href="@Url.Action("SponsorToClients", new { id =  Model[0].Sponsor.CUSTOMER_ID})" class="btn btn-default waves-effect waves-light">
             <i class="fa fa-mail-reply m-r-5"></i> <span>Átras</span>
         </a>
     </p>
@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="table-detail table-actions-bar">
-                            <a href="javascript:void(0)" onclick="AssingCustomerToSponsor('@Model[0].Sponsor.CUSTOMER_ID','@item.CUSTOMER_ID')" class="btn btn-sm btn-primary waves-effect waves-light">Añadir</a>
+                            <a href="javascript:void(0)" onclick="AssingCustomerToSponsor('@Model[0].Sponsor.CUSTOMER_ID','@item.CUSTOMER_ID',true)" class="btn btn-sm btn-primary waves-effect waves-light">Añadir</a>
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                         </div>
 
                         <div class="table-detail table-actions-bar">
-                            <a href="#" class="btn btn-sm btn-primary waves-effect waves-light">Eliminar</a>
+                            <a href="javascript:void(0)" onclick="AssingCustomerToSponsor('@Model[0].Sponsor.CUSTOMER_ID','@item.CUSTOMER_ID',false)" class="btn btn-sm btn-primary waves-effect waves-light">Eliminar</a>
                         </div>
                     </div>
                 </div>
@@ -97,24 +97,26 @@
 @section Scripts {
     @Scripts.Render("~/bundles/PopUp")
     <script type="text/javascript">
-    function AssingCustomerToSponsor(sponsor, client) {
+    function AssingCustomerToSponsor(sponsor, client, state) {
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("AssingCustomerToSponsor","Generic")',
                 dataType: 'json',
-                data: { sponsor: sponsor, client: client},
+                data: { sponsor: sponsor, client: client,state:state},
                 success: function (data) {
                     if (data.CodeError == 200){
-                        ModalSuccess("Se añadio correctamente");
-                        location.reload();
+                        if(state){
+                        MessageSuccess("¡Buen trabajo!","Se añadio correctamente");
+                        }else{
+                        MessageSuccess("¡Buen trabajo!","Se eliminó correctamente");
+                        }
                     }
                     else{
-                        ModalError(data.Message);
+                        ModalMessageError("Error",data.Message);
                     }
                 },
                 error: function (ex) {
-                    ModalError(ex);
-                    //ModalMessageError("Error", 'Failed ' + ex.statusText);
+                    ModalMessageError("Error", 'Failed ' + ex.statusText);
                 }
             });
     }

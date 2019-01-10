@@ -193,6 +193,7 @@
     <Compile Include="Models\SponsorToClientViewModel.cs" />
     <Compile Include="Models\SubModule.cs" />
     <Compile Include="Models\Transaction_Type.cs" />
+    <Compile Include="Models\UserModule.cs" />
     <Compile Include="Models\UserSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiService.cs" />
@@ -305,6 +306,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\ModalGeneric.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr.min.js" />
     <Content Include="Scripts\npm.js" />
@@ -2326,6 +2328,8 @@
     <Content Include="Views\Users\CreateUser.cshtml" />
     <Content Include="Views\Modules\CreateModule.cshtml" />
     <Content Include="Views\Modules\CreateSubModule.cshtml" />
+    <Content Include="Views\Modules\AssingModuleToUser.cshtml" />
+    <Content Include="Views\Transact\EditTransact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
