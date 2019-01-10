@@ -66,5 +66,19 @@ namespace PayPadAdministrator.Controllers
             var response = await apiService.InsertPost(userModule, "AssingModuleToUser");            
             return Json(response);
         }
+
+        public async Task<JsonResult> AssingTransactToPayPad(int transactId, int payPadId, bool state)
+        {
+            var payPadTransaction = new PayPadTransactionType
+            {
+                PAYPAD_ID = payPadId,
+                TRANSACTION_TYPE_ID = transactId,
+                STATE = state
+            };
+
+            var response = await apiService.InsertPost(payPadTransaction, "AssingTransactForPaypad");
+            return Json(response);
+        }
+        
     }
 }

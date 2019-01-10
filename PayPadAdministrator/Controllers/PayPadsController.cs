@@ -139,5 +139,18 @@ namespace PayPadAdministrator.Controllers
 
             return PartialView(transacts);
         }
+
+        public async Task<ActionResult> AssingTransact(int id)
+        {
+            List<Transaction_Type> transaction_Types = new List<Transaction_Type>();
+            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetAllsTransactForPayPad"), id));
+            if (response.CodeError == 200)
+            {
+                transaction_Types = JsonConvert.DeserializeObject<List<Transaction_Type>>(response.Data.ToString());
+            }
+
+            ViewBag.PayPadId = id;
+            return View(transaction_Types);
+        }
     }
 }

@@ -18,6 +18,7 @@
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Pay +" action="Index" controller="PayPads">
       <mvcSiteMapNode title="Crear Pay +" controller="PayPads" action="CreatePayPad" />
+      <mvcSiteMapNode title="Asignar Trámites" controller="PayPads" action="AssingTransact" preservedRouteParameters="id" />
       <mvcSiteMapNode title="Detalles" controller="PayPads" action="Details" preservedRouteParameters="id" />
       <mvcSiteMapNode title="Editar" controller="PayPads" action="Edit" preservedRouteParameters="id"  />
     </mvcSiteMapNode>

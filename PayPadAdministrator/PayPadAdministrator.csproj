@@ -187,6 +187,7 @@
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\Office.cs" />
     <Compile Include="Models\PayPad.cs" />
+    <Compile Include="Models\PayPadTransactionType.cs" />
     <Compile Include="Models\RequestAuthentication.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Sponsor.cs" />
@@ -2330,6 +2331,7 @@
     <Content Include="Views\Modules\CreateSubModule.cshtml" />
     <Content Include="Views\Modules\AssingModuleToUser.cshtml" />
     <Content Include="Views\Transact\EditTransact.cshtml" />
+    <Content Include="Views\PayPads\AssingTransact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

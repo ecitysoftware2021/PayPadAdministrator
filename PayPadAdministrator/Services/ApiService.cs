@@ -156,5 +156,10 @@ namespace PayPadAdministrator.Services
                 };
             }
         }
+
+        internal Task ValidateUser(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

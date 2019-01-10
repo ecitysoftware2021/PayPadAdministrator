@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PayPadAdministrator.Classes;
 using PayPadAdministrator.CustomAuthentication;
 using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Models;
@@ -146,6 +147,25 @@ namespace PayPadAdministrator.Controllers
             }
 
             return View();
+        }
+
+        public async Task<ActionResult> GetModule()
+        {
+            var userCurrent = await apiService.ValidateUser(User.Identity.Name);
+            if (userCurrent == null)
+            {
+                LogOut();
+            }
+
+            List<ModuleViewModel> modules = new List<ModuleViewModel>();
+            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetModuleForUser"), userCurrent.USER_ID));
+            if (response.CodeError == 200)
+            {
+                modules = JsonConvert.DeserializeObject<List<ModuleViewModel>>(response.Data.ToString());
+            }
+
+            //TODO:Crear Vista parcial de modulos
+            return View(modules);
         }
     }
 }
