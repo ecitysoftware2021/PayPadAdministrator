@@ -1,0 +1,46 @@
+﻿@model IEnumerable<PayPadAdministrator.Models.TransactPaypadViewModel>
+
+@{
+    ViewBag.Title = "trámites";
+}
+
+@Styles.Render("~/Content/css")
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
+            <br />            
+            <table data-toggle="table"
+                   data-show-columns="false"
+                   data-page-list="[5, 10, 20]"
+                   data-page-size="5"
+                   data-pagination="true" data-show-pagination-switch="true" 
+                   class="table-bordered ">
+                <thead>
+                    <tr>
+                        <th data-field="id">
+
+                        </th>
+                        <th data-field="Descripción">
+                            @Html.DisplayNameFor(model => model.DESCRIPTION)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <i class="fa fa-tv fa-2x"></i>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DESCRIPTION)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

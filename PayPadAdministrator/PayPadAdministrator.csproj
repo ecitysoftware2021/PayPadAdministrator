@@ -151,6 +151,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Classes\Dictionaries.cs" />
     <Compile Include="Classes\Response.cs" />
     <Compile Include="Classes\Utilities.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -183,12 +184,14 @@
     <Compile Include="Models\Device.cs" />
     <Compile Include="Models\GetRequest.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\Module.cs" />
     <Compile Include="Models\Office.cs" />
     <Compile Include="Models\PayPad.cs" />
     <Compile Include="Models\RequestAuthentication.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Sponsor.cs" />
     <Compile Include="Models\SponsorToClientViewModel.cs" />
+    <Compile Include="Models\SubModule.cs" />
     <Compile Include="Models\Transaction_Type.cs" />
     <Compile Include="Models\UserSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2318,6 +2321,11 @@
     <Content Include="Views\Roles\CreateRole.cshtml" />
     <Content Include="Views\Transact\Index.cshtml" />
     <Content Include="Views\Transact\CreateTransact.cshtml" />
+    <Content Include="Views\PayPads\GetTransactsPaypad.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\CreateUser.cshtml" />
+    <Content Include="Views\Modules\CreateModule.cshtml" />
+    <Content Include="Views\Modules\CreateSubModule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

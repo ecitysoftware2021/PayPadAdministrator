@@ -11,7 +11,7 @@
 <p>
     <a href="@Url.Action("CreatePayPad")" class="btn btn-default waves-effect waves-light">
         <i class="fa fa-plus-circle m-r-5"></i> <span>Crear Nuevo</span>
-    </a> 
+    </a>
 </p>
 
 <div class="row port">
@@ -40,8 +40,11 @@
                         <h5 class="m-0 text-dark"><i class="md md-business m-r-10"></i><small>@item.OFFICE_ADDRESS</small></h5>
 
                         <ul class="social-links list-inline m-0">
-                            <li>
-                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" data-original-title="Ver trámites"><i class="fa fa-book"></i></a>
+                            <li>                                
+                                <a href="@Url.Action("GetTransactsPaypad", new {id = item.PAYPAD_ID })"
+                                   data-placement="top" data-toggle="tooltip" class="tooltips dialog-window"  data-original-title="Ver trámites">
+                                    <i class="fa fa-book"></i>
+                                </a>
                             </li>
                             <li>
                                 <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Asignar Trámite"><i class="fa fa-server"></i></a>
@@ -60,5 +63,43 @@
     </div>
 </div>
 
-@Scripts.Render("~/bundles/PopUp")
 
+
+@section Scripts {
+    @Scripts.Render("~/bundles/PopUp")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                e.preventDefault();
+                var $link = $(this);
+                var title = "Detalles";
+                $('#Details .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#Details').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#Details .te').html(data);
+                        $('#Details').modal();
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+            });
+        });
+    </script>
+}
+
+<div class="modal fade" id="Details" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" style="width: 970px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>

@@ -126,5 +126,18 @@ namespace PayPadAdministrator.Controllers
             viewModel.Devices = devices;
             return View(viewModel);
         }
+
+
+        public async Task<ActionResult> GetTransactsPaypad(int id)
+        {
+            List<TransactPaypadViewModel> transacts = new List<TransactPaypadViewModel>();
+            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetTransactsForPaypad"), id));
+            if (response.CodeError == 200)
+            {
+                transacts = JsonConvert.DeserializeObject<List<TransactPaypadViewModel>>(response.Data.ToString());
+            }
+
+            return PartialView(transacts);
+        }
     }
 }

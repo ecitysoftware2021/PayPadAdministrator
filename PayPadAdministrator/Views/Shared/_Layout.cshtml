@@ -210,26 +210,24 @@
                             <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="ti-user"></i> <span> Usuarios </span> </a>
                                 <ul class="list-unstyled">
-                                    <li class="active"><a href="@Url.Action("SuperAdministrators","Users")">Super Administradores</a></li>
+                                    <li class="active"><a href="@Url.Action("Index","Users")">Todos los usuarios</a></li>
+                                    <li><a href="@Url.Action("SuperAdministrators","Users")">Super Administradores</a></li>
                                     <li><a href="@Url.Action("Administrators","Users")">Administradores</a></li>
-                                    <li><a href="@Url.Action("Responsible","Users")">Responsables</a></li>
-                                    <li><a href="dashboard_2.html">Crear Usuarios</a></li>
+                                    <li><a href="@Url.Action("Responsible","Users")">Responsables</a></li>                                    
                                 </ul>
                             </li>
 
                             <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="ti-layers-alt"></i> <span> Módulos </span> </a>
                                 <ul class="list-unstyled">
-                                    <li class="active"><a href="@Url.Action("Index","Modules")">Menús</a></li>
-                                    <li><a href="index.html">Crear Menú</a></li>
+                                    <li class="active"><a href="@Url.Action("Index","Modules")">Menús</a></li>                                    
                                 </ul>
                             </li>
 
                             <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="ti-widget"></i> <span> Administación </span> </a>
-                                <ul class="list-unstyled">
-                                    <li class="active"><a href="dashboard_2.html">Tipo de Clientes</a></li>
-                                    <li><a href="@Url.Action("Index","Roles")">Roles</a></li>
+                                <ul class="list-unstyled">                                    
+                                    <li class="active"><a href="@Url.Action("Index","Roles")">Roles</a></li>
                                     <li><a href="@Url.Action("Index","Devices")">Dispositivos</a></li>
                                     <li><a href="@Url.Action("Index","Transact")">Trámites</a></li>
                                     <li><a href="@Url.Action("Locations","Account")">Regiones</a></li>

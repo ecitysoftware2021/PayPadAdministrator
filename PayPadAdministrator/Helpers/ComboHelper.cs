@@ -38,6 +38,31 @@ namespace PayPadAdministrator.Helpers
             return customerTypes;
         }
 
+        public static async Task<List<Customer>> GetAllCustomers()
+        {
+            List<Customer> clients = new List<Customer>();
+            var request = new GetRequest
+            {
+                Parameter = string.Empty,
+                Type = 1
+            };
+
+            var response = await apiService.InsertPost(request, "GetCustomers");
+            if (response.CodeError == 200)
+            {
+                var data = response.Data.ToString();
+                clients = JsonConvert.DeserializeObject<List<Customer>>(response.Data.ToString());
+            }
+
+            clients.Add(new Customer
+            {
+                CUSTOMER_ID = 0,
+                NAME = "Seleccione un cliente"
+            });
+
+            return clients;
+        }
+
         public static async Task<List<Customer>> GetCustomers()
         {
             List<Customer> clients = new List<Customer>();
@@ -61,6 +86,30 @@ namespace PayPadAdministrator.Helpers
             });
 
             return clients;
+        }
+
+        public static async Task<List<Role>> GetRoles()
+        {
+            List<Role> roles = new List<Role>();
+            var request = new GetRequest
+            {
+                Parameter = string.Empty,
+                Type = 1
+            };
+
+            var response = await apiService.InsertPost(request, "GetRoles");
+            if (response.CodeError == 200)
+            {
+                roles = JsonConvert.DeserializeObject<List<Role>>(response.Data.ToString());
+            }
+
+            roles.Add(new Role
+            {
+                ROLE_ID = 0,
+                DESCRIPTION = "Seleccione una opción"
+            });
+
+            return roles;
         }
 
         public static async Task<List<Currency>> GetCurrencies()
