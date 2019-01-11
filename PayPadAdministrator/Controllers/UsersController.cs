@@ -28,19 +28,46 @@ namespace PayPadAdministrator.Controllers
             return View(users.OrderBy(u => u.ROLE_ID).ToList());
         }
 
-        public ActionResult SuperAdministrators()
+        public async Task<ActionResult> SuperAdministrators()
         {
-            return View();
+            List<UserViewModel> users = new List<UserViewModel>();
+            var response = await apiService.GetData("GetAllUsers");
+            if (response.CodeError == 200)
+            {
+                users = JsonConvert.DeserializeObject<List<UserViewModel>>(response.Data.ToString());
+            }
+
+            return View(users.Where(u => u.ROLE_ID == 1).ToList());
         }
 
-        public ActionResult Administrators()
+        public async Task<ActionResult> Administrators()
         {
-            return View();
+            List<UserViewModel> users = new List<UserViewModel>();
+            var response = await apiService.GetData("GetAllUsers");
+            if (response.CodeError == 200)
+            {
+                users = JsonConvert.DeserializeObject<List<UserViewModel>>(response.Data.ToString());
+            }
+
+            return View(users.Where(u => u.ROLE_ID == 2).ToList());
         }
 
-        public ActionResult Responsible()
+        public async Task<ActionResult> Responsible()
         {
-            return View();
+            List<UserViewModel> users = new List<UserViewModel>();
+            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var response = await apiService.GetData("GetAllUsers");
+            if (response.CodeError == 200)
+            {
+                users = JsonConvert.DeserializeObject<List<UserViewModel>>(response.Data.ToString());
+            }
+
+            if (userCurrent.ROLE_ID == 1)
+            {
+                return View(users.Where(u => u.ROLE_ID == 3).ToList());
+            }
+
+            return View(users.Where(u => u.ROLE_ID == 3 && u.CUSTOMER_ID == userCurrent.CUSTOMER_ID).ToList());
         }
 
         public async Task<ActionResult> CreateUser()
@@ -82,6 +109,53 @@ namespace PayPadAdministrator.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult CreateUserResponsible()
+        {
+            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            if (userCurrent == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var userViewModel = new UserViewModel
+            {
+                ROLE_ID = 3,
+                CUSTOMER_ID = userCurrent.CUSTOMER_ID,
+            };
+            
+            return View(userViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateUserResponsible(UserViewModel user)
+        {
+            if (!ModelState.IsValid)
+            {                
+                return View(user);
+            }
+
+            if (user.ImagePathFile == null)
+            {
+                ViewBag.ROLE_ID = new SelectList(await ComboHelper.GetRoles(), nameof(Role.ROLE_ID), nameof(Role.DESCRIPTION), user.ROLE_ID);
+                ViewBag.CUSTOMER_ID = new SelectList(await ComboHelper.GetAllCustomers(), nameof(Customer.CUSTOMER_ID), nameof(Customer.NAME), user.CUSTOMER_ID);
+                ModelState.AddModelError(string.Empty, "Debe ingresar una foto");
+                return View(user);
+            }
+
+            user.IMAGE = Utilities.GenerateByteArray(user.ImagePathFile.InputStream);
+            user.ImagePathFile = null;
+            user.PASSWORD = await GeneratePassword(user.CUSTOMER_ID);
+            var response = await apiService.InsertPost(user, "CreateUser");
+            if (response.CodeError != 200)
+            {                
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View(user);
+            }
+
+            return RedirectToAction("Responsible");
         }
 
         private async Task<string> GeneratePassword(int customerId)

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
 using PayPadAdministrator.Models;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,66 @@ namespace PayPadAdministrator.Services
             {
                 var reques = new RequestAuthentication
                 {
+                    Password = password,                    
+                    UserName = username
+                };
+
+                var json = JsonConvert.SerializeObject(reques);
+                var content = new StringContent(json, Encoding.UTF8, "Application/json");
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlApi);
+                var url = "api/Users/Login";                
+                var response = await client.PostAsync(url, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                var result = await response.Content.ReadAsStringAsync();
+                var responseApi = JsonConvert.DeserializeObject<Response>(result);
+                if (responseApi.CodeError != 200)
+                {
+                    return null;
+                }
+
+                var user = JsonConvert.DeserializeObject<UserViewModel>(responseApi.Data.ToString());
+                var userSession = new UserSession
+                {
+                    CUSTOMER_ID = user.CUSTOMER_ID,
+                    EMAIL = user.EMAIL,
+                    IDENTIFICATION = user.IDENTIFICATION,
+                    IMAGE = user.IMAGE,
+                    NAME = user.NAME,
+                    PASSWORD = user.PASSWORD,
+                    PHONE = user.PHONE,
+                    STATE = user.STATE,
+                    USERNAME = user.USERNAME,
+                    USER_ID = user.USER_ID,
+                    Roles = new List<Role>()
+                    {
+                        new Role
+                        {
+                            DESCRIPTION = user.ROL_NAME,
+                            ROLE_ID = user.ROLE_ID
+                        }
+                    },
+                   
+                };
+                
+                return userSession;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<UserSession> LoginApi(string username, string password)
+        {
+            try
+            {
+                var reques = new RequestAuthentication
+                {
                     Password = password,
                     Type = 2,
                     UserName = username
@@ -42,11 +103,11 @@ namespace PayPadAdministrator.Services
                 var json = JsonConvert.SerializeObject(reques);
                 var content = new StringContent(json, Encoding.UTF8, "Application/json");
                 var client = new HttpClient();
-                client.BaseAddress = new Uri("");
+                client.BaseAddress = new Uri(urlApi);
                 var url = "Authentication/AuthenticateRepo";
 
-                var authentication = Encoding.ASCII.GetBytes(userAPi + ":" + passwordAPi);
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authentication));
+                //var authentication = Encoding.ASCII.GetBytes(userAPi + ":" + passwordAPi);
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authentication));
                 var response = await client.PostAsync(url, content);
                 if (!response.IsSuccessStatusCode)
                 {
@@ -57,7 +118,7 @@ namespace PayPadAdministrator.Services
                 var requestresponse = JsonConvert.DeserializeObject<UserSession>(result);
                 return requestresponse;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }
@@ -157,9 +218,77 @@ namespace PayPadAdministrator.Services
             }
         }
 
-        internal Task ValidateUser(string name)
+        public async Task<UserViewModel> ValidateUserAsync(string name)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(urlApi);
+                var url = string.Concat("api/Users/GetUserForUserName?userName=", name);
+                var response = await client.GetAsync(url);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                var result = await response.Content.ReadAsStringAsync();
+                var responseApi = JsonConvert.DeserializeObject<Response>(result);
+                if (responseApi.CodeError != 200)
+                {
+                    return null;
+                }
+
+                var userCurrent = JsonConvert.DeserializeObject<UserViewModel>(responseApi.Data.ToString());
+                return userCurrent;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public UserViewModel ValidateUser(string name)
+        {
+            try
+            {
+                var url = string.Concat(urlApi, "api/Users/GetUserForUserName?userName=", name);
+                var client = new RestClient(url);
+                var request = new RestRequest(Method.GET);
+                IRestResponse iResponse = client.Execute(request);
+                var responseApi = JsonConvert.DeserializeObject<Response>(iResponse.Content.ToString());
+                if (responseApi.CodeError != 200)
+                {
+                    return null;
+                }
+
+                var userCurrent = JsonConvert.DeserializeObject<UserViewModel>(responseApi.Data.ToString());
+                return userCurrent;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public Response GetDataRest(string controller)
+        {
+            try
+            {
+                var url = string.Concat(urlApi, controller);
+                var client = new RestClient(url);
+                var request = new RestRequest(Method.GET);
+                IRestResponse iResponse = client.Execute(request);
+                var response = JsonConvert.DeserializeObject<Response>(iResponse.Content.ToString());
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    CodeError = 300,
+                    Message = ex.Message,
+                };
+            }
         }
     }
 }

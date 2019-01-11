@@ -41,36 +41,72 @@ namespace PayPadAdministrator.Controllers
                 return View(model);
             }
 
-            //var response = await apiService.Login(model.UserName, model.Password);
-            //if (response == null)
-            //{
-            //    ModelState.AddModelError(string.Empty, "Something Wrong : Username or Password invalid ^_^ ");
-            //    return View(model);
-            //}
+            var response = await apiService.Login(model.UserName, model.Password);
+            if (response == null)
+            {
+                ModelState.AddModelError(string.Empty, "Something Wrong : Username or Password invalid ^_^ ");
+                return View(model);
+            }
 
-            //var user = new CustomMembershipUser(response);
-            //if (user != null)
+            var user = new CustomMembershipUser(response);
+            if (user != null)
+            {
+                CustomSerializeModel userModel = new Models.CustomSerializeModel()
+                {
+                    UserId = user.UserId,
+                    User_Name = user.User_Name,
+                    CustomerId = user.CustomerId,
+                    Email = user.Email,                    
+                    Name = user.Name,
+                    Roles = user.Roles.Select(r => r.DESCRIPTION).ToList()
+                };
+
+                string userData = JsonConvert.SerializeObject(userModel);
+                FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket
+                    (
+                    1, model.UserName, DateTime.Now, DateTime.Now.AddMinutes(15), false, userData
+                    );
+
+                string enTicket = FormsAuthentication.Encrypt(authTicket);
+                HttpCookie faCookie = new HttpCookie("Cookie1", enTicket);
+                Response.Cookies.Add(faCookie);
+            }
+
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            //if (Membership.ValidateUser(model.UserName, model.Password))
             //{
-            //    CustomSerializeModel userModel = new Models.CustomSerializeModel()
+            //    var user = (CustomMembershipUser)Membership.GetUser(model.UserName, false);
+            //    if (user != null)
             //    {
-            //        UserId = user.UserId,
-            //        User_Name = user.User_Name,
-            //        CustomerId = user.CustomerId,
-            //        Email = user.Email,
-            //        Image = user.Image,
-            //        Name = user.Name,
-            //        Roles = user.Roles.Select(r => r.DESCRIPTION).ToList()
-            //    };
+            //        CustomSerializeModel userModel = new Models.CustomSerializeModel()
+            //        {
+            //            UserId = user.UserId,
+            //            User_Name = user.User_Name,
+            //            CustomerId = user.CustomerId,
+            //            Email = user.Email,
+            //            Image = user.Image,
+            //            Name = user.Name,                        
+            //            Roles = user.Roles.Select(r => r.DESCRIPTION).ToList()
+            //        };
 
-            //    string userData = JsonConvert.SerializeObject(userModel);
-            //    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, model.UserName,
-            //                                            DateTime.Now, DateTime.Now.AddMinutes(15),
-            //                                            false,
-            //                                            userData);
+            //        string userData = JsonConvert.SerializeObject(userModel);
+            //        FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket
+            //            (
+            //            1, model.UserName, DateTime.Now, DateTime.Now.AddMinutes(15), false, userData
+            //            );
 
-            //    string enTicket = FormsAuthentication.Encrypt(authTicket);
-            //    HttpCookie faCookie = new HttpCookie("Cookie1", enTicket);
-            //    Response.Cookies.Add(faCookie);
+            //        string enTicket = FormsAuthentication.Encrypt(authTicket);
+            //        HttpCookie faCookie = new HttpCookie("Cookie1", enTicket);
+            //        Response.Cookies.Add(faCookie);
+            //    }
+
             //    if (Url.IsLocalUrl(returnUrl))
             //    {
             //        return Redirect(returnUrl);
@@ -81,45 +117,8 @@ namespace PayPadAdministrator.Controllers
             //    }
             //}
 
-            if (Membership.ValidateUser(model.UserName, model.Password))
-            {
-                var user = (CustomMembershipUser)Membership.GetUser(model.UserName, false);
-                if (user != null)
-                {
-                    CustomSerializeModel userModel = new Models.CustomSerializeModel()
-                    {
-                        UserId = user.UserId,
-                        User_Name = user.User_Name,
-                        CustomerId = user.CustomerId,
-                        Email = user.Email,
-                        Image = user.Image,
-                        Name = user.Name,                        
-                        Roles = user.Roles.Select(r => r.DESCRIPTION).ToList()
-                    };
-
-                    string userData = JsonConvert.SerializeObject(userModel);
-                    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket
-                        (
-                        1, model.UserName, DateTime.Now, DateTime.Now.AddMinutes(15), false, userData
-                        );
-
-                    string enTicket = FormsAuthentication.Encrypt(authTicket);
-                    HttpCookie faCookie = new HttpCookie("Cookie1", enTicket);
-                    Response.Cookies.Add(faCookie);
-                }
-
-                if (Url.IsLocalUrl(returnUrl))
-                {
-                    return Redirect(returnUrl);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
-            ModelState.AddModelError(string.Empty, "Something Wrong : Username or Password invalid ^_^ ");
-            return View(model);
+            //ModelState.AddModelError(string.Empty, "Something Wrong : Username or Password invalid ^_^ ");
+            //return View(model);
 
         }
 
@@ -149,23 +148,36 @@ namespace PayPadAdministrator.Controllers
             return View();
         }
 
-        public async Task<ActionResult> GetModule()
+        [ChildActionOnly]
+        public ActionResult GetModule()
         {
-            var userCurrent = await apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(User.Identity.Name);
             if (userCurrent == null)
             {
                 LogOut();
             }
 
             List<ModuleViewModel> modules = new List<ModuleViewModel>();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetModuleForUser"), userCurrent.USER_ID));
+            var response = apiService.GetDataRest(string.Concat(Utilities.GetConfiguration("GetModuleForUser"), userCurrent.USER_ID));
             if (response.CodeError == 200)
             {
                 modules = JsonConvert.DeserializeObject<List<ModuleViewModel>>(response.Data.ToString());
             }
 
             //TODO:Crear Vista parcial de modulos
-            return View(modules);
+            return PartialView(modules);
+        }
+
+        [ChildActionOnly]
+        public ActionResult GetPhotoProfile()
+        {
+            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            if (userCurrent == null)
+            {
+                LogOut();
+            }
+            
+            return PartialView(userCurrent);
         }
     }
 }

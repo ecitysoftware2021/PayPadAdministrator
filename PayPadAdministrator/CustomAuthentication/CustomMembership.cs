@@ -1,4 +1,5 @@
 ﻿using PayPadAdministrator.Models;
+using PayPadAdministrator.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace PayPadAdministrator.CustomAuthentication
 {
     public class CustomMembership : MembershipProvider
     {
+        static ApiService apiService = new ApiService();
+
         public override bool EnablePasswordRetrieval => throw new NotImplementedException();
 
         public override bool EnablePasswordReset => throw new NotImplementedException();
@@ -83,28 +86,32 @@ namespace PayPadAdministrator.CustomAuthentication
 
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
-            UserSession userSession = new UserSession
+
+            var user = apiService.ValidateUser(username);
+            var userSession = new UserSession
             {
-                CUSTOMER_ID = 1,
-                EMAIL = "brandon-377@hotmail.com",
-                IDENTIFICATION = "1036660391",
-                PHONE = "3126104754",
-                STATE = 1,
-                USERNAME = username,    
+                CUSTOMER_ID = user.CUSTOMER_ID,
+                EMAIL = user.EMAIL,
+                IDENTIFICATION = user.IDENTIFICATION,
+                IMAGE = user.IMAGE,
+                NAME = user.NAME,
+                PASSWORD = user.PASSWORD,
+                PHONE = user.PHONE,
+                STATE = user.STATE,
+                USERNAME = user.USERNAME,
+                USER_ID = user.USER_ID,
                 Roles = new List<Role>()
-                {
-                    new Role
                     {
-                        ROLE_ID = 1,
-                        DESCRIPTION = "SuperAdmin",                        
-                    }
-                },
-                USER_ID = 1,
-                NAME = "brandon steven montoya",                
+                        new Role
+                        {
+                            DESCRIPTION = user.ROL_NAME,
+                            ROLE_ID = user.ROLE_ID
+                        }
+                    },
+
             };
 
             var selectedUser = new CustomMembershipUser(userSession);
-
             return selectedUser;
         }
 

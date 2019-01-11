@@ -21,7 +21,7 @@ namespace PayPadAdministrator.Models
 
         public string PHONE { get; set; }
 
-        public int STATE { get; set; }
+        public bool STATE { get; set; }
 
         public List<Role> Roles { get; set; }
 

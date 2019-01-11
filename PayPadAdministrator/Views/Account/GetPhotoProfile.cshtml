@@ -1,0 +1,8 @@
+﻿@model PayPadAdministrator.Models.UserViewModel
+
+@{ 
+    var base64 = Convert.ToBase64String(Model.IMAGE);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+}
+
+<img src="@imgSrc" alt="user-img" class="img-circle"> 

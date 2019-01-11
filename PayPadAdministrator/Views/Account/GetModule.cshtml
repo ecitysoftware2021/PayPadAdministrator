@@ -1,0 +1,25 @@
+﻿@model IEnumerable<PayPadAdministrator.Models.ModuleViewModel>
+
+
+<div id="sidebar-menu">
+    <ul>
+        <li class="text-muted menu-title">Navegación</li>
+        <li><a href="@Url.Action("Index","Home")" class="waves-effect active"><i class="ti-home"></i> <span> Dashboard </span> </a></li>
+            @foreach (var module in Model)
+            {
+
+                <li class="has_sub">
+                    <a href="#" class="waves-effect active"><i class="@module.Module.ICON"></i> <span> @module.Module.DESCRIPTION </span> </a>
+                    <ul class="list-unstyled">
+                        @foreach (var subModule in module.SubModules)
+                        {
+                            <li><a href="/@subModule.URL">@subModule.DESCRIPTION</a></li>
+                        }
+                    </ul>
+                </li>
+            }
+        
+
+
+    </ul>
+</div>
