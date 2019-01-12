@@ -291,5 +291,26 @@ namespace PayPadAdministrator.Controllers
             return View(customerType);
         }
 
+        public async Task<ActionResult> AssingUserToIffice(int id)
+        {
+            OfficeUserViewModel officeUserViewModel = new OfficeUserViewModel();
+            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            List<Office> offices = new List<Office>();
+            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetOfficeForId"), id));
+            if (response.CodeError == 200)
+            {
+                officeUserViewModel.Office = JsonConvert.DeserializeObject<Office>(response.Data.ToString());
+            }
+
+            //officeUserViewModel.Office = offices.Where(o => o.OFFICE_ID == id).FirstOrDefault();
+
+            var responseUsers = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("ValidateOfficeUsers"), id));
+            if (responseUsers.CodeError == 200)
+            {
+                officeUserViewModel.UserViewModels = JsonConvert.DeserializeObject<List<UserViewModel>>(responseUsers.Data.ToString());
+            }
+
+            return View(officeUserViewModel);
+        }
     }
 }

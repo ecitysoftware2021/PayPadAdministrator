@@ -16,7 +16,7 @@ namespace PayPadAdministrator.Controllers
         static ApiService apiService = new ApiService();
 
         public async Task<ActionResult> Index()
-        {            
+        {
             return View();
         }
 
@@ -56,6 +56,18 @@ namespace PayPadAdministrator.Controllers
             return RedirectToAction("Currencies");
         }
 
+        public async Task<ActionResult> ShowDenominationForCurrency(int id)
+        {
+            CurrencyDenominationViewModel currency = new CurrencyDenominationViewModel();
+            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetDenominationsForCurrency"), id));
+            if (response.CodeError == 200)
+            {
+                currency = JsonConvert.DeserializeObject<CurrencyDenominationViewModel>(response.Data.ToString());
+            }
+
+            return View(currency);
+        }
+
         public ActionResult CreateDenominationForCurrency(int id)
         {
             var Currency = new Currency_Denomination
@@ -90,7 +102,7 @@ namespace PayPadAdministrator.Controllers
                 return View(currency_Denomination);
             }
 
-            return RedirectToAction("Currencies");
+            return RedirectToAction("ShowDenominationForCurrency", new { id = currency_Denomination.CURRENCY_ID });
         }
 
     }

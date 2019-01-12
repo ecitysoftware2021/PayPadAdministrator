@@ -22,10 +22,11 @@
       <mvcSiteMapNode title="Detalles" controller="PayPads" action="Details" preservedRouteParameters="id" />
       <mvcSiteMapNode title="Editar" controller="PayPads" action="Edit" preservedRouteParameters="id"  />
     </mvcSiteMapNode>
-    <mvcSiteMapNode title="Denominaciones" action="Index" controller="Denominations">
-      <mvcSiteMapNode title="Crear Denominaciones" controller="Denominations" action="Create" />
-      <mvcSiteMapNode title="Detalles" controller="Denominations" action="Details" preservedRouteParameters="id" />
-      <mvcSiteMapNode title="Editar" controller="Denominations" action="Edit" preservedRouteParameters="id"  />
+    <mvcSiteMapNode title="Monedas" action="Currencies" controller="Denominations">
+      <mvcSiteMapNode title="Crear Moneda" controller="Denominations" action="CreateCurrency" />
+      <mvcSiteMapNode title="Denominaciones" controller="Denominations" action="ShowDenominationForCurrency" preservedRouteParameters="id">
+        <mvcSiteMapNode title="Crear denominación" controller="Denominations" action="CreateDenominationForCurrency" preservedRouteParameters="id"  />
+      </mvcSiteMapNode>      
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Roles" action="Index" controller="Roles" >
       <mvcSiteMapNode title="Crear Roles" action="CreateRole" controller="Roles" />

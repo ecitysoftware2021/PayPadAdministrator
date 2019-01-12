@@ -1,0 +1,98 @@
+﻿@model List<PayPadAdministrator.Models.ModuleViewModel>
+
+@{
+    ViewBag.Title = "Asignar modulo para cliente";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="m-t-0 header-title"><b>Mapa del Dashboard</b></h4>
+            <p class="text-muted m-b-20 font-13">
+                Decripción del sitio
+            </p>
+            <p>
+                <a href="@Url.Action("Index","Customers")" class="btn btn-default waves-effect waves-light">
+                    <i class="fa fa-mail-reply m-r-5"></i> <span>Átras</span>
+                </a>
+            </p>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="sitemap-wrapper">
+                        @foreach (var module in Model)
+                        {
+                            <h5>
+                                <a href="#">
+                                    <i class="@module.Module.ICON"></i>
+                                    @module.Module.DESCRIPTION
+                                </a>  --------------
+                                @if (module.Module.STATE)
+                                {
+                                    <a href="javascript:void(0);"
+                                       onclick="UpdateCustomerModule(@module.Module.MODULE_ID,@ViewBag.CustomerId,false)"
+                                       data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Eliminar">
+                                        <i class="fa fa-check-circle"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0);"
+                                       onclick="UpdateCustomerModule(@module.Module.MODULE_ID,@ViewBag.CustomerId,true)"
+                                       data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Agregar">
+                                        <i class="fa fa-circle-o"></i>
+                                    </a>
+                                }
+                            </h5>
+
+                            <ul class="list-unstyled">
+                                @foreach (var subModules in module.SubModules)
+                                {
+                                    <li><a href="/@subModules.URL"><i class="@subModules.ICON"></i>@subModules.DESCRIPTION</a></li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/PopUp")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+        function UpdateCustomerModule(moduleId, customerId, state) {
+            var data = {
+                moduleId: moduleId,
+                customerId: customerId,
+                state: state
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateModuleToCustomer", "Generic")',
+                dataType: 'json',
+                data: data,
+                success: function (data) {
+                    if (data.CodeError == 200) {
+                        if (state) {
+                            MessageSuccess("¡Buen Trabajo!", "Se asignó el modulo correctamente");
+                        } else {
+                            MessageSuccess("¡Buen Trabajo!", "Se eliminó el modulo correctamente");
+                        }
+
+                    } else {
+                        ModalMessageError("Error", data.Message);
+                    }
+                },
+                error: function (ex) {
+                    ModalMessageError("Error", 'Failed ' + ex.responseText);
+                }
+            });
+        }
+
+    </script>
+}

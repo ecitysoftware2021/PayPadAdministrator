@@ -1,0 +1,89 @@
+﻿@model PayPadAdministrator.Models.OfficeUserViewModel
+@{
+    ViewBag.Title = Model.Office.NAME;
+}
+<p>
+    <a href="@Url.Action("ShowOfficeForCustomer","Customers",new { id=Model.Office.CUSTOMER_ID})" class="btn btn-default waves-effect waves-light">
+        <i class="fa fa-mail-reply m-r-5"></i> <span>Átras</span>
+    </a>
+</p>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card-box m-b-10">
+            <div class="table-box opport-box">
+                <div class="table-detail">
+                    <div class="member-info">
+                        <h4 class="m-t-0"><b>@Model.Office.NAME </b></h4>
+                        <p class="text-dark m-b-5"><b>Dirección: </b> <span class="text-muted">@Model.Office.ADDRESS</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var item in Model.UserViewModels)
+    {
+        <div class="col-sm-6 col-lg-4">
+            <div class="card-box">
+                <div class="contact-card">
+                    <a class="pull-left" href="#">
+                        @if (item.IMAGE != null)
+                        {
+                            var base64 = Convert.ToBase64String(item.IMAGE);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            <img class="img-circle" src="@imgSrc" alt="">
+                        }
+
+                    </a>
+                    <div class="member-info">
+                        <h4 class="m-t-0 m-b-5 header-title"><b>@Html.DisplayFor(modelItem => item.USERNAME)</b></h4>
+                        <p class="text-muted">@Html.DisplayFor(modelItem => item.EMAIL)</p>
+                        <p class="text-dark"><i class="md md-account-circle m-r-10"></i><small>@Html.DisplayFor(modelItem => item.NAME)</small></p>
+                        <p class="text-dark"><i class="md md-business m-r-10"></i><small>@Html.DisplayFor(modelItem => item.ROL_NAME)</small></p>
+                    </div>
+                    @if (item.STATE)
+                    {
+                        <a href="javascript:void(0)" onclick="AssingUserToOffice(@Model.Office.OFFICE_ID,@item.USER_ID,false)" class="btn btn-sm btn-danger waves-effect waves-light">Eliminar</a>
+                    }
+                    else
+                    {
+                        <a href="javascript:void(0)" onclick="AssingUserToOffice(@Model.Office.OFFICE_ID,@item.USER_ID,true)" class="btn btn-sm btn-primary waves-effect waves-light">Añadir</a>
+                    }
+
+                </div>
+            </div>
+
+        </div> <!-- end col -->
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/PopUp")
+    <script type="text/javascript">
+    function AssingUserToOffice(officeId, userId, state) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AssingUserToOffice", "Generic")',
+                dataType: 'json',
+                data: { officeId: officeId, userId: userId,state:state},
+                success: function (data) {
+                    if (data.CodeError == 200){
+                        if(state){
+                        MessageSuccess("¡Buen trabajo!","Se añadio correctamente");
+                        }else{
+                        MessageSuccess("¡Buen trabajo!","Se eliminó correctamente");
+                        }
+                    }
+                    else{
+                        ModalMessageError("Error",data.Message);
+                    }
+                },
+                error: function (ex) {
+                    ModalMessageError("Error", 'Failed ' + ex.statusText);
+                }
+            });
+    }
+    </script>
+}

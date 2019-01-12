@@ -63,9 +63,14 @@
                                 }
                             </td>
                             <td>
-                                <a href="@Url.Action("ShowOfficeForCustomer",new { id=item.CUSTOMER_ID })"><i class="fa fa-industry fa-2x"></i></a>
-
-                                <a href="@Url.Action("ShowOfficeForCustomer",new { id=item.CUSTOMER_ID })"><i class="fa fa-trash-o fa-2x"></i></a>                                
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <a title="Mostrar oficinas" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("ShowOfficeForCustomer",new { id=item.CUSTOMER_ID })"><i class="fa fa-industry fa-lg"></i></a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a title="Asignar Menú" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingModuleToCustomer","Modules",new { id=item.CUSTOMER_ID })"><i class="fa fa fa-object-group fa-lg"></i></a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }

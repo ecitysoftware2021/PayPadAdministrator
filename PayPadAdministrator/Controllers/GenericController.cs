@@ -67,6 +67,32 @@ namespace PayPadAdministrator.Controllers
             return Json(response);
         }
 
+        public async Task<JsonResult> UpdateModuleToCustomer(int moduleId, int customerId, bool state)
+        {
+            var moduleCustomer = new ModuleCustomer
+            {
+                MODULE_ID = moduleId,
+                CUSTOMER_ID = customerId,
+                STATE = state
+            };
+
+            var response = await apiService.InsertPost(moduleCustomer, "AssingModuleToCustomer");
+            return Json(response);
+        }
+
+        public async Task<JsonResult> AssingUserToOffice(int officeId, int userId, bool state)
+        {
+            var request = new UserOffice
+            {
+                OFFICE_ID = officeId,
+                STATE = state,
+                USER_ID = userId
+            };
+
+            var response = await apiService.InsertPost(request, "AssingUserToOffice");
+            return Json(response);
+        }
+
         public async Task<JsonResult> AssingTransactToPayPad(int transactId, int payPadId, bool state)
         {
             var payPadTransaction = new PayPadTransactionType

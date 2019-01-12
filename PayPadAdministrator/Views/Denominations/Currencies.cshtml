@@ -23,7 +23,7 @@
                         <th data-field="id" data-switchable="false">ID</th>
                         <th data-field="name" data-switchable="false">Descripción</th>
                         <th data-field="nit">Simbolo</th>
-                        <th data-field="nit">Estado</th>
+                        <th data-field="estado">Estado</th>
                         <th data-field="administrator" class="text-center">Adminitración</th>
                     </tr>
                 </thead>
@@ -44,9 +44,11 @@
                                 @Html.DisplayFor(modelItem => item.STATE)
                             </td>
                             <td>
-                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <a title="Mostrar Denominaciones" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("ShowDenominationForCurrency",new { id=item.CURRENCY_ID })"><i class="fa fa-money fa-lg"></i></a>
+                                    </div>                                    
+                                </div>
                             </td>
                         </tr>
                     }

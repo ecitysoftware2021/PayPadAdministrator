@@ -108,5 +108,18 @@ namespace PayPadAdministrator.Controllers
             ViewBag.UserId = userId;
             return View(moduleViewModels);
         }
+
+        public async Task<ActionResult> AssingModuleToCustomer(int id)
+        {
+            List<ModuleViewModel> moduleViewModels = new List<ModuleViewModel>();
+            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetValidateModulesAssingForCustomer"), id));
+            if (response.CodeError == 200)
+            {
+                moduleViewModels = JsonConvert.DeserializeObject<List<ModuleViewModel>>(response.Data.ToString());
+            }
+
+            ViewBag.CustomerId = id;
+            return View(moduleViewModels);
+        }
     }
 }

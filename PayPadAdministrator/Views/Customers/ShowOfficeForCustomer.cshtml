@@ -57,9 +57,11 @@
                                 }
                             </td>
                             <td>
-                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <a title="Mostrar Usuarios" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingUserToIffice",new { id=item.OFFICE_ID })"><i class="fa fa-user fa-lg"></i></a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }

@@ -255,6 +255,7 @@
     <Compile Include="Models\GetRequest.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Module.cs" />
+    <Compile Include="Models\ModuleCustomer.cs" />
     <Compile Include="Models\Office.cs" />
     <Compile Include="Models\PayPad.cs" />
     <Compile Include="Models\PayPadTransactionType.cs" />
@@ -265,6 +266,7 @@
     <Compile Include="Models\SubModule.cs" />
     <Compile Include="Models\Transaction_Type.cs" />
     <Compile Include="Models\UserModule.cs" />
+    <Compile Include="Models\UserOffice.cs" />
     <Compile Include="Models\UserSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiService.cs" />
@@ -2405,6 +2407,10 @@
     <Content Include="Views\Account\GetModule.cshtml" />
     <Content Include="Views\Users\CreateUserResponsible.cshtml" />
     <Content Include="Views\Account\GetPhotoProfile.cshtml" />
+    <Content Include="Views\Modules\AssingModuleToCustomer.cshtml" />
+    <Content Include="Views\Customers\AssingUserToIffice.cshtml" />
+    <Content Include="Views\Denominations\ShowDenominationForCurrency.cshtml" />
+    <Content Include="Views\Account\GetDataLogoCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

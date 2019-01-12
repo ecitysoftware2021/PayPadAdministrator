@@ -11,6 +11,20 @@ namespace PayPadAdministrator.Models
     {
     }
 
+    public class CurrencyDenominationViewModel
+    {
+        public Currency Currency { get; set; }
+
+        public List<Currency_Denomination> Denominations { get; set; }
+    }
+
+    public class OfficeUserViewModel
+    {
+        public Office Office { get; set; }
+
+        public List<UserViewModel> UserViewModels { get; set; }
+    }
+
     public class ModuleViewModel
     {
         public Module Module { get; set; }

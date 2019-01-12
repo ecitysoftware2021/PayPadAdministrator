@@ -179,5 +179,17 @@ namespace PayPadAdministrator.Controllers
             
             return PartialView(userCurrent);
         }
+
+        [ChildActionOnly]
+        public ActionResult GetDataLogoCustomer()
+        {
+            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            if (userCurrent == null)
+            {
+                LogOut();
+            }
+
+            return PartialView(userCurrent);
+        }
     }
 }
