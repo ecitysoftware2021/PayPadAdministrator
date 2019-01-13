@@ -2416,6 +2416,7 @@
     <Content Include="Views\Denominations\ShowDenominationForCurrency.cshtml" />
     <Content Include="Views\Account\GetDataLogoCustomer.cshtml" />
     <Content Include="Views\Reports\GetTransactionForTransact.cshtml" />
+    <Content Include="Views\Reports\GetTransactionCM.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

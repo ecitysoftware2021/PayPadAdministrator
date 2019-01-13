@@ -43,5 +43,26 @@ namespace PayPadAdministrator.Controllers
 
             return View();
         }
+
+        public async Task<ActionResult> GetTransactionCM()
+        {
+            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            List<PayPad> payPads = new List<PayPad>();
+            if (User.IsInRole("SuperAdmin"))
+            {
+                payPads = await ComboHelper.GetAllsPaypads();
+            }
+            else if (User.IsInRole("Admin"))
+            {
+                payPads = await ComboHelper.GetAllsPaypadsForCustomer(userCurrent.CUSTOMER_ID);
+            }
+            else
+            {
+                payPads = await ComboHelper.GetAllsPaypadsForCustomer(userCurrent.USER_ID);
+            }
+
+            ViewBag.PayPadId = new SelectList(payPads, nameof(PayPad.PAYPAD_ID), nameof(PayPad.NAME), 0);            
+            return View();
+        }
     }
 }

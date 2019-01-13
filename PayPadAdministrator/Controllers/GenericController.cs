@@ -135,5 +135,13 @@ namespace PayPadAdministrator.Controllers
             var response = await apiService.InsertPost(model, "GetTransactionForTransact");
             return Json(response);
         }
+
+        public async Task<JsonResult> GetTransactionCM(RequestReport model)
+        {
+            model.StartDate = DateTime.ParseExact(model.DateStartString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            model.FinishDate = DateTime.ParseExact(model.DateFinishString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            var response = await apiService.InsertPost(model, "GetTransactionCM");
+            return Json(response);
+        }
     }
 }
