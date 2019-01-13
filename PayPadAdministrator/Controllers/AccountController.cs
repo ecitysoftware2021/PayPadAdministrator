@@ -36,6 +36,8 @@ namespace PayPadAdministrator.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            //TODO: para produccion
+            #region Metodo api
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -80,6 +82,13 @@ namespace PayPadAdministrator.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            #endregion
+
+            //TODO: para desarrollo quemado
+            //usuario: branmous
+            //contraseña: 123
+
+            #region Metodo inicial
             //if (Membership.ValidateUser(model.UserName, model.Password))
             //{
             //    var user = (CustomMembershipUser)Membership.GetUser(model.UserName, false);
@@ -119,6 +128,7 @@ namespace PayPadAdministrator.Controllers
             //ModelState.AddModelError(string.Empty, "Something Wrong : Username or Password invalid ^_^ ");
             //return View(model);
 
+            #endregion
         }
 
         public ActionResult LogOut()
