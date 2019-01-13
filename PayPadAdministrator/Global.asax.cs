@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PayPadAdministrator.Classes;
 using PayPadAdministrator.CustomAuthentication;
 using PayPadAdministrator.Models;
 using System;
@@ -24,7 +25,7 @@ namespace PayPadAdministrator
 
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {
-            HttpCookie authCookie = Request.Cookies["Cookie1"];
+            HttpCookie authCookie = Request.Cookies[Utilities.GetNameCookie()];
             if (authCookie != null)
             {
                 FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);

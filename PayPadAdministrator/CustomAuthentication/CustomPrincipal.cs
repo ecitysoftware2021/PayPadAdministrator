@@ -29,7 +29,8 @@ namespace PayPadAdministrator.CustomAuthentication
 
         public bool IsInRole(string role)
         {
-            if (Roles.Any(r => role.Contains(r)))
+            var rol = Roles.Where(r => r.ToUpper().Equals(role.ToUpper())).FirstOrDefault();
+            if (rol != null)
             {
                 return true;
             }

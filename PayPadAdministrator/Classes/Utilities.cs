@@ -62,5 +62,10 @@ namespace PayPadAdministrator.Classes
             }
         }
 
+        public static string GetNameCookie()
+        {
+            return string.Concat("ECity", DateTime.Now.ToString("yyyyMMdd"));
+        }
+
     }
 }

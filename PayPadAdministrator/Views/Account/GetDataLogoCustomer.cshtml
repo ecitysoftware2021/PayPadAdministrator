@@ -1,9 +1,17 @@
 ﻿@model PayPadAdministrator.Models.UserViewModel
 
 @{
+    <img src="~/Content/Images/login-logo.png" width="50" class="icon-magnet icon-c-logo">
+    if (Model != null)
+    {
 
-    <img src="~/Content/Images/login-logo.png" width="50" class="icon-magnet icon-c-logo">    
-    <span>@Model.CUSTOMER_NAME</span>        
+        <span>@Model.USERNAME</span>
+    }
+    else
+    {
+        <span>E-City Software</span>
+    }
+
 
 }
 

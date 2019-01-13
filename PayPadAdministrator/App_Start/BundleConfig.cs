@@ -37,6 +37,7 @@ namespace PayPadAdministrator
                   "~/Scripts/pages/legacy.min.js",
                   "~/Scripts/plugins/sweetalert/dist/sweetalert.min.js",
                   "~/Scripts/ModalGeneric.js",
+                  "~/Scripts/jquery.table2excel.js",
                   "~/Scripts/PayPad.js"
                   ));
 
@@ -64,6 +65,23 @@ namespace PayPadAdministrator
                      "~/Scripts/plugins/sweetalert/dist/sweetalert.css"
                       ));
 
+            bundles.Add(new StyleBundle("~/Content/DatePicker").Include(
+                "~/Scripts/plugins/timepicker/bootstrap-timepicker.min.css",
+                "~/Scripts/plugins/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css",
+                "~/Scripts/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
+                "~/Scripts/plugins/clockpicker/dist/jquery-clockpicker.min.css",
+                "~/Scripts/plugins/bootstrap-daterangepicker/daterangepicker.css"
+                      ));
+
+            bundles.Add(new ScriptBundle("~/bundles/DatePicker").Include(
+                   "~/Scripts/plugins/moment/moment.js",
+                  "~/Scripts/plugins/timepicker/bootstrap-timepicker.min.js",
+                  "~/Scripts/plugins/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js",
+                  "~/Scripts/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
+                  "~/Scripts/plugins/clockpicker/dist/jquery-clockpicker.min.js",
+                  "~/Scripts/plugins/bootstrap-daterangepicker/daterangepicker.js",
+                  "~/Scripts/DatePickersFuntions.js"
+                  ));
 
             bundles.Add(new StyleBundle("~/Content/Login").Include(
                      "~/Content/Css/bootstrap.css",

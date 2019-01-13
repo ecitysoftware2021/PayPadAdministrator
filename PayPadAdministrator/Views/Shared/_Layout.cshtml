@@ -7,6 +7,7 @@
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
     @if (User.Identity.IsAuthenticated)
     {
+        @Styles.Render("~/Content/DatePicker")        
         @Styles.Render("~/Content/css")        
     }
     else
@@ -26,8 +27,8 @@
                 <!-- LOGO -->
                 <div class="topbar-left">
                     <div class="text-center">
-                        <a href="@Url.Action("Index","Home")" class="logo">  
-                            @{ Html.RenderAction("GetDataLogoCustomer", "Account");}                            
+                        <a href="@Url.Action("Index","Home")" class="logo">
+                            @{ Html.RenderAction("GetDataLogoCustomer", "Account");}
                         </a>
                     </div>
                 </div>
@@ -151,7 +152,7 @@
                                 </li>
                                 <li class="dropdown">
                                     <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true">
-                                    @{ Html.RenderAction("GetPhotoProfile", "Account");}
+                                        @{ Html.RenderAction("GetPhotoProfile", "Account");}
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
@@ -172,7 +173,7 @@
             <!-- Top Bar End -->
 
             <div class="left side-menu">
-                
+
                 <div class="sidebar-inner slimscrollleft">
                     <!--- Divider -->
 
@@ -211,9 +212,10 @@
 
 
     @if (User.Identity.IsAuthenticated)
-    {        
+    {
         @Scripts.Render("~/bundles/bootstrap")
-
+        @Scripts.Render("~/bundles/PopUp")
+        @Scripts.Render("~/bundles/DatePicker")
     }
     else
     {

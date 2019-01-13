@@ -38,6 +38,9 @@
       <mvcSiteMapNode title="Crear Dispositivo" action="CreateDevice" controller="Devices" />
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Usuarios" action="Index" controller="Users" />
+    <mvcSiteMapNode title="Usuarios Responsables" action="Responsible" controller="Users">
+      <mvcSiteMapNode title="Crear Usuario" action="CreateUserResponsible" controller="Users" />
+    </mvcSiteMapNode>
     <mvcSiteMapNode title="Super Administradores" action="SuperAdministrators" controller="Users" />
     <mvcSiteMapNode title="Administradores" action="Administrators" controller="Users" />
     <mvcSiteMapNode title="Módulos" action="Index" controller="Modules" />

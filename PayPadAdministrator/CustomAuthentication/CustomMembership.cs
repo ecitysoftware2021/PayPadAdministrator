@@ -87,25 +87,47 @@ namespace PayPadAdministrator.CustomAuthentication
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
 
-            var user = apiService.ValidateUser(username);
+            //var user = apiService.ValidateUser(username);
+            //var userSession = new UserSession
+            //{
+            //    CUSTOMER_ID = user.CUSTOMER_ID,
+            //    EMAIL = user.EMAIL,
+            //    IDENTIFICATION = user.IDENTIFICATION,
+            //    IMAGE = user.IMAGE,
+            //    NAME = user.NAME,
+            //    PASSWORD = user.PASSWORD,
+            //    PHONE = user.PHONE,
+            //    STATE = user.STATE,
+            //    USERNAME = user.USERNAME,
+            //    USER_ID = user.USER_ID,
+            //    Roles = new List<Role>()
+            //        {
+            //            new Role
+            //            {
+            //                DESCRIPTION = user.ROL_NAME,
+            //                ROLE_ID = user.ROLE_ID
+            //            }
+            //        },
+
+            //};
+
             var userSession = new UserSession
             {
-                CUSTOMER_ID = user.CUSTOMER_ID,
-                EMAIL = user.EMAIL,
-                IDENTIFICATION = user.IDENTIFICATION,
-                IMAGE = user.IMAGE,
-                NAME = user.NAME,
-                PASSWORD = user.PASSWORD,
-                PHONE = user.PHONE,
-                STATE = user.STATE,
-                USERNAME = user.USERNAME,
-                USER_ID = user.USER_ID,
+                CUSTOMER_ID = 1,
+                EMAIL = "brandon-377@hotmail.com",
+                IDENTIFICATION = "1036660391",
+                NAME = username,
+                PASSWORD = "123",
+                PHONE = "1234",
+                STATE = true,
+                USERNAME = username,
+                USER_ID = 1,
                 Roles = new List<Role>()
                     {
                         new Role
                         {
-                            DESCRIPTION = user.ROL_NAME,
-                            ROLE_ID = user.ROLE_ID
+                            DESCRIPTION = "SuperAdmin",
+                            ROLE_ID = 1
                         }
                     },
 

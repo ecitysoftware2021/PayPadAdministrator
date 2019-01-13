@@ -25,7 +25,7 @@ namespace PayPadAdministrator.Models
         public string L_NAME { get; set; }
 
         [Display(Name = "Nit")]
-        [StringLength(30, ErrorMessage =
+        [StringLength(int.MaxValue, ErrorMessage =
             "El campo {0} puede contener un máximo de {1} y un mínimo de {2} caracteres",
             MinimumLength = 3)]
         [Required(ErrorMessage = "Debes ingresar una {0}")]
@@ -60,7 +60,7 @@ namespace PayPadAdministrator.Models
             "El campo {0} puede contener un máximo de {1} y un mínimo de {2} caracteres",
             MinimumLength = 3)]
         [Required(ErrorMessage = "Debes ingresar una {0}")]
-        public decimal PHONE { get; set; }
+        public string PHONE { get; set; }
 
         [Display(Name = "Estado")]
         public bool STATE { get; set; }

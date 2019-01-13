@@ -99,14 +99,46 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> AssingModuleToUser(int userId)
         {
             List<ModuleViewModel> moduleViewModels = new List<ModuleViewModel>();
+            if (User.IsInRole("SuperAdmin"))
+            {
+                moduleViewModels = await ModuleAllUsers(userId);
+            }
+            else
+            {
+                var usercurrent = apiService.ValidateUser(User.Identity.Name);
+                moduleViewModels = await ModuleUserResponsible(userId, usercurrent.CUSTOMER_ID);
+            }
+
+            ViewBag.UserId = userId;
+            return View(moduleViewModels);
+        }
+
+        private async Task<List<ModuleViewModel>> ModuleUserResponsible(int userId, int customerId)
+        {
+            List<ModuleViewModel> moduleViewModels = new List<ModuleViewModel>();
+            var response = await apiService.GetDataV2(
+                string.Concat(
+                    Utilities.GetConfiguration("GetValidateModulesAssingForUserResponsible"),
+                    "?userId=", userId,
+                    "&customerId=", customerId));
+            if (response.CodeError == 200)
+            {
+                moduleViewModels = JsonConvert.DeserializeObject<List<ModuleViewModel>>(response.Data.ToString());
+            }
+
+            return moduleViewModels;
+        }
+
+        private async Task<List<ModuleViewModel>> ModuleAllUsers(int userId)
+        {
+            List<ModuleViewModel> moduleViewModels = new List<ModuleViewModel>();
             var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetValidateModulesAssingForUser"), userId));
             if (response.CodeError == 200)
             {
                 moduleViewModels = JsonConvert.DeserializeObject<List<ModuleViewModel>>(response.Data.ToString());
             }
 
-            ViewBag.UserId = userId;
-            return View(moduleViewModels);
+            return moduleViewModels;
         }
 
         public async Task<ActionResult> AssingModuleToCustomer(int id)

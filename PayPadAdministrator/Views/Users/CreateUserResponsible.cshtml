@@ -34,8 +34,6 @@
                                         @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.USERNAME, htmlAttributes: new { @class = "col-sm-3 control-label" })
                                     <div class="col-sm-9">
@@ -43,6 +41,9 @@
                                         @Html.ValidationMessageFor(model => model.USERNAME, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.EMAIL, htmlAttributes: new { @class = "col-sm-3 control-label" })
                                     <div class="col-sm-9">
@@ -82,7 +83,9 @@
                                 <div class="form-group m-b-0">
                                     <div class="col-sm-offset-3 col-sm-9">
                                         <button type="submit" class="btn btn-info waves-effect waves-light">Crear</button>
-                                        @Html.ActionLink("Back to List", "Index")
+                                        <a href="@Url.Action("Responsible")" class="btn btn-default waves-effect waves-light">
+                                            <i class="fa fa-mail-reply m-r-5"></i> <span>Átras</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

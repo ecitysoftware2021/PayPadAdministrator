@@ -1,0 +1,206 @@
+﻿@model PayPadAdministrator.Models.RequestReport
+@{
+    ViewBag.Title = "Transacciones por Trámite";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="row">
+                <div class="form-horizontal">
+                    <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.PayPadId, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                                <div class="col-sm-9">
+                                    @Html.DropDownList("PayPadId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PayPadId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">Rango de fechas</label>
+                                <div class="col-sm-8">
+                                    <div class="input-daterange input-group" id="date-range">
+                                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @*<input type="text" class="form-control" name="start" />*@
+                                        <span class="input-group-addon bg-custom b-0 text-white">A</span>
+                                        @Html.EditorFor(model => model.FinishDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @*<input type="text" class="form-control" name="end" />*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.TransactId, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                                <div class="col-sm-9">
+                                    @Html.DropDownList("TransactId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.TransactId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group m-b-0">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="button" onclick="GenerateReport()" class="btn btn-info waves-effect waves-light">Generar</button>
+                                    <button type="button" id="btnDownload" class="btn btn-info waves-effect waves-light">Descargar</button>
+                                    <a href="javascript:history.back();" class="btn btn-default waves-effect waves-light">
+                                        <i class="fa fa-mail-reply m-r-5"></i> <span>Átras</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="transactionsDiv">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="row">
+                <table data-toggle="table"
+                       data-show-columns="false"
+                       data-page-list="[5, 10, 20]"
+                       data-page-size="5"
+                       data-pagination="true" 
+                       data-show-pagination-switch="true" 
+                       id="tblTransactions"
+                       class="table-bordered ">
+                    <thead>
+                        <tr>
+                            <th data-field="TransactionId" data-switchable="false">TransactionId</th>
+                            <th data-field="PayPad" data-switchable="false">Pay+</th>
+                            <th data-field="tramite">Trámites</th>
+                            <th data-field="dateStart">Fecha de inicio</th>
+                            <th data-field="DateFinish">Fecha final</th>
+                            <th data-field="total">Total</th>
+                            <th data-field="totalIngresado">Total ingresado</th>
+                            <th data-field="total devuelto">Total devuelto</th>
+                            <th data-field="Estado">Estado</th>
+                            <th data-field="description" class="text-center">Descripcion</th>                            
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        window.onload = function(){
+            $("#transactionsDiv").css("display", "none");
+            $("#btnDownload").attr("disabled", "disabled");
+        }
+
+        $("#btnDownload").on("click", function (e) {
+            e.preventDefault();
+            var name = "Transaccion" + $("#StartDate").val() + "Hasta" + $("#FinishDate").val();
+            name = name.replace(/ /g, "");
+            $("#tblTransactions").table2excel({ filename: name });
+        });
+
+        $("#PayPadId").change(function(){
+            var payPadId = $("#PayPadId").val();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetTransacts", "Generic")',
+                dataType: 'json',
+                data: {payPadId : payPadId},
+                success: function (data) {
+                    if (data.CodeError == 200) {
+                        $.each(data.Data, function (i, data) {
+                            $("#TransactId").append('<option value="'
+                                + data.TRANSACTION_TYPE_ID + '">'
+                                + data.DESCRIPTION + '</option>');
+                        });
+                    } else {
+                        ModalMessageError("Error", data.Message);
+                    }
+                },
+                error: function (ex) {
+                    ModalMessageError("Error", 'Failed ' + ex.responseText);
+                }
+            });
+        });
+
+        function GenerateReport(){
+            if($("#PayPadId").val() == "" || $("#PayPadId").val() =="0"){
+                ModalMessageError("Error", "Debe seleccione un Pay +");
+                return;
+            }
+
+            if($("#TransactId").val() == "" || $("#TransactId").val() =="0"){
+                ModalMessageError("Error", "Debe seleccione un trámite");
+                return;
+            }
+
+            if($("#StartDate").val() == "" || $("#FinishDate").val() == ""){
+                ModalMessageError("Error", "Las fechas deben tener valor");
+                return;
+            }
+
+            var request = {
+                PayPadId:$("#PayPadId").val(),
+                TransactId:$("#TransactId").val(),
+                DateStartString:$("#StartDate").val(),
+                DateFinishString:$("#FinishDate").val(),
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetTransactionForTransact", "Generic")',
+                dataType: 'json',
+                data: request,
+                success: function (data) {        
+                    if (data.CodeError == 200) {
+                        FillTable(data);
+                    } else {
+                        ModalMessageError("Error", data.Message);
+                        $("#transactionsDiv").css("display", "none");
+                        $("#btnDownload").attr("disabled", "disabled");    
+                    }
+                },
+                error: function (ex) {
+                    ModalMessageError("Error", 'Failed ' + ex.responseText);
+                    $("#transactionsDiv").css("display", "none");
+                    $("#btnDownload").attr("disabled", "disabled");                    
+                }
+            });
+        }
+
+        function FillTable(data) {
+            var content = "";
+            $.each(data.Data, function (i, data) {
+                content += "<tr>" +
+                    "<td>" + data.TRANSACTION_ID + "</td>" +
+                    "<td>" + data.PAYPAD_NAME + "</td>" +
+                    "<td>" + data.TRANSACT + "</td>" +
+                    "<td>" + data.DATE_BEGIN + "</td>" +
+                    "<td>" + data.DATE_END + "</td>" +
+                    "<td>" + data.TOTAL_AMOUNT + "</td>" +
+                    "<td>" + data.INCOME_AMOUNT + "</td>" +
+                    "<td>" + data.RETURN_AMOUNT + "</td>" +
+                    "<td>" + data.STATE_TRANSACTION + "</td>" +
+                    "<td>" + data.DESCRIPTION + "</td>" +
+                    "</tr>";
+            });
+
+            $("#btnDownload").removeAttr("disabled");
+            $("#transactionsDiv").css("display", "block");
+            $("#tblTransactions tbody").html(content);
+        }
+    </script>
+}
+
+

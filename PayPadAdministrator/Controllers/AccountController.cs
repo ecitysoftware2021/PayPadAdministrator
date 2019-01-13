@@ -51,12 +51,12 @@ namespace PayPadAdministrator.Controllers
             var user = new CustomMembershipUser(response);
             if (user != null)
             {
-                CustomSerializeModel userModel = new Models.CustomSerializeModel()
+                CustomSerializeModel userModel = new CustomSerializeModel()
                 {
                     UserId = user.UserId,
                     User_Name = user.User_Name,
                     CustomerId = user.CustomerId,
-                    Email = user.Email,                    
+                    Email = user.Email,
                     Name = user.Name,
                     Roles = user.Roles.Select(r => r.DESCRIPTION).ToList()
                 };
@@ -68,7 +68,7 @@ namespace PayPadAdministrator.Controllers
                     );
 
                 string enTicket = FormsAuthentication.Encrypt(authTicket);
-                HttpCookie faCookie = new HttpCookie("Cookie1", enTicket);
+                HttpCookie faCookie = new HttpCookie(Utilities.GetNameCookie(), enTicket);
                 Response.Cookies.Add(faCookie);
             }
 
@@ -91,8 +91,7 @@ namespace PayPadAdministrator.Controllers
             //            User_Name = user.User_Name,
             //            CustomerId = user.CustomerId,
             //            Email = user.Email,
-            //            Image = user.Image,
-            //            Name = user.Name,                        
+            //            Name = user.Name,
             //            Roles = user.Roles.Select(r => r.DESCRIPTION).ToList()
             //        };
 
@@ -124,7 +123,7 @@ namespace PayPadAdministrator.Controllers
 
         public ActionResult LogOut()
         {
-            HttpCookie cookie = new HttpCookie("Cookie1", "");
+            HttpCookie cookie = new HttpCookie(Utilities.GetNameCookie(), "");
             cookie.Expires = DateTime.Now.AddYears(-1);
             Response.Cookies.Add(cookie);
             FormsAuthentication.SignOut();
@@ -151,20 +150,19 @@ namespace PayPadAdministrator.Controllers
         [ChildActionOnly]
         public ActionResult GetModule()
         {
+            List<ModuleViewModel> modules = new List<ModuleViewModel>();
             var userCurrent = apiService.ValidateUser(User.Identity.Name);
             if (userCurrent == null)
             {
-                LogOut();
+                return PartialView(modules);
             }
 
-            List<ModuleViewModel> modules = new List<ModuleViewModel>();
             var response = apiService.GetDataRest(string.Concat(Utilities.GetConfiguration("GetModuleForUser"), userCurrent.USER_ID));
             if (response.CodeError == 200)
             {
                 modules = JsonConvert.DeserializeObject<List<ModuleViewModel>>(response.Data.ToString());
             }
-
-            //TODO:Crear Vista parcial de modulos
+            
             return PartialView(modules);
         }
 
@@ -172,11 +170,6 @@ namespace PayPadAdministrator.Controllers
         public ActionResult GetPhotoProfile()
         {
             var userCurrent = apiService.ValidateUser(User.Identity.Name);
-            if (userCurrent == null)
-            {
-                LogOut();
-            }
-            
             return PartialView(userCurrent);
         }
 
@@ -184,11 +177,6 @@ namespace PayPadAdministrator.Controllers
         public ActionResult GetDataLogoCustomer()
         {
             var userCurrent = apiService.ValidateUser(User.Identity.Name);
-            if (userCurrent == null)
-            {
-                LogOut();
-            }
-
             return PartialView(userCurrent);
         }
     }

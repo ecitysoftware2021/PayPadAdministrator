@@ -4,6 +4,7 @@ using PayPadAdministrator.Models;
 using PayPadAdministrator.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -42,6 +43,27 @@ namespace PayPadAdministrator.Controllers
                 {
                     CodeError = 200,
                     Data = offices
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new Response
+                {
+                    CodeError = 300,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        public async Task<JsonResult> GetTransacts(int payPadId)
+        {
+            try
+            {
+                var transacts = await ComboHelper.GetTransact(payPadId);
+                return Json(new Response
+                {
+                    CodeError = 200,
+                    Data = transacts
                 });
             }
             catch (Exception ex)
@@ -106,5 +128,12 @@ namespace PayPadAdministrator.Controllers
             return Json(response);
         }
         
+        public async Task<JsonResult> GetTransactionForTransact(RequestReport model)
+        {
+            model.StartDate = DateTime.ParseExact(model.DateStartString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            model.FinishDate = DateTime.ParseExact(model.DateFinishString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            var response = await apiService.InsertPost(model, "GetTransactionForTransact");
+            return Json(response);
+        }
     }
 }

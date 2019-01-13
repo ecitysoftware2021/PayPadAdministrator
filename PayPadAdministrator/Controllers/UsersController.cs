@@ -124,7 +124,7 @@ namespace PayPadAdministrator.Controllers
                 ROLE_ID = 3,
                 CUSTOMER_ID = userCurrent.CUSTOMER_ID,
             };
-            
+
             return View(userViewModel);
         }
 
@@ -133,7 +133,7 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> CreateUserResponsible(UserViewModel user)
         {
             if (!ModelState.IsValid)
-            {                
+            {
                 return View(user);
             }
 
@@ -150,7 +150,7 @@ namespace PayPadAdministrator.Controllers
             user.PASSWORD = await GeneratePassword(user.CUSTOMER_ID);
             var response = await apiService.InsertPost(user, "CreateUser");
             if (response.CodeError != 200)
-            {                
+            {
                 ModelState.AddModelError(string.Empty, response.Message);
                 return View(user);
             }
@@ -174,7 +174,7 @@ namespace PayPadAdministrator.Controllers
                 password = string.Concat("Ecity", DateTime.Now.Year, character);
             }
 
-            return password;
+            return password.Replace(" ", string.Empty);
         }
     }
 }

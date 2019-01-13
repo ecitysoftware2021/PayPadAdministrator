@@ -9,9 +9,12 @@
 <link href="~/Scripts/plugins/magnific-popup/dist/magnific-popup.css" rel="stylesheet" />
 
 <p>
-    <a href="@Url.Action("CreatePayPad")" class="btn btn-default waves-effect waves-light">
-        <i class="fa fa-plus-circle m-r-5"></i> <span>Crear Nuevo</span>
-    </a>
+    @if (User.IsInRole("SuperAdmin"))
+    {
+        <a href="@Url.Action("CreatePayPad")" class="btn btn-default waves-effect waves-light">
+            <i class="fa fa-plus-circle m-r-5"></i> <span>Crear Nuevo</span>
+        </a>
+    }
 </p>
 
 <div class="row port">
@@ -28,10 +31,15 @@
                             <img src="@imgSrc" class="thumb-img" alt="work-thumbnail">
                         </a>
                     }
-                    <div class="product-action">
-                        <a href="#" class="btn btn-success btn-sm"><i class="md md-mode-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-sm"><i class="md md-close"></i></a>
-                    </div>
+
+                    @if (User.IsInRole("SuperAdmin"))
+                    {
+                        <div class="product-action">
+                            <a href="#" class="btn btn-success btn-sm"><i class="md md-mode-edit"></i></a>
+                            <a href="#" class="btn btn-danger btn-sm"><i class="md md-close"></i></a>
+                        </div>
+                    }
+
 
                     <div class="detail">
                         <h4 class="m-t-0 m-b-5"><a href="" class="text-dark">@item.NAME</a> </h4>
@@ -40,15 +48,19 @@
                         <h5 class="m-0 text-dark"><i class="md md-business m-r-10"></i><small>@item.OFFICE_ADDRESS</small></h5>
 
                         <ul class="social-links list-inline m-0">
-                            <li>                                
+                            <li>
                                 <a href="@Url.Action("GetTransactsPaypad", new {id = item.PAYPAD_ID })"
-                                   data-placement="top" data-toggle="tooltip" class="tooltips dialog-window"  data-original-title="Ver trámites">
+                                   data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Ver trámites">
                                     <i class="fa fa-book"></i>
                                 </a>
                             </li>
-                            <li>
-                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingTransact", new {id = item.PAYPAD_ID })" data-original-title="Asignar Trámite"><i class="fa fa-server"></i></a>
-                            </li>
+                            @if (User.IsInRole("SuperAdmin"))
+                            {
+                                <li>
+                                    <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingTransact", new {id = item.PAYPAD_ID })" data-original-title="Asignar Trámite"><i class="fa fa-server"></i></a>
+                                </li>
+                            }
+
                             <li>
                                 <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Administrar pantalla"><i class="fa fa-desktop"></i></a>
                             </li>

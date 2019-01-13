@@ -13,7 +13,9 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
             <p class="text-muted font-18">
-                Example of basic columns (Your text goes here).
+                <a href="@Url.Action("CreateCustomer")" class="btn btn-default waves-effect waves-light">
+                    <i class="fa fa-plus-circle m-r-5"></i> <span>Crear Nuevo</span>
+                </a>
             </p>
 
             <table data-toggle="table"
@@ -72,9 +74,14 @@
                                 }
                             </td>
                             <td>
-                                <a href="@Url.Action("SponsorToClients",new { id = item.CUSTOMER_ID})">
-                                    <i class="fa fa-pencil"></i><i class="fa fa-trash-o"></i>
-                                </a>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <a title="Mostrar oficinas" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("SponsorToClients",new { id = item.CUSTOMER_ID})"><i class="fa fa-institution fa-lg"></i></a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a title="Asignar Menú" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingModuleToCustomer","Modules",new { id=item.CUSTOMER_ID })"><i class="fa fa fa-object-group fa-lg"></i></a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }

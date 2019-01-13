@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
+using PayPadAdministrator.CustomAuthentication;
 using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Models;
 using PayPadAdministrator.Services;
@@ -12,6 +13,7 @@ using System.Web.Mvc;
 
 namespace PayPadAdministrator.Controllers
 {
+    [CustomAuthorize]
     public class PayPadsController : Controller
     {
         static ApiService apiService = new ApiService();
@@ -19,13 +21,58 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> Index()
         {
             List<PayPad> payPads = new List<PayPad>();
+
+            if (User.IsInRole("SuperAdmin"))
+            {
+                payPads = await GetAllsPaypads();
+                return View(payPads);
+            }
+
+            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            if (User.IsInRole("Admin"))
+            {
+                payPads = await GetAllsPaypadsForCustomer(userCurrent.CUSTOMER_ID);
+                return View(payPads);
+            }
+
+            payPads = await GetAllsPaypadsForUser(userCurrent.USER_ID);
+            return View(payPads.Where(p => p.CUSTOMER_ID == userCurrent.CUSTOMER_ID).ToList());
+        }
+
+        private async Task<List<PayPad>> GetAllsPaypads()
+        {
+            List<PayPad> payPads = new List<PayPad>();
             var response = await apiService.GetData("GetAllPayPads");
-            if (response.CodeError == 200)
+            if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
                 payPads = JsonConvert.DeserializeObject<List<PayPad>>(response.Data.ToString());
             }
 
-            return View(payPads);
+            return payPads;
+        }
+
+        private async Task<List<PayPad>> GetAllsPaypadsForCustomer(int customerId)
+        {
+            List<PayPad> payPads = new List<PayPad>();
+            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetAllPayPadsForCustomer"), customerId));
+            if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
+            {
+                payPads = JsonConvert.DeserializeObject<List<PayPad>>(response.Data.ToString());
+            }
+
+            return payPads;
+        }
+
+        private async Task<List<PayPad>> GetAllsPaypadsForUser(int userId)
+        {
+            List<PayPad> payPads = new List<PayPad>();
+            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetAllPayPadsForUserOffice"), userId));
+            if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
+            {
+                payPads = JsonConvert.DeserializeObject<List<PayPad>>(response.Data.ToString());
+            }
+
+            return payPads;
         }
 
         public async Task<ActionResult> CreatePayPad()

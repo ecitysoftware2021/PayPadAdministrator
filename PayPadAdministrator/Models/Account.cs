@@ -108,6 +108,9 @@ namespace PayPadAdministrator.Models
         [Display(Name = "Trámites")]
         public string DESCRIPTION { get; set; }
 
+        [Display(Name = "ID")]
+        public int TRANSACTION_TYPE_ID { get; set; }
+
     }
 
     public class LoginViewModel

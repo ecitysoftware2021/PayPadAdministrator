@@ -232,6 +232,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\PayPadsController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TransactController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="Models\PayPad.cs" />
     <Compile Include="Models\PayPadTransactionType.cs" />
     <Compile Include="Models\RequestAuthentication.cs" />
+    <Compile Include="Models\RequestReport.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Sponsor.cs" />
     <Compile Include="Models\SponsorToClientViewModel.cs" />
@@ -362,6 +364,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\DatePickersFuntions.js" />
     <Content Include="Scripts\detect.js" />
     <Content Include="Scripts\fastclick.js" />
     <Content Include="Scripts\genericfunctions.js" />
@@ -375,6 +378,7 @@
     <Content Include="Scripts\jquery.nicescroll.js" />
     <Content Include="Scripts\jquery.scrollTo.min.js" />
     <Content Include="Scripts\jquery.slimscroll.js" />
+    <Content Include="Scripts\jquery.table2excel.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -2411,6 +2415,7 @@
     <Content Include="Views\Customers\AssingUserToIffice.cshtml" />
     <Content Include="Views\Denominations\ShowDenominationForCurrency.cshtml" />
     <Content Include="Views\Account\GetDataLogoCustomer.cshtml" />
+    <Content Include="Views\Reports\GetTransactionForTransact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -19,6 +19,7 @@ namespace PayPadAdministrator.Controllers
     {
         ApiService apiService = new ApiService();
         // GET: Customers
+        [CustomAuthorize(Roles = "SuperAdmin")]
         public async Task<ActionResult> Index()
         {
             List<Customer> clients = new List<Customer>();
@@ -38,6 +39,7 @@ namespace PayPadAdministrator.Controllers
             return View(clients);
         }
 
+        [CustomAuthorize(Roles ="SuperAdmin")]
         public async Task<ActionResult> SponsorCustomers()
         {
             List<Customer> clients = new List<Customer>();
@@ -56,6 +58,7 @@ namespace PayPadAdministrator.Controllers
             return View(clients);
         }
 
+        [CustomAuthorize(Roles = "SuperAdmin")]
         public async Task<ActionResult> SponsorToClients(int id)
         {
             SponsorToClientViewModel sponsor = new SponsorToClientViewModel();
@@ -87,6 +90,7 @@ namespace PayPadAdministrator.Controllers
             return View(sponsorToClientViews);
         }
 
+        [CustomAuthorize(Roles = "SuperAdmin")]
         public async Task<ActionResult> AssingClient(int id)
         {
             SponsorToClientViewModelV2 sponsor = new SponsorToClientViewModelV2();
@@ -140,16 +144,28 @@ namespace PayPadAdministrator.Controllers
             return View(sponsorToClientViews);
         }
 
-        public async Task<ActionResult> ShowOfficeForCustomer(int id)
+        public async Task<ActionResult> ShowOfficeForCustomer(int? id)
         {
+            if (id == null && User.IsInRole("SuperAdmin"))
+            {
+                return RedirectToAction("Index");
+            }
+            else if (id == null)
+            {
+                var usercurrent = apiService.ValidateUser(User.Identity.Name);
+                id = usercurrent.CUSTOMER_ID;
+            }
+
+            
+            
             var customer = new Customer
             {
-                CUSTOMER_ID = id
+                CUSTOMER_ID = id.Value
             };
 
             List<Office> offices = new List<Office>();
             var response = await apiService.InsertPost(customer, "GetOfficesForClient");
-            if (response.CodeError == 200)
+            if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
                 offices = JsonConvert.DeserializeObject<List<Office>>(response.Data.ToString());
             }
@@ -188,6 +204,7 @@ namespace PayPadAdministrator.Controllers
             return RedirectToAction("ShowOfficeForCustomer", new { id = office.CUSTOMER_ID, Message = "Se creó el cliente correctamente" });
         }
 
+        [CustomAuthorize(Roles = "SuperAdmin")]
         public async Task<ActionResult> CreateCustomer()
         {
             ViewBag.TYPE_CUSTOMER_ID = new SelectList(await ComboHelper.GetTypeCustomers(),
@@ -244,6 +261,7 @@ namespace PayPadAdministrator.Controllers
             return RedirectToAction("Index", new { Message = "Se creó el cliente correctamente" });
         }
 
+        [CustomAuthorize(Roles = "SuperAdmin")]
         public async Task<ActionResult> TypeCustomers()
         {
             List<CustomerType> customerTypes = new List<CustomerType>();
@@ -262,6 +280,7 @@ namespace PayPadAdministrator.Controllers
             return View(customerTypes);
         }
 
+        [CustomAuthorize(Roles = "SuperAdmin")]
         public ActionResult CreateTypeCustomers()
         {
             var custom = new CustomerType
