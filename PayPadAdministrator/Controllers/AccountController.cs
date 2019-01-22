@@ -111,7 +111,7 @@ namespace PayPadAdministrator.Controllers
             //            );
 
             //        string enTicket = FormsAuthentication.Encrypt(authTicket);
-            //        HttpCookie faCookie = new HttpCookie("Cookie1", enTicket);
+            //        HttpCookie faCookie = new HttpCookie(Utilities.GetNameCookie(), enTicket);
             //        Response.Cookies.Add(faCookie);
             //    }
 
@@ -127,7 +127,6 @@ namespace PayPadAdministrator.Controllers
 
             //ModelState.AddModelError(string.Empty, "Something Wrong : Username or Password invalid ^_^ ");
             //return View(model);
-
             #endregion
         }
 
@@ -149,12 +148,12 @@ namespace PayPadAdministrator.Controllers
                 Type = 1
             };
             var response = await apiService.InsertPost(request, "GetLocations");
-            if (response.CodeError == 100)
+            if (response.CodeError == 200)
             {
                 locations = JsonConvert.DeserializeObject<List<Location>>(response.Data.ToString());
             }
 
-            return View();
+            return View(locations);
         }
 
         [ChildActionOnly]
