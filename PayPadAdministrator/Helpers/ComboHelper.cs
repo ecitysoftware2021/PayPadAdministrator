@@ -39,6 +39,24 @@ namespace PayPadAdministrator.Helpers
             return customerTypes;
         }
 
+        public static async Task<List<DeviceType>> GetDevicesType()
+        {
+            List<DeviceType> deviceTypes = new List<DeviceType>();
+            var response = await apiService.GetData("GetDeviceTypes");
+            if (response.CodeError == 200)
+            {
+                deviceTypes = JsonConvert.DeserializeObject<List<DeviceType>>(response.Data.ToString());
+            }
+
+            deviceTypes.Add(new DeviceType
+            {
+                APOSTROPHE = "Seleccione un tipo de dispositivo",
+                DEVICE_TYPE_ID = 0
+            });
+
+            return deviceTypes;
+        }
+
         public static async Task<List<PayPad>> GetAllsPaypads()
         {
             List<PayPad> payPads = new List<PayPad>();

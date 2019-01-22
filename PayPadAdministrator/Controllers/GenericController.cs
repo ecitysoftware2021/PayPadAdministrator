@@ -127,7 +127,21 @@ namespace PayPadAdministrator.Controllers
             var response = await apiService.InsertPost(payPadTransaction, "AssingTransactForPaypad");
             return Json(response);
         }
-        
+
+        public async Task<JsonResult> AssingDeviceForPayPad(int payPadId,int deviceId,bool state)
+        {
+            var request = new Device_PayPad
+            {
+                PAYPAD_ID = payPadId,
+                DEVICE_ID = deviceId,
+                STATE = state
+            };
+
+            var response = await apiService.InsertPost(request, "AssingDeviceForPayPad");
+            return Json(response);
+        }
+
+
         public async Task<JsonResult> GetTransactionForTransact(RequestReport model)
         {
             model.StartDate = DateTime.ParseExact(model.DateStartString, "MM/dd/yyyy", CultureInfo.InvariantCulture);

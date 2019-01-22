@@ -30,6 +30,9 @@ namespace PayPadAdministrator.Models
         [Display(Name = "Logo")]
         public byte[] IMAGE { get; set; }
 
+        [Display(Name = "Tipo de dispositivo")]
+        public int DEVICE_TYPE_ID { get; set; }
+
         [NotMapped]
         [Display(Name = "Logo")]
         public HttpPostedFileBase ImagePathFile { get; set; }

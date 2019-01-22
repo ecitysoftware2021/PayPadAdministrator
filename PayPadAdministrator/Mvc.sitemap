@@ -21,6 +21,7 @@
       <mvcSiteMapNode title="Asignar Trámites" controller="PayPads" action="AssingTransact" preservedRouteParameters="id" />
       <mvcSiteMapNode title="Detalles" controller="PayPads" action="Details" preservedRouteParameters="id" />
       <mvcSiteMapNode title="Editar" controller="PayPads" action="Edit" preservedRouteParameters="id"  />
+      <mvcSiteMapNode title="Dispositivos Asignados" controller="PayPads" action="AssingDevice" preservedRouteParameters="id"  />
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Monedas" action="Currencies" controller="Denominations">
       <mvcSiteMapNode title="Crear Moneda" controller="Denominations" action="CreateCurrency" />

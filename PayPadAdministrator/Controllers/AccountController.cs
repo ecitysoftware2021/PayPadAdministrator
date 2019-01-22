@@ -111,7 +111,7 @@ namespace PayPadAdministrator.Controllers
             //            );
 
             //        string enTicket = FormsAuthentication.Encrypt(authTicket);
-            //        HttpCookie faCookie = new HttpCookie("Cookie1", enTicket);
+            //        HttpCookie faCookie = new HttpCookie(Utilities.GetNameCookie(), enTicket);
             //        Response.Cookies.Add(faCookie);
             //    }
 

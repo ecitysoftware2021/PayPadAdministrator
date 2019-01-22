@@ -5,11 +5,11 @@
     <ul>
         <li class="text-muted menu-title">Navegación</li>
         <li><a href="@Url.Action("Index","Home")" class="waves-effect active"><i class="ti-home"></i> <span> Dashboard </span> </a></li>
-        @*@foreach (var module in Model)
+        @foreach (var module in Model)
         {
 
             <li class="has_sub">
-                <a href="#" class="waves-effect active"><i class="@module.Module.ICON"></i> <span> @module.Module.DESCRIPTION </span> </a>
+                <a href="#" class="waves-effect"><i class="@module.Module.ICON"></i> <span> @module.Module.DESCRIPTION </span> </a>
                 <ul class="list-unstyled">
                     @foreach (var subModule in module.SubModules)
                     {
@@ -17,9 +17,9 @@
                     }
                 </ul>
             </li>
-        }*@
+        }
 
-        <li class="has_sub">
+        @*<li class="has_sub">
             <a href="#" class="waves-effect"><i class=" ti-server"></i> <span> Clientes </span> </a>
             <ul class="list-unstyled">
                 <li class="active"><a href="@Url.Action("SponsorCustomers","Customers")">Patrocinadores</a></li>
@@ -71,7 +71,7 @@
                 <li><a href="@Url.Action("Index","Transact")">Trámites</a></li>
                 <li><a href="@Url.Action("Locations","Account")">Regiones</a></li>
             </ul>
-        </li>
+        </li>*@
 
     </ul>
 </div>

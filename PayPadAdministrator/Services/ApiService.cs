@@ -43,7 +43,7 @@ namespace PayPadAdministrator.Services
                 var content = new StringContent(json, Encoding.UTF8, "Application/json");
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlApi);
-                var url = "api/Users/Login";                
+                var url = "ApiAdministrator/api/Users/Login";                
                 var response = await client.PostAsync(url, content);
                 if (!response.IsSuccessStatusCode)
                 {
@@ -104,7 +104,7 @@ namespace PayPadAdministrator.Services
                 var content = new StringContent(json, Encoding.UTF8, "Application/json");
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlApi);
-                var url = "Authentication/AuthenticateRepo";
+                var url = "/ApiAdministrator/api/Authentication/AuthenticateRepo";
 
                 //var authentication = Encoding.ASCII.GetBytes(userAPi + ":" + passwordAPi);
                 //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authentication));
@@ -224,7 +224,7 @@ namespace PayPadAdministrator.Services
             {
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(urlApi);
-                var url = string.Concat("api/Users/GetUserForUserName?userName=", name);
+                var url = string.Concat("ApiAdministrator/api/Users/GetUserForUserName?userName=", name);
                 var response = await client.GetAsync(url);
                 if (!response.IsSuccessStatusCode)
                 {
@@ -251,7 +251,7 @@ namespace PayPadAdministrator.Services
         {
             try
             {
-                var url = string.Concat(urlApi, "api/Users/GetUserForUserName?userName=", name);
+                var url = string.Concat(urlApi, "ApiAdministrator/api/Users/GetUserForUserName?userName=", name);
                 var client = new RestClient(url);
                 var request = new RestRequest(Method.GET);
                 IRestResponse iResponse = client.Execute(request);

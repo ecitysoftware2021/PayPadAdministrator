@@ -68,8 +68,8 @@
     <Reference Include="MvcSiteMapProvider.WebActivator, Version=4.6.26.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MvcSiteMapProvider.MVC5.4.6.26\lib\net45\MvcSiteMapProvider.WebActivator.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RestClient, Version=2.4.1.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestClient.2.4.1.9\lib\net451\RestClient.dll</HintPath>
@@ -253,6 +253,8 @@
     <Compile Include="Models\CustomerType.cs" />
     <Compile Include="Models\CustomSerializeModel.cs" />
     <Compile Include="Models\Device.cs" />
+    <Compile Include="Models\DeviceType.cs" />
+    <Compile Include="Models\Device_PayPad.cs" />
     <Compile Include="Models\GetRequest.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Module.cs" />
@@ -2417,6 +2419,9 @@
     <Content Include="Views\Account\GetDataLogoCustomer.cshtml" />
     <Content Include="Views\Reports\GetTransactionForTransact.cshtml" />
     <Content Include="Views\Reports\GetTransactionCM.cshtml" />
+    <Content Include="Views\Devices\GetDeviceTypes.cshtml" />
+    <Content Include="Views\Devices\CreateDeviceType.cshtml" />
+    <Content Include="Views\PayPads\AssingDevice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

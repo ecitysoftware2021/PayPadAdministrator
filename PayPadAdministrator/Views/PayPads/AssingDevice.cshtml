@@ -1,0 +1,78 @@
+﻿@model IEnumerable<PayPadAdministrator.Models.Device>
+
+@{
+    ViewBag.Title = "Dispositivos Asignados";
+}
+
+<div class="row pricing-plan">
+    <div class="col-md-12">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                var color = item.STATE ? "success" : "danger";
+
+                <div class="col-sm-6 col-md-6 col-lg-3">
+                    <div class="price_card text-center">
+
+                        <div class="pricing-header bg-@color">
+                            @if (item.IMAGE != null)
+                            {
+                                var base64 = Convert.ToBase64String(item.IMAGE);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                <img src="@imgSrc" alt="Image" style="width:100px;height:150px;max-width: 100%; height: auto;" />
+                            }
+                            <span class="name"> @item.NAME</span>
+
+                        </div>
+                        <ul class="price-features">
+                            <li>@item.DESCRIPTION</li>
+                            <li>@item.BRAND</li>
+                            <li>@item.SERIAL</li>
+                        </ul>
+                        @if (User.IsInRole("SuperAdmin"))
+                        {
+                            if (item.STATE)
+                            {
+                                <a href="Javascript:void(0);" onclick="AssingDeviceForPayPad(@ViewBag.PayPadId,@item.DEVICE_ID,false)" class="btn btn-danger waves-effect waves-light w-md">Eliminar</a>
+                            }
+                            else
+                            {
+                                <a href="Javascript:void(0);" onclick="AssingDeviceForPayPad(@ViewBag.PayPadId,@item.DEVICE_ID,true)" class="btn btn-success waves-effect waves-light w-md">Añadir</a>
+                            }
+                        }
+
+                        <a href="Javascript:void(0);" onclick="" class="btn btn-success waves-effect waves-light w-sm">Detalle</a>
+
+                    </div> <!-- end Pricing_card -->
+                </div> <!-- end col -->
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+    function AssingDeviceForPayPad(payPadId, deviceId, state) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AssingDeviceForPayPad", "Generic")',
+                dataType: 'json',
+                data: { payPadId: payPadId, deviceId: deviceId,state:state},
+                success: function (data) {
+                    if (data.CodeError == 200){
+                        if(state){
+                        MessageSuccess("¡Buen trabajo!","Se añadio correctamente");
+                        }else{
+                        MessageSuccess("¡Buen trabajo!","Se eliminó correctamente");
+                        }
+                    }
+                    else{
+                        ModalMessageError("Error",data.Message);
+                    }
+                },
+                error: function (ex) {
+                    ModalMessageError("Error", 'Failed ' + ex.statusText);
+                }
+            });
+    }
+    </script>
+}

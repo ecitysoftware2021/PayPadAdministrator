@@ -174,7 +174,6 @@ namespace PayPadAdministrator.Controllers
             return View(viewModel);
         }
 
-
         public async Task<ActionResult> GetTransactsPaypad(int id)
         {
             List<TransactPaypadViewModel> transacts = new List<TransactPaypadViewModel>();
@@ -198,6 +197,24 @@ namespace PayPadAdministrator.Controllers
 
             ViewBag.PayPadId = id;
             return View(transaction_Types);
+        }
+
+        public async Task<ActionResult> AssingDevice(int id)
+        {
+            List<Device> devices = new List<Device>();
+            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetAllsDevicesForPayPad"), id));
+            if (response.CodeError == 200)
+            {
+                devices = JsonConvert.DeserializeObject<List<Device>>(response.Data.ToString());
+            }
+
+            ViewBag.PayPadId = id;
+            if (User.IsInRole("SuperAdmin"))
+            {
+                return View(devices);
+            }
+
+            return View(devices.Where(d=>d.STATE == true).ToList());
         }
     }
 }

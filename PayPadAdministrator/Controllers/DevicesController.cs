@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
+using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Models;
 using PayPadAdministrator.Services;
 using System;
@@ -27,8 +28,9 @@ namespace PayPadAdministrator.Controllers
             return View(devices);
         }
 
-        public ActionResult CreateDevice()
+        public async Task<ActionResult> CreateDevice()
         {
+            ViewBag.DEVICE_TYPE_ID = new SelectList(await ComboHelper.GetDevicesType(), nameof(DeviceType.DEVICE_TYPE_ID), nameof(DeviceType.APOSTROPHE), 0);
             return View();
         }
 
@@ -38,12 +40,14 @@ namespace PayPadAdministrator.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.DEVICE_TYPE_ID = new SelectList(await ComboHelper.GetDevicesType(), nameof(DeviceType.DEVICE_TYPE_ID), nameof(DeviceType.APOSTROPHE), device.DEVICE_TYPE_ID);
                 return View(device);
             }
 
             if (device.ImagePathFile == null)
             {
                 ModelState.AddModelError(string.Empty, "Debe ingresar una imagen");
+                ViewBag.DEVICE_TYPE_ID = new SelectList(await ComboHelper.GetDevicesType(), nameof(DeviceType.DEVICE_TYPE_ID), nameof(DeviceType.APOSTROPHE), device.DEVICE_TYPE_ID);
                 return View(device);
             }
 
@@ -53,10 +57,48 @@ namespace PayPadAdministrator.Controllers
             if (response.CodeError != 200)
             {
                 ModelState.AddModelError(string.Empty, response.Message);
+                ViewBag.DEVICE_TYPE_ID = new SelectList(await ComboHelper.GetDevicesType(), nameof(DeviceType.DEVICE_TYPE_ID), nameof(DeviceType.APOSTROPHE), device.DEVICE_TYPE_ID);
                 return View(device);
             }
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> GetDeviceTypes()
+        {
+            List<DeviceType> deviceTypes = new List<DeviceType>();
+            var response = await apiService.GetData("GetDeviceTypes");
+            if (response.CodeError == 200)
+            {
+                deviceTypes = JsonConvert.DeserializeObject<List<DeviceType>>(response.Data.ToString());
+            }
+
+            return View(deviceTypes);
+        }
+
+        public ActionResult CreateDeviceType()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateDeviceType(DeviceType device)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(device);
+            }
+
+            device.STATE = true;
+            var response = await apiService.InsertPost(device, "CreateDeviceType");
+            if (response.CodeError != 200)
+            {
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View(device);
+            }
+
+            return RedirectToAction("GetDeviceTypes");
         }
     }
 }
