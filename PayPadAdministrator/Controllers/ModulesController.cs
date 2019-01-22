@@ -17,6 +17,7 @@ namespace PayPadAdministrator.Controllers
     {
         static ApiService apiService = new ApiService();
         // GET: Modules
+
         public async Task<ActionResult> Index()
         {
             List<ModuleViewModel> moduleViewModels = new List<ModuleViewModel>();
