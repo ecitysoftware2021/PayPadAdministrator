@@ -217,5 +217,18 @@ namespace PayPadAdministrator.Controllers
 
             return View(devices.Where(d=>d.STATE == true).ToList());
         }
+
+        public async Task<ActionResult> ViewDetailsDevice()
+        {
+            DeviceDetailViewModel device = new DeviceDetailViewModel();
+            var url = string.Concat(Utilities.GetConfiguration("GetDetailsDevicesForPayPad"), "payPad_Id=",1, "&deviceId=",2);
+            var response = await apiService.GetDataV2(url);
+            if (response.CodeError == 200)
+            {
+                device = JsonConvert.DeserializeObject<DeviceDetailViewModel>(response.Data.ToString());
+            }
+
+            return View(device);
+        }
     }
 }

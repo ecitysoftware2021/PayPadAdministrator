@@ -253,6 +253,7 @@
     <Compile Include="Models\CustomerType.cs" />
     <Compile Include="Models\CustomSerializeModel.cs" />
     <Compile Include="Models\Device.cs" />
+    <Compile Include="Models\DeviceDetailViewModel.cs" />
     <Compile Include="Models\DeviceType.cs" />
     <Compile Include="Models\Device_PayPad.cs" />
     <Compile Include="Models\GetRequest.cs" />
@@ -2423,6 +2424,7 @@
     <Content Include="Views\Devices\GetDeviceTypes.cshtml" />
     <Content Include="Views\Devices\CreateDeviceType.cshtml" />
     <Content Include="Views\PayPads\AssingDevice.cshtml" />
+    <Content Include="Views\PayPads\ViewDetailsDevice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
