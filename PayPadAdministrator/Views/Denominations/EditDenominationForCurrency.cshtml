@@ -1,0 +1,67 @@
+﻿@model PayPadAdministrator.Models.Currency_Denomination
+
+@{
+    ViewBag.Title = "Crear denominación";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
+                    @using (Html.BeginForm("EditDenominationForCurrency", "Denominations", new { }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.CURRENCY_DENOMINATION_ID)
+                        @Html.HiddenFor(model => model.CURRENCY_ID)
+                        @Html.HiddenFor(model => model.STATE)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.VALUE, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.EditorFor(model => model.VALUE, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.VALUE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group label-floating">
+                                @Html.LabelFor(model => model.ImagePathFile, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                                <div class="col-sm-9">
+                                    <div class="file-input-new">
+                                        <div class="input-group">
+                                            <div tabindex="500" class="form-control file-caption">
+                                                <div class="file-caption-name" id="NombreArchivoResponse">
+                                                </div>
+                                            </div>
+                                            <div class="input-group-btn" style="height:auto">
+                                                <div tabindex="500" class="btn btn-info btn-file">
+                                                    <i class="glyphicon glyphicon-folder-open"></i>
+                                                    File Search...
+                                                    @Html.TextBoxFor(modelo => modelo.ImagePathFile, new { type = "file", id = "ImagePathFile" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-b-0">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-info waves-effect waves-light">Guardar</button>
+                                <a href="javascript:history.back();" class="btn btn-default waves-effect waves-light">
+                                    <i class="fa fa-mail-reply m-r-5"></i> <span>Átras</span>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

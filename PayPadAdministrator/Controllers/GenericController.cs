@@ -85,7 +85,7 @@ namespace PayPadAdministrator.Controllers
                 STATE = state
             };
 
-            var response = await apiService.InsertPost(userModule, "AssingModuleToUser");            
+            var response = await apiService.InsertPost(userModule, "AssingModuleToUser");
             return Json(response);
         }
 
@@ -128,12 +128,18 @@ namespace PayPadAdministrator.Controllers
             return Json(response);
         }
 
-        public async Task<JsonResult> AssingDeviceForPayPad(int payPadId,int deviceId,bool state)
+        public async Task<JsonResult> AssingDeviceForPayPad(int payPadId, int deviceId, bool state)
         {
             var request = new Device_PayPad
             {
                 PAYPAD_ID = payPadId,
                 DEVICE_ID = deviceId,
+                CASHBOX_AMOUNT = 0,
+                CASHBOX_QUANTITY = 0,
+                MAX_CASHBOX_QUANTITY = 0,
+                MAX_STACKER_QUANTITY = 0,
+                STACKER_AMOUNT = 0,
+                STACKER_QUANTITY = 0,
                 STATE = state
             };
 

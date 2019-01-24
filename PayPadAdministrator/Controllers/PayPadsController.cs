@@ -35,6 +35,12 @@ namespace PayPadAdministrator.Controllers
                 return View(payPads);
             }
 
+            if (User.IsInRole("Director"))
+            {
+                payPads = await GetAllsPaypadsForSponsor(userCurrent.CUSTOMER_ID);
+                return View(payPads);
+            }
+
             payPads = await GetAllsPaypadsForUser(userCurrent.USER_ID);
             return View(payPads.Where(p => p.CUSTOMER_ID == userCurrent.CUSTOMER_ID).ToList());
         }
@@ -63,6 +69,17 @@ namespace PayPadAdministrator.Controllers
             return payPads;
         }
 
+        private async Task<List<PayPad>> GetAllsPaypadsForSponsor(int customerId)
+        {
+            List<PayPad> payPads = new List<PayPad>();
+            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetAllPayPadsForSponsor"), customerId));
+            if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
+            {
+                payPads = JsonConvert.DeserializeObject<List<PayPad>>(response.Data.ToString());
+            }
+
+            return payPads;
+        }
 
         private async Task<List<PayPad>> GetAllsPaypadsForUser(int userId)
         {

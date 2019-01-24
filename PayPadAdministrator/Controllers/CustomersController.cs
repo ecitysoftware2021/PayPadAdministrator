@@ -19,27 +19,40 @@ namespace PayPadAdministrator.Controllers
     {
         ApiService apiService = new ApiService();
         // GET: Customers
-        [CustomAuthorize(Roles = "SuperAdmin")]
+
         public async Task<ActionResult> Index()
         {
             List<Customer> clients = new List<Customer>();
-            var request = new GetRequest
+            if (User.IsInRole("SuperAdmin"))
             {
-                Parameter = "2",
-                Type = 4
-            };
+                var request = new GetRequest
+                {
+                    Parameter = "2",
+                    Type = 4
+                };
 
-            var response = await apiService.InsertPost(request, "GetCustomers");
-            if (response.CodeError == 200)
+                var response = await apiService.InsertPost(request, "GetCustomers");
+                if (response.CodeError == 200)
+                {
+                    var data = response.Data.ToString();
+                    clients = JsonConvert.DeserializeObject<List<Customer>>(response.Data.ToString());
+                }
+
+                return View(clients);
+            }
+
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = string.Concat(Utilities.GetConfiguration("GetCustomersFromSponsor"), usercurrent.CUSTOMER_ID);
+            var responseclients = await apiService.GetDataV2(url);
+            if (responseclients.CodeError == 200)
             {
-                var data = response.Data.ToString();
-                clients = JsonConvert.DeserializeObject<List<Customer>>(response.Data.ToString());
+                clients = JsonConvert.DeserializeObject<List<Customer>>(responseclients.Data.ToString());
             }
 
             return View(clients);
         }
 
-        [CustomAuthorize(Roles ="SuperAdmin")]
+        [CustomAuthorize(Roles = "SuperAdmin")]
         public async Task<ActionResult> SponsorCustomers()
         {
             List<Customer> clients = new List<Customer>();
@@ -156,8 +169,8 @@ namespace PayPadAdministrator.Controllers
                 id = usercurrent.CUSTOMER_ID;
             }
 
-            
-            
+
+
             var customer = new Customer
             {
                 CUSTOMER_ID = id.Value

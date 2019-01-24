@@ -2425,6 +2425,7 @@
     <Content Include="Views\Devices\CreateDeviceType.cshtml" />
     <Content Include="Views\PayPads\AssingDevice.cshtml" />
     <Content Include="Views\PayPads\ViewDetailsDevice.cshtml" />
+    <Content Include="Views\Denominations\EditDenominationForCurrency.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -20,7 +20,7 @@
             <table data-toggle="table"
                    data-show-columns="false"
                    data-page-list="[5, 10, 20]"
-                   data-page-size="5"
+                   data-page-size="10"
                    data-pagination="true" data-show-pagination-switch="true" class="table-bordered ">
                 <thead>
                     <tr>
@@ -50,13 +50,13 @@
                                     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                                     <img src="@imgSrc" style="width:80px;" />
                                 }
-                                
+
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.VALUE)
                             </td>
                             <td>
-                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                <a title="Asignar Menú" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("EditDenominationForCurrency",new { id=item.CURRENCY_DENOMINATION_ID })"><i class="fa fa-edit fa-lg"></i></a>                                
                             </td>
                         </tr>
                     }
