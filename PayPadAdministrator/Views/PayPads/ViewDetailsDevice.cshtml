@@ -5,21 +5,28 @@
 }
 
 
+
 <table data-toggle="table"
        data-show-columns="false"
        data-page-list="[5, 10, 20]"
-       data-page-size="5"
+       data-page-size="10"
        data-pagination="true" data-show-pagination-switch="true" class="table-bordered ">
     <thead>
         <tr>
-            <th data-field="id">
-
+            <th data-field="logo">
+                Denominación
             </th>
-            <th data-field="description">
-
+            <th data-field="cashboxquantity">
+                Cantidad Baúl
             </th>
-            <th data-field="State">
-
+            <th data-field="cashboxtotal">
+                Total Baúl
+            </th>
+            <th data-field="stacketquantity">
+                Cantidad Disponible
+            </th>
+            <th data-field="stacketotal">
+                Total Disponible
             </th>
             <th data-field="Administracion">Administración</th>
         </tr>
@@ -27,29 +34,32 @@
     <tbody>
         @foreach (var item in Model.DevicePayPadDetails)
         {
-        <tr>
-            <td>
-                @if (item.CURRENCY_IMAGE != null)
-        {
-            var base64 = Convert.ToBase64String(item.CURRENCY_IMAGE);
-            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-            <img src="@imgSrc" alt="Image" style="width:100px;height:150px;max-width: 100%; height: auto;" />
-}
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CURRENCY_VALUE)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CASHBOX_QUANTITY)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.STACKER_QUANTITY)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @if (item.CURRENCY_IMAGE != null)
+                    {
+                        var base64 = Convert.ToBase64String(item.CURRENCY_IMAGE);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        <img src="@imgSrc" alt="Image" style="width:80px; height: auto;" />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CASHBOX_QUANTITY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TOTAL_CASHBOX)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.STACKER_QUANTITY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TOTAL_STACKER)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
         }
     </tbody>
 </table>
