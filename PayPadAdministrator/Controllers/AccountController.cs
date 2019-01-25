@@ -156,6 +156,18 @@ namespace PayPadAdministrator.Controllers
             return View(locations);
         }
 
+        public ActionResult ProfileUser()
+        {
+            var user = apiService.ValidateUser(User.Identity.Name);
+            if (user == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
+            ViewBag.Title = string.Concat("Perfil de ",user.USERNAME);
+            return View(user);
+        }
+
         [ChildActionOnly]
         public ActionResult GetModule()
         {
@@ -188,5 +200,6 @@ namespace PayPadAdministrator.Controllers
             var userCurrent = apiService.ValidateUser(User.Identity.Name);
             return PartialView(userCurrent);
         }
+
     }
 }

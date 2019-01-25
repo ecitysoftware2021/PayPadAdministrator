@@ -1,69 +1,123 @@
 ﻿@model PayPadAdministrator.Models.DeviceDetailViewModel
 
 @{
-    ViewBag.Title = "ViewDetailsDevice";
+   
 }
+<p>
+    <a href="javascript:history.back();" class="btn btn-default waves-effect waves-light">
+        <i class="fa fa-mail-reply m-r-5"></i> <span>Átras</span>
+    </a>
+</p>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card-box m-b-10">
+                        <div class="table-box opport-box">
+                            <div class="table-detail">
+                                @if (Model.Device.IMAGE != null)
+                                {
+                                    var base64 = Convert.ToBase64String(Model.Device.IMAGE);
+                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                    <img src="@imgSrc" alt="img" class="img-circle thumb-lg m-r-15">
+                                }
+                            </div>
 
+                            <div class="table-detail">
+                                <div class="member-info">
+                                    <h4 class="m-t-0"><b>@Model.Device.NAME </b></h4>
+                                    <p class="text-dark m-b-5"><b>Descripción: </b> <span class="text-muted">@Model.Device.DESCRIPTION</span></p>
+                                    <p class="text-dark m-b-5"><b>Cantidad Máxima Baúl: </b> <span class="text-muted">@Model.DevicePayPad.MAX_CASHBOX_QUANTITY</span></p>
+                                    <p class="text-dark m-b-5"><b>Cantidad Máxima Disponibles: </b> <span class="text-muted">@Model.DevicePayPad.MAX_STACKER_QUANTITY</span></p>
+                                </div>
+                            </div>
 
+                            <div class="table-detail lable-detail">
+                                
+                            </div>
 
-<table data-toggle="table"
-       data-show-columns="false"
-       data-page-list="[5, 10, 20]"
-       data-page-size="10"
-       data-pagination="true" data-show-pagination-switch="true" class="table-bordered ">
-    <thead>
-        <tr>
-            <th data-field="logo">
-                Denominación
-            </th>
-            <th data-field="cashboxquantity">
-                Cantidad Baúl
-            </th>
-            <th data-field="cashboxtotal">
-                Total Baúl
-            </th>
-            <th data-field="stacketquantity">
-                Cantidad Disponible
-            </th>
-            <th data-field="stacketotal">
-                Total Disponible
-            </th>
-            <th data-field="Administracion">Administración</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.DevicePayPadDetails)
-        {
-            <tr>
-                <td>
-                    @if (item.CURRENCY_IMAGE != null)
-                    {
-                        var base64 = Convert.ToBase64String(item.CURRENCY_IMAGE);
-                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                        <img src="@imgSrc" alt="Image" style="width:80px; height: auto;" />
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CASHBOX_QUANTITY)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TOTAL_CASHBOX)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.STACKER_QUANTITY)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TOTAL_STACKER)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                            <div class="table-detail">
 
+                            </div>
+
+                            <div class="table-detail table-actions-bar">
+                                <a href="#" class="table-action-btn"><i class="md md-edit"></i></a>
+                                <a href="#" class="table-action-btn"><i class="md md-close"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="row">
+                <table data-toggle="table"
+                       data-show-columns="false"
+                       data-page-list="[5, 10, 20]"
+                       data-page-size="10"
+                       data-pagination="true" data-show-pagination-switch="true" class="table-bordered ">
+                    <thead>
+                        <tr>
+                            <th data-field="logo">
+                                Denominación
+                            </th>
+                            <th data-field="cashboxquantity">
+                                Cantidad Baúl
+                            </th>
+                            <th data-field="cashboxtotal">
+                                Total Baúl
+                            </th>
+                            <th data-field="stacketquantity">
+                                Cantidad Disponible
+                            </th>
+                            <th data-field="stacketotal">
+                                Total Disponible
+                            </th>
+                            <th data-field="Administracion">Administración</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.DevicePayPadDetails)
+                        {
+                            <tr>
+                                <td>
+                                    @if (item.CURRENCY_IMAGE != null)
+                                    {
+                                        var base64 = Convert.ToBase64String(item.CURRENCY_IMAGE);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                        <img src="@imgSrc" alt="Image" style="width:80px; height: auto;" />
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CASHBOX_QUANTITY)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TOTAL_CASHBOX)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.STACKER_QUANTITY)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TOTAL_STACKER)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -232,20 +232,38 @@ namespace PayPadAdministrator.Controllers
                 return View(devices);
             }
 
-            return View(devices.Where(d=>d.STATE == true).ToList());
+            return View(devices.Where(d => d.STATE == true).ToList());
         }
 
-        public async Task<ActionResult> ViewDetailsDevice()
+        public async Task<ActionResult> ViewDetailsDevice(string data)
         {
-            DeviceDetailViewModel device = new DeviceDetailViewModel();
-            var url = string.Concat(Utilities.GetConfiguration("GetDetailsDevicesForPayPad"), "payPad_Id=",1, "&deviceId=",3);
-            var response = await apiService.GetDataV2(url);
-            if (response.CodeError == 200)
+            try
             {
-                device = JsonConvert.DeserializeObject<DeviceDetailViewModel>(response.Data.ToString());
-            }
+                if (string.IsNullOrEmpty(data))
+                {
+                    //TODO:Colocar la pagina no disponible
+                    return RedirectToAction("Index");
+                }
 
-            return View(device);
+                EncryptionHelper encryptionHelper = new EncryptionHelper();
+                var text = encryptionHelper.DecryptString(data);
+                string paypadId = text.Split(',')[0];
+                string deviceId = text.Split(',')[1];
+                DeviceDetailViewModel device = new DeviceDetailViewModel();
+                var url = string.Concat(Utilities.GetConfiguration("GetDetailsDevicesForPayPad"), "payPad_Id=", paypadId, "&deviceId=", deviceId);
+                var response = await apiService.GetDataV2(url);
+                if (response.CodeError == 200)
+                {
+                    device = JsonConvert.DeserializeObject<DeviceDetailViewModel>(response.Data.ToString());
+                }
+
+                ViewBag.Title = device.Device.NAME;
+                return View(device);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error500", "Errors");
+            }
         }
     }
 }

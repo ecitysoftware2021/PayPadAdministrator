@@ -7,7 +7,9 @@ namespace PayPadAdministrator.Models
 {
     public class DeviceDetailViewModel
     {
-        public Device_PayPad Device { get; set; }
+        public Device Device { get; set; }
+
+        public Device_PayPad DevicePayPad { get; set; }
 
         public List<Device_PayPad_Detail_ViewModel> DevicePayPadDetails { get; set; }
     }

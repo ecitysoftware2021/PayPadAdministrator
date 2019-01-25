@@ -1,0 +1,72 @@
+﻿@model IEnumerable<PayPadAdministrator.Models.Notifications>
+
+@{
+    ViewBag.Title = "Notificaciones";
+}
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
+            <br />
+            <table data-toggle="table"
+                   data-show-columns="false"
+                   data-page-list="[5, 10, 20]"
+                   data-page-size="10"
+                   data-pagination="true" data-show-pagination-switch="true" class="table-bordered ">
+                <thead>
+                    <tr>
+                        <th data-field="id">
+                            @Html.DisplayNameFor(model => model.NOTIFICATION_ID)
+                        </th>
+                        <th data-field="PayPad">
+                            @Html.DisplayNameFor(model => model.PAYPAD_NAME)
+                        </th>
+                        <th data-field="Mensaje">
+                            @Html.DisplayNameFor(model => model.MESSAGE)
+                        </th>
+                        <th data-field="Fecha">
+                            @Html.DisplayNameFor(model => model.DATE)
+                        </th>
+                        <th data-field="medioNoti">
+                            @Html.DisplayNameFor(model => model.MEANS_DESCRIPTION)
+                        </th>
+                        <th data-field="tiponoti">
+                            @Html.DisplayNameFor(model => model.TYPE_NOT_DESCRIPTION)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NOTIFICATION_ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PAYPAD_NAME)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MESSAGE)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DATE)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MEANS_DESCRIPTION)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TYPE_NOT_DESCRIPTION)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+

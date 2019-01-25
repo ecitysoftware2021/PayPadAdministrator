@@ -100,5 +100,49 @@ namespace PayPadAdministrator.Controllers
 
             return RedirectToAction("GetDeviceTypes");
         }
+
+        public async Task<ActionResult> EditDevice(int id)
+        {
+            var device = new Device();
+            var url = string.Concat(Utilities.GetConfiguration("GetDeviceForId"), id);
+            var response = await apiService.GetDataV2(url);
+            if (response.CodeError == 200)
+            {
+                device = JsonConvert.DeserializeObject<Device>(response.Data.ToString());
+            }
+
+            ViewBag.DEVICE_TYPE_ID = new SelectList(await ComboHelper.GetDevicesType(), nameof(DeviceType.DEVICE_TYPE_ID), nameof(DeviceType.APOSTROPHE), device.DEVICE_TYPE_ID);
+            return View(device);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditDevice(Device device)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.DEVICE_TYPE_ID = new SelectList(await ComboHelper.GetDevicesType(), nameof(DeviceType.DEVICE_TYPE_ID), nameof(DeviceType.APOSTROPHE), device.DEVICE_TYPE_ID);
+                return View(device);
+            }
+
+            if (device.ImagePathFile == null)
+            {
+                ModelState.AddModelError(string.Empty, "Debe ingresar una imagen");
+                ViewBag.DEVICE_TYPE_ID = new SelectList(await ComboHelper.GetDevicesType(), nameof(DeviceType.DEVICE_TYPE_ID), nameof(DeviceType.APOSTROPHE), device.DEVICE_TYPE_ID);
+                return View(device);
+            }
+
+            device.IMAGE = Utilities.GenerateByteArray(device.ImagePathFile.InputStream);
+            device.ImagePathFile = null;
+            var response = await apiService.InsertPost(device, "UpdateDevice");
+            if (response.CodeError != 200)
+            {
+                ModelState.AddModelError(string.Empty, response.Message);
+                ViewBag.DEVICE_TYPE_ID = new SelectList(await ComboHelper.GetDevicesType(), nameof(DeviceType.DEVICE_TYPE_ID), nameof(DeviceType.APOSTROPHE), device.DEVICE_TYPE_ID);
+                return View(device);
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

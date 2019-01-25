@@ -1,0 +1,150 @@
+﻿@model PayPadAdministrator.Models.UserViewModel
+@{
+   
+}
+
+<div class="wraper container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="bg-picture text-center">
+                <div class="bg-picture-overlay"></div>
+                <div class="profile-info-name">
+                    @if (Model.IMAGE != null)
+                    {
+                        var base64 = Convert.ToBase64String(Model.IMAGE);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        <img src="@imgSrc" class="thumb-lg img-circle img-thumbnail" alt="profile-image">
+                    }
+
+                    <h4 class="m-b-5"><b>@Model.USERNAME</b></h4>
+                    <p class="text-muted"><i class="fa fa-map-marker"></i> @Model.ROL_NAME</p>
+                </div>
+            </div>
+            <!--/ meta -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="card-box m-t-20">
+                <h4 class="m-t-0 header-title"><b>Información personal</b></h4>
+                <div class="p-20">
+                    <div class="about-info-p">
+                        <strong>Nombre</strong>
+                        <br>
+                        <p class="text-muted">@Model.NAME</p>
+                    </div>
+                    <div class="about-info-p m-b-0">
+                        <strong>Identificacion</strong>
+                        <br>
+                        <p class="text-muted">@Model.IDENTIFICATION</p>
+                    </div>
+                    <div class="about-info-p">
+                        <strong>Telefono</strong>
+                        <br>
+                        <p class="text-muted">@Model.PHONE</p>
+                    </div>
+                    <div class="about-info-p">
+                        <strong>Email</strong>
+                        <br>
+                        <p class="text-muted">@Model.EMAIL</p>
+                    </div>
+                    <div class="about-info-p m-b-0">
+                        <strong>Cliente</strong>
+                        <br>
+                        <p class="text-muted">@Model.CUSTOMER_NAME</p>
+                    </div>
+                    <div class="about-info-p m-b-0">
+                        <strong>Rol</strong>
+                        <br>
+                        <p class="text-muted">@Model.ROL_NAME</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-8">
+
+            <div class="card-box m-t-20">
+                <h4 class="m-t-0 header-title"><b>Activity</b></h4>
+                <div class="p-20">
+                    <div class="timeline-2">
+                        <div class="time-item">
+                            <div class="item-info">
+                                <div class="text-muted">5 minutes ago</div>
+                                <p><strong><a href="#" class="text-info">John Doe</a></strong> Uploaded a photo <strong>"DSC000586.jpg"</strong></p>
+                            </div>
+                        </div>
+
+                        <div class="time-item">
+                            <div class="item-info">
+                                <div class="text-muted">30 minutes ago</div>
+                                <p><a href="" class="text-info">Lorem</a> commented your post.</p>
+                                <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
+                            </div>
+                        </div>
+
+                        <div class="time-item">
+                            <div class="item-info">
+                                <div class="text-muted">59 minutes ago</div>
+                                <p><a href="" class="text-info">Jessi</a> attended a meeting with<a href="#" class="text-success">John Doe</a>.</p>
+                                <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
+                            </div>
+                        </div>
+
+                        <div class="time-item">
+                            <div class="item-info">
+                                <div class="text-muted">5 minutes ago</div>
+                                <p><strong><a href="#" class="text-info">John Doe</a></strong>Uploaded 2 new photos</p>
+                            </div>
+                        </div>
+
+                        <div class="time-item">
+                            <div class="item-info">
+                                <div class="text-muted">30 minutes ago</div>
+                                <p><a href="" class="text-info">Lorem</a> commented your post.</p>
+                                <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
+                            </div>
+                        </div>
+
+                        <div class="time-item">
+                            <div class="item-info">
+                                <div class="text-muted">59 minutes ago</div>
+                                <p><a href="" class="text-info">Jessi</a> attended a meeting with<a href="#" class="text-success">John Doe</a>.</p>
+                                <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h4 class="m-t-0 m-b-20 header-title"><b>My Office</b></h4>
+
+                <div class="gmap">
+                    <iframe height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                            src="http://maps.google.co.in/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Google+India+Bangalore,+Bennigana+Halli,+Bangalore,+Karnataka&amp;aq=0&amp;oq=google+&amp;sll=9.930582,78.12303&amp;sspn=0.192085,0.308647&amp;ie=UTF8&amp;hq=Google&amp;hnear=Bennigana+Halli,+Bangalore,+Bengaluru+Urban,+Karnataka&amp;t=m&amp;ll=12.993518,77.660294&amp;spn=0.012545,0.036006&amp;z=15&amp;output=embed"></iframe>
+                </div>
+                <br />
+                <div class="gmap-info">
+                    <h4><b><a href="#" class="text-dark">Google India Pvt. Ltd</a></b></h4>
+                    <p>No. 3, RMZ Infinity - Tower E 3rd, 4th, and 5th Floors, </p>
+                    <p>Old Madras Road, </p>
+                    <p>Bengaluru, Karnataka 560016,</p>
+                    <p>India</p>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+</div>
+
+

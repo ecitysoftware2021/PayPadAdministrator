@@ -1,0 +1,38 @@
+﻿@model IEnumerable<PayPadAdministrator.Models.Notifications>
+
+<li class="dropdown hidden-xs">
+    <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
+        <i class="icon-bell"></i> <span class="badge badge-xs badge-danger">@Model.Count()</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-lg">
+        <li class="notifi-title"><span class="label label-default pull-right">Nuevo @Model.Count()</span>Notificaciones</li>
+        <li class="list-group nicescroll notification-list">
+
+            <!-- list item-->
+            @foreach (var item in Model)
+            {
+                <a href="javascript:void(0);" class="list-group-item">
+                    <div class="media">
+                        <div class="pull-left p-r-10">
+                            <em class="fa fa-bell-o fa-2x text-danger"></em>
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading">@item.MESSAGE</h5>
+                            <p class="m-0">
+                                <small>Fecha: @item.DATE.ToString("dd/MM/yyyy")</small>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            }
+
+
+        </li>
+        <li>
+            <a href="@Url.Action("Index")" class="list-group-item text-right">
+                <small class="font-600">Ver todas las notificaciones</small>
+            </a>
+        </li>
+    </ul>
+</li>
+

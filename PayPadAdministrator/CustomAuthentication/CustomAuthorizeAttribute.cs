@@ -51,7 +51,7 @@ namespace PayPadAdministrator.CustomAuthentication
                 (new System.Web.Routing.RouteValueDictionary
                  (new
                  {
-                     controller = "Error",
+                     controller = "Errors",
                      action = "AccessDenied"
                  }
                  ));

@@ -32,6 +32,8 @@
     <mvcSiteMapNode title="Roles" action="Index" controller="Roles" >
       <mvcSiteMapNode title="Crear Roles" action="CreateRole" controller="Roles" />
     </mvcSiteMapNode>
+    <mvcSiteMapNode title="Notificaciones" action="Index" controller="Notifications" >      
+    </mvcSiteMapNode>
     <mvcSiteMapNode title="Trámites" action="Index" controller="Transact" >
       <mvcSiteMapNode title="Crear trámite" action="CreateTransact" controller="Transact" />
     </mvcSiteMapNode>

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Dispositivos Asignados";
+    PayPadAdministrator.Helpers.EncryptionHelper encryptionHelper = new PayPadAdministrator.Helpers.EncryptionHelper();
 }
 
 <div class="row pricing-plan">
@@ -41,7 +42,7 @@
                             }
                         }
 
-                        <a href="Javascript:void(0);" onclick="" class="btn btn-success waves-effect waves-light w-sm">Detalle</a>
+                        <a href="@Url.Action("ViewDetailsDevice", new { data = encryptionHelper.EncryptString(string.Concat(ViewBag.PayPadId,",",item.DEVICE_ID))})" class="btn btn-success waves-effect waves-light w-sm">Detalle</a>
 
                     </div> <!-- end Pricing_card -->
                 </div> <!-- end col -->
