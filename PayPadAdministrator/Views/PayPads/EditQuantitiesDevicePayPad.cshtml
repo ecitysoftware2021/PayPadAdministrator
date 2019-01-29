@@ -1,0 +1,51 @@
+﻿@model PayPadAdministrator.Models.Device_PayPad_Detail_ViewModel
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="m-t-0 header-title">Denominación <b>@Model.CURRENCY_VALUE</b></h4>
+                    @using (Html.BeginForm("CreateTransact", "Transact", new { }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CASHBOX_QUANTITY, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.EditorFor(model => model.CASHBOX_QUANTITY, new { htmlAttributes = new { @class = "form-control tochpinPrueba" } })
+                                @Html.ValidationMessageFor(model => model.CASHBOX_QUANTITY, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.STACKER_QUANTITY, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.EditorFor(model => model.STACKER_QUANTITY, new { htmlAttributes = new { @class = "form-control tochpinPrueba" } })
+                                @Html.ValidationMessageFor(model => model.STACKER_QUANTITY, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MIN_STACKER_QUANTITY, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.EditorFor(model => model.MIN_STACKER_QUANTITY, new { htmlAttributes = new { @class = "form-control tochpinPrueba" } })
+                                @Html.ValidationMessageFor(model => model.MIN_STACKER_QUANTITY, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group m-b-0">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-info waves-effect waves-light">Guardar</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

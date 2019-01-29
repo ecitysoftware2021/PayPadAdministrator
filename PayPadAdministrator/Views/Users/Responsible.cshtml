@@ -13,7 +13,7 @@
            data-overlaySpeed="200" data-overlayColor="#36404a"><i class="md md-add"></i>Crear Responsable</a>
     </div>
     <div class="col-sm-4">
-        
+
     </div>
 </div>
 
@@ -49,7 +49,10 @@
                             <a title="Asignar Menú" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingModuleToUser","Modules",new { userId = item.USER_ID})" data-original-title="Asignar menú"><i class="fa fa-list"></i></a>
                         </li>
                         <li>
-                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Detalle"><i class="fa fa-server"></i></a>
+                            <a href="@Url.Action("UserDetails", new {userName = item.USERNAME })"
+                               data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Detalle">
+                                <i class="fa fa-server"></i>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -59,4 +62,41 @@
     }
 
 
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                e.preventDefault();
+                var $link = $(this);
+                var title = "Detalle del usuario";
+                $('#Details .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#Details').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#Details .te').html(data);
+                        $('#Details').modal();
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+            });
+        });
+    </script>
+}
+
+<div class="modal fade" id="Details" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" style="width: 970px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
 </div>

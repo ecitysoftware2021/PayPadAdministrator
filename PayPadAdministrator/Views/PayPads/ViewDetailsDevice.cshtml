@@ -1,7 +1,8 @@
 ﻿@model PayPadAdministrator.Models.DeviceDetailViewModel
-
+@using Newtonsoft.Json;
 @{
-   
+
+    PayPadAdministrator.Helpers.EncryptionHelper encryptionHelper = new PayPadAdministrator.Helpers.EncryptionHelper();
 }
 <p>
     <a href="javascript:history.back();" class="btn btn-default waves-effect waves-light">
@@ -34,7 +35,7 @@
                             </div>
 
                             <div class="table-detail lable-detail">
-                                
+
                             </div>
 
                             <div class="table-detail">
@@ -107,8 +108,15 @@
                                     @Html.DisplayFor(modelItem => item.TOTAL_STACKER)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                    <ul class="social-links list-inline m-0">
+                                        <li>
+                                            <a title="Editar Cantidad" data-placement="top"
+                                               data-toggle="tooltip" class="tooltips"
+                                               href="javascript:void(0)"
+                                               onclick="EditQuantity(@JsonConvert.SerializeObject(item))"
+                                               data-original-title="Editar Cantidad"><i class="fa fa-plus-circle"></i></a>
+                                        </li>
+                                    </ul>
                                 </td>
                             </tr>
                         }
@@ -118,6 +126,51 @@
         </div>
     </div>
 </div>
+
+
+
+
+
 @section Scripts {
+
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function EditQuantity(json) {               
+                var title = "Crear SubMódulo";
+                $('#Details .modal-title').html(title);
+                var url = '@Url.Action("EditQuantitiesDevicePayPad")';
+                if (url.indexOf('#') == 0) {
+                    $('#Details').modal('show');
+                }
+                else {
+                    $.post(url,json, function (data) {
+                        $('#Details .te').html(data);
+                        $('#Details').modal();
+                    }).success(function () {
+
+                        $('input:text:visible:first').focus();
+                        $(".tochpinPrueba").TouchSpin({
+                            min: 0
+                        });
+                        //$("#CASHBOX_QUANTITY").val(json.CASHBOX_QUANTITY);
+                        //$("#STACKER_QUANTITY").val(json.STACKER_QUANTITY);
+                    });                
+                }
+            }
+    </script>
 }
+
+    <div class="modal fade" id="Details" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog" style="width: 970px !important;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body"><div class="te">Please wait...</div></div>
+            </div>
+        </div>
+    </div>

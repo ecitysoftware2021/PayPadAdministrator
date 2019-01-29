@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -22,16 +23,22 @@ namespace PayPadAdministrator.Models
 
         public int CURRENCY_DENOMINATION_ID { get; set; }
 
+        [Display(Name ="Cantidad Baúl")]
         public int CASHBOX_QUANTITY { get; set; }
 
+        [Display(Name = "Total Baúl")]
         public string TOTAL_CASHBOX { get { return string.Format("{0:C0}", (CASHBOX_QUANTITY * CURRENCY_VALUE)); } }
 
+        [Display(Name = "Cantidad Disponible")]
         public int STACKER_QUANTITY { get; set; }
 
+        [Display(Name = "Total Disponible")]
         public string TOTAL_STACKER { get { return string.Format("{0:C0}", (STACKER_QUANTITY * CURRENCY_VALUE)); } }
 
+        [Display(Name = "Mínimo Cantidad Disponible")]
         public int MIN_STACKER_QUANTITY { get; set; }
 
+        [Display(Name = "Estado")]
         public bool STATE { get; set; }
 
         public byte[] CURRENCY_IMAGE { get; set; }

@@ -28,6 +28,17 @@ namespace PayPadAdministrator.Controllers
             return View(users.OrderBy(u => u.ROLE_ID).ToList());
         }
 
+        public ActionResult UserDetails(string userName)
+        {
+            var user = apiService.ValidateUser(userName);
+            if (user == null)
+            {
+                return RedirectToAction("Error500", "Errors");
+            }
+
+            return PartialView(user);
+        }
+
         public async Task<ActionResult> SuperAdministrators()
         {
             List<UserViewModel> users = new List<UserViewModel>();

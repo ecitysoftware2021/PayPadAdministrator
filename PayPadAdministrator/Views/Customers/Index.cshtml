@@ -66,18 +66,25 @@
                                 }
                             </td>
                             <td>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <a title="Mostrar oficinas" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("ShowOfficeForCustomer",new { id=item.CUSTOMER_ID })"><i class="fa fa-industry fa-lg"></i></a>
-                                    </div>
-                                    @if (User.IsInRole("SuperAdmin"))
-                                    {
-                                        <div class="col-md-4">
-                                            <a title="Asignar Menú" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingModuleToCustomer","Modules",new { id=item.CUSTOMER_ID })"><i class="fa fa fa-object-group fa-lg"></i></a>
-                                        </div>
-                                    }
 
-                                </div>
+
+
+
+                                <ul class="social-links list-inline m-0">
+                                    <li>
+                                        <a title="Mostrar oficinas" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("ShowOfficeForCustomer",new { id=item.CUSTOMER_ID })" data-original-title="Mostrar oficinas"><i class="fa fa-industry"></i></a>
+                                    </li>
+                                    <li>
+                                        @if (User.IsInRole("SuperAdmin"))
+                                        {
+                                            <a title="Asignar Menú" data-placement="top"
+                                               data-toggle="tooltip" class="tooltips"
+                                               href="@Url.Action("SponsorToClients",new { id = item.CUSTOMER_ID})"
+                                               data-original-title="Asignar Menú"><i class="fa fa-object-group"></i></a>
+                                        }
+
+                                    </li>
+                                </ul>
                             </td>
                         </tr>
                     }

@@ -1,12 +1,13 @@
-﻿
+﻿@model IEnumerable<PayPadAdministrator.Models.UserViewModel>
+
 @{
-    ViewBag.Title = "Administrators";
+    ViewBag.Title = "Administradores";
 }
 
 <link href="~/Scripts/plugins/custombox/dist/custombox.min.css" rel="stylesheet">
 
 <div class="row">
-    <div class="col-sm-8">        
+    <div class="col-sm-8">
         <form role="form">
             <div class="form-group contact-search m-b-30">
                 <input type="text" id="search" class="form-control" placeholder="Search...">
@@ -15,50 +16,92 @@
         </form>
     </div>
     <div class="col-sm-4">
-        <a href="#custom-modal" class="btn btn-default btn-md waves-effect waves-light m-b-30" data-animation="fadein" data-plugin="custommodal"
-           data-overlaySpeed="200" data-overlayColor="#36404a"><i class="md md-add"></i>Crear Administrador</a>
+        <a href="@Url.Action("CreateUser","Users")" class="btn btn-default btn-md waves-effect waves-light m-b-30"
+           data-overlaySpeed="200" data-overlayColor="#36404a"><i class="md md-add"></i>Crear Usuario</a>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-sm-6 col-lg-4">
-        <div class="card-box">
-            <div class="contact-card">
-                <a class="pull-left" href="#">
-                    <img class="img-circle" src="~/Content/Images/User_Generic_1.png" alt="">
-                </a>
-                <div class="member-info">
-                    <h4 class="m-t-0 m-b-5 header-title"><b>Branmous</b></h4>
-                    <p class="text-muted">brandon-377@hotmail.com</p>
-                    <p class="text-dark"><i class="md md-account-circle m-r-10"></i><small>brandon steven montoya</small></p>
-                    <p class="text-dark"><i class="md md-business m-r-10"></i><small>Bancolombia</small></p>
-                    <p class="text-dark"><i class="md md-business m-r-10"></i><small>Alcaldía de Copacabana</small></p>
-                    <div class="contact-action">
-                        <a href="#" class="btn btn-success btn-sm"><i class="md md-mode-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-sm"><i class="md md-close"></i></a>
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-6 col-lg-4">
+            <div class="card-box">
+                <div class="contact-card">
+                    <a class="pull-left" href="#">
+                        @if (item.IMAGE != null)
+                        {
+                            var base64 = Convert.ToBase64String(item.IMAGE);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            <img class="img-circle" src="@imgSrc" alt="">
+                        }
+
+                    </a>
+                    <div class="member-info">
+                        <h4 class="m-t-0 m-b-5 header-title"><b>@Html.DisplayFor(modelItem => item.USERNAME)</b></h4>
+                        <p class="text-muted">@Html.DisplayFor(modelItem => item.EMAIL)</p>
+                        <p class="text-dark"><i class="md md-account-circle m-r-10"></i><small>@Html.DisplayFor(modelItem => item.NAME)</small></p>
+                        <p class="text-dark"><i class="md md-business m-r-10"></i><small>@Html.DisplayFor(modelItem => item.CUSTOMER_NAME)</small></p>
+                        <p class="text-dark"><i class="md md-business m-r-10"></i><small>@Html.DisplayFor(modelItem => item.ROL_NAME)</small></p>
+                        <div class="contact-action">
+                            <a href="#" class="btn btn-success btn-sm"><i class="md md-mode-edit"></i></a>
+                            <a href="#" class="btn btn-danger btn-sm"><i class="md md-close"></i></a>
+                        </div>
                     </div>
+
+                    <ul class="social-links list-inline m-0">
+                        <li>
+                            <a title="Asignar Menú" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingModuleToUser","Modules",new { userId = item.USER_ID})" data-original-title="Asignar menú"><i class="fa fa-list"></i></a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("UserDetails", new {userName = item.USERNAME })"
+                               data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Detalle">
+                                <i class="fa fa-server"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-
-                <ul class="social-links list-inline m-0">
-                    <li>
-                        <a title="" data-placement="top" data-toggle="tooltip"
-                           class="tooltips"
-                           href=""
-                           data-original-title="Editar"><i class="fa fa-edit"></i></a>
-                    </li>
-                    <li>
-                        <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Eliminar"><i class="fa fa-trash"></i></a>
-                    </li>
-                    <li>
-                        <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Asignar menú"><i class="fa fa-list"></i></a>
-                    </li>
-                    <li>
-                        <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Detalle"><i class="fa fa-server"></i></a>
-                    </li>
-                </ul>
             </div>
+
+        </div> <!-- end col -->
+    }
+
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                e.preventDefault();
+                var $link = $(this);
+                var title = "Detalle del usuario";
+                $('#Details .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#Details').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#Details .te').html(data);
+                        $('#Details').modal();
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+            });
+        });
+    </script>
+}
+
+<div class="modal fade" id="Details" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" style="width: 970px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
         </div>
-
-    </div> <!-- end col -->
-
+    </div>
 </div>

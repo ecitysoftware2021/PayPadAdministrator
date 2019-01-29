@@ -265,5 +265,10 @@ namespace PayPadAdministrator.Controllers
                 return RedirectToAction("Error500", "Errors");
             }
         }
+        
+        public ActionResult EditQuantitiesDevicePayPad(Device_PayPad_Detail_ViewModel device)
+        {
+            return PartialView(device);
+        }
     }
 }

@@ -2436,6 +2436,8 @@
     <Content Include="Views\Notifications\Index.cshtml" />
     <Content Include="Views\Notifications\GetTenNotificstions.cshtml" />
     <Content Include="Views\Account\ProfileUser.cshtml" />
+    <Content Include="Views\Users\UserDetails.cshtml" />
+    <Content Include="Views\PayPads\EditQuantitiesDevicePayPad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

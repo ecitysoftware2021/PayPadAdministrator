@@ -143,8 +143,7 @@
 </div>
 
 
-@section Scripts {
-    @Scripts.Render("~/bundles/PopUp")
+@section Scripts {    
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         $(document).ready(function () {
@@ -161,7 +160,11 @@
                     $.get(url, function (data) {
                         $('#Details .te').html(data);
                         $('#Details').modal();
-                    }).success(function () { $('input:text:visible:first').focus(); });
+                    }).success(function () { 
+
+                        $('input:text:visible:first').focus(); 
+        
+                    });
 
                 }
             });

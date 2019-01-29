@@ -1,0 +1,59 @@
+﻿@model PayPadAdministrator.Models.UserViewModel
+
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card-box m-t-20">
+            <h4 class="m-t-0 header-title"><b>Información personal</b></h4>
+            <div class="p-20">
+                <div class="about-info-p">
+                    <strong>Nombre</strong>
+                    <br>
+                    <p class="text-muted">@Model.NAME</p>
+                </div>
+                <div class="about-info-p m-b-0">
+                    <strong>Identificacion</strong>
+                    <br>
+                    <p class="text-muted">@Model.IDENTIFICATION</p>
+                </div>
+                <div class="about-info-p">
+                    <strong>Telefono</strong>
+                    <br>
+                    <p class="text-muted">@Model.PHONE</p>
+                </div>
+                <div class="about-info-p">
+                    <strong>Email</strong>
+                    <br>
+                    <p class="text-muted">@Model.EMAIL</p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card-box m-t-20">            
+            <div class="p-20">
+                <div class="about-info-p m-b-0">
+                    <strong>Cliente</strong>
+                    <br>
+                    <p class="text-muted">@Model.CUSTOMER_NAME</p>
+                </div>
+                <div class="about-info-p m-b-0">
+                    <strong>Rol</strong>
+                    <br>
+                    <p class="text-muted">@Model.ROL_NAME</p>
+                </div>
+                <div class="about-info-p m-b-0">
+                    <strong>Usuario</strong>
+                    <br>
+                    <p class="text-muted">@Model.USERNAME</p>
+                </div>
+                <div class="about-info-p m-b-0">
+                    <strong>Contraseña</strong>
+                    <br>
+                    <p class="text-muted">@Model.PASSWORD</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

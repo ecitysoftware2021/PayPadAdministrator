@@ -36,6 +36,7 @@ namespace PayPadAdministrator
                   "~/Scripts/plugins/custombox/dist/custombox.min.js",
                   "~/Scripts/pages/legacy.min.js",
                   "~/Scripts/plugins/sweetalert/dist/sweetalert.min.js",
+                  "~/Scripts/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js",
                   "~/Scripts/ModalGeneric.js",
                   "~/Scripts/jquery.table2excel.js",
                   "~/Scripts/PayPad.js"
@@ -62,7 +63,8 @@ namespace PayPadAdministrator
                      "~/Content/Css/icons.css",
                      "~/Content/Css/pages.css",
                      "~/Content/Css/responsive.css",
-                     "~/Scripts/plugins/sweetalert/dist/sweetalert.css"
+                     "~/Scripts/plugins/sweetalert/dist/sweetalert.css",
+                     "~/Scripts/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css"
                       ));
 
             bundles.Add(new StyleBundle("~/Content/DatePicker").Include(
