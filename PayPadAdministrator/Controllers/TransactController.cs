@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
+using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Models;
 using PayPadAdministrator.Services;
 using System;
@@ -48,6 +49,10 @@ namespace PayPadAdministrator.Controllers
                 return View(transaction_Type);
             }
 
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el trámite ", transaction_Type.DESCRIPTION), url);
+
             return RedirectToAction("Index");
         }
 
@@ -79,6 +84,9 @@ namespace PayPadAdministrator.Controllers
                 return View(transaction_Type);
             }
 
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se editó el trámite ", transaction_Type.DESCRIPTION), url);
             return RedirectToAction("Index");
         }
     }

@@ -168,6 +168,9 @@ namespace PayPadAdministrator.Controllers
                 return View(payPad);
             }
 
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el Pay+ ", payPad.NAME), url);
             return RedirectToAction("Index", new { Message = "Se creó correctamente" });
         }
 
@@ -269,6 +272,12 @@ namespace PayPadAdministrator.Controllers
         public ActionResult EditQuantitiesDevicePayPad(Device_PayPad_Detail_ViewModel device)
         {
             return PartialView(device);
+        }
+
+        public async Task<JsonResult> EditQuantitiesDevicePayPadP(Device_PayPad_Detail_ViewModel device)
+        {
+            var response = await apiService.InsertPost(device, "UpdateDevicePayPadDetail");
+            return Json(response);
         }
     }
 }

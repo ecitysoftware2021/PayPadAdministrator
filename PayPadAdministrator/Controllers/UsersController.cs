@@ -119,6 +119,9 @@ namespace PayPadAdministrator.Controllers
                 return View(user);
             }
 
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el usuario ", user.USERNAME), url);
             return RedirectToAction("Index");
         }
 
@@ -166,6 +169,9 @@ namespace PayPadAdministrator.Controllers
                 return View(user);
             }
 
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el usuario ", user.USERNAME), url);
             return RedirectToAction("Responsible");
         }
 

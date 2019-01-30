@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
+using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Models;
 using PayPadAdministrator.Services;
 using System;
@@ -53,6 +54,9 @@ namespace PayPadAdministrator.Controllers
                 return View(currency);
             }
 
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó la moneda ", currency.DESCRIPTION), url);
             return RedirectToAction("Currencies");
         }
 
@@ -102,6 +106,9 @@ namespace PayPadAdministrator.Controllers
                 return View(currency_Denomination);
             }
 
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó la denominación ", currency_Denomination.VALUE), url);
             return RedirectToAction("ShowDenominationForCurrency", new { id = currency_Denomination.CURRENCY_ID });
         }
 
@@ -143,6 +150,9 @@ namespace PayPadAdministrator.Controllers
                 return View(currency_Denomination);
             }
 
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se editó la denominación ", currency_Denomination.VALUE), url);
             return RedirectToAction("ShowDenominationForCurrency", new { id = currency_Denomination.CURRENCY_ID });
         }
     }

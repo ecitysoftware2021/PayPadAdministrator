@@ -5,6 +5,10 @@
     <ul>
         <li class="text-muted menu-title">Navegación</li>
         <li><a href="@Url.Action("Index","Home")" class="waves-effect active"><i class="ti-home"></i> <span> Dashboard </span> </a></li>
+        @{
+            var url = Request.Url.AbsolutePath;
+        }
+
         @foreach (var module in Model)
         {
 
@@ -14,64 +18,72 @@
                     @foreach (var subModule in module.SubModules)
                     {
                         <li><a href="/@subModule.URL">@subModule.DESCRIPTION</a></li>
+
+
+                        if (url.Equals('/' + subModule.URL))
+                        {
+                            ViewData["ModuleID"] = module.Module.MODULE_ID;
+                        }
                     }
+
+
                 </ul>
             </li>
         }
 
         @*<li class="has_sub">
-            <a href="#" class="waves-effect"><i class=" ti-server"></i> <span> Clientes </span> </a>
-            <ul class="list-unstyled">
-                <li class="active"><a href="@Url.Action("SponsorCustomers","Customers")">Patrocinadores</a></li>
-                <li><a href="@Url.Action("Index","Customers")">Clientes</a></li>
-                <li><a href="@Url.Action("CreateCustomer","Customers")">Crear Cliente</a></li>
-                <li><a href="@Url.Action("TypeCustomers","Customers")">Tipo de Clientes</a></li>
-            </ul>
-        </li>
+                <a href="#" class="waves-effect"><i class=" ti-server"></i> <span> Clientes </span> </a>
+                <ul class="list-unstyled">
+                    <li class="active"><a href="@Url.Action("SponsorCustomers","Customers")">Patrocinadores</a></li>
+                    <li><a href="@Url.Action("Index","Customers")">Clientes</a></li>
+                    <li><a href="@Url.Action("CreateCustomer","Customers")">Crear Cliente</a></li>
+                    <li><a href="@Url.Action("TypeCustomers","Customers")">Tipo de Clientes</a></li>
+                </ul>
+            </li>
 
-        <li class="has_sub">
-            <a href="#" class="waves-effect"><i class="ti-desktop"></i> <span> Corresponsales </span> </a>
-            <ul class="list-unstyled">
-                <li class="active"><a href="@Url.Action("Index","PayPads")">Pay+</a></li>
-                <li><a href="@Url.Action("CreatePayPad","PayPads")">Crear Pay+</a></li>
-            </ul>
-        </li>
+            <li class="has_sub">
+                <a href="#" class="waves-effect"><i class="ti-desktop"></i> <span> Corresponsales </span> </a>
+                <ul class="list-unstyled">
+                    <li class="active"><a href="@Url.Action("Index","PayPads")">Pay+</a></li>
+                    <li><a href="@Url.Action("CreatePayPad","PayPads")">Crear Pay+</a></li>
+                </ul>
+            </li>
 
-        <li class="has_sub">
-            <a href="#" class="waves-effect"><i class="ti-money"></i> <span> Denominaciones </span> </a>
-            <ul class="list-unstyled">
-                <li class="active"><a href="@Url.Action("Index","Denominations")">Denominaciones</a></li>
-                <li><a href="@Url.Action("Currencies","Denominations")">Monedas</a></li>
-                <li><a href="dashboard_2.html">Billetero y Monedero</a></li>
-            </ul>
-        </li>
+            <li class="has_sub">
+                <a href="#" class="waves-effect"><i class="ti-money"></i> <span> Denominaciones </span> </a>
+                <ul class="list-unstyled">
+                    <li class="active"><a href="@Url.Action("Index","Denominations")">Denominaciones</a></li>
+                    <li><a href="@Url.Action("Currencies","Denominations")">Monedas</a></li>
+                    <li><a href="dashboard_2.html">Billetero y Monedero</a></li>
+                </ul>
+            </li>
 
-        <li class="has_sub">
-            <a href="#" class="waves-effect"><i class="ti-user"></i> <span> Usuarios </span> </a>
-            <ul class="list-unstyled">
-                <li class="active"><a href="@Url.Action("Index","Users")">Todos los usuarios</a></li>
-                <li><a href="@Url.Action("SuperAdministrators","Users")">Super Administradores</a></li>
-                <li><a href="@Url.Action("Administrators","Users")">Administradores</a></li>
-                <li><a href="@Url.Action("Responsible","Users")">Responsables</a></li>
-            </ul>
-        </li>
+            <li class="has_sub">
+                <a href="#" class="waves-effect"><i class="ti-user"></i> <span> Usuarios </span> </a>
+                <ul class="list-unstyled">
+                    <li class="active"><a href="@Url.Action("Index","Users")">Todos los usuarios</a></li>
+                    <li><a href="@Url.Action("SuperAdministrators","Users")">Super Administradores</a></li>
+                    <li><a href="@Url.Action("Administrators","Users")">Administradores</a></li>
+                    <li><a href="@Url.Action("Responsible","Users")">Responsables</a></li>
+                </ul>
+            </li>
 
-        <li class="has_sub">
-            <a href="#" class="waves-effect"><i class="ti-layers-alt"></i> <span> Módulos </span> </a>
-            <ul class="list-unstyled">
-                <li class="active"><a href="@Url.Action("Index","Modules")">Menús</a></li>
-            </ul>
-        </li>
+            <li class="has_sub">
+                <a href="#" class="waves-effect"><i class="ti-layers-alt"></i> <span> Módulos </span> </a>
+                <ul class="list-unstyled">
+                    <li class="active"><a href="@Url.Action("Index","Modules")">Menús</a></li>
+                </ul>
+            </li>
 
-        <li class="has_sub">
-            <a href="#" class="waves-effect"><i class="ti-widget"></i> <span> Administación </span> </a>
-            <ul class="list-unstyled">
-                <li class="active"><a href="@Url.Action("Index","Roles")">Roles</a></li>
-                <li><a href="@Url.Action("Index","Devices")">Dispositivos</a></li>
-                <li><a href="@Url.Action("Index","Transact")">Trámites</a></li>
-                <li><a href="@Url.Action("Locations","Account")">Regiones</a></li>
-            </ul>
-        </li>*@
+            <li class="has_sub">
+                <a href="#" class="waves-effect"><i class="ti-widget"></i> <span> Administación </span> </a>
+                <ul class="list-unstyled">
+                    <li class="active"><a href="@Url.Action("Index","Roles")">Roles</a></li>
+                    <li><a href="@Url.Action("Index","Devices")">Dispositivos</a></li>
+                    <li><a href="@Url.Action("Index","Transact")">Trámites</a></li>
+                    <li><a href="@Url.Action("Locations","Account")">Regiones</a></li>
+                </ul>
+            </li>*@
 
     </ul>
 </div>

@@ -56,10 +56,15 @@ namespace PayPadAdministrator.Controllers
             var response = await apiService.InsertPost(device, "CreateDevice");
             if (response.CodeError != 200)
             {
+                var data = JsonConvert.DeserializeObject<Exception>(response.Data.ToString());
                 ModelState.AddModelError(string.Empty, response.Message);
                 ViewBag.DEVICE_TYPE_ID = new SelectList(await ComboHelper.GetDevicesType(), nameof(DeviceType.DEVICE_TYPE_ID), nameof(DeviceType.APOSTROPHE), device.DEVICE_TYPE_ID);
                 return View(device);
             }
+
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el dispositivo ", device.NAME), url);
 
             return RedirectToAction("Index");
         }
@@ -98,6 +103,9 @@ namespace PayPadAdministrator.Controllers
                 return View(device);
             }
 
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el tipo de dispositivo ", device.APOSTROPHE), url);
             return RedirectToAction("GetDeviceTypes");
         }
 
@@ -142,6 +150,9 @@ namespace PayPadAdministrator.Controllers
                 return View(device);
             }
 
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se editó el dispositivo ", device.NAME), url);
             return RedirectToAction("Index");
         }
     }

@@ -5,32 +5,35 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PayPadAdministrator.CustomAuthentication;
+using System.Threading.Tasks;
+using PayPadAdministrator.Services;
+using PayPadAdministrator.Models;
 
 namespace PayPadAdministrator.Controllers
 {
     public class HomeController : Controller
     {
+        ApiService apiService = new ApiService();
+
         [CustomAuthorize]
-        public ActionResult Index()
+        public async Task< ActionResult> Index()
         {
+            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            List<PayPad> payPads = new List<PayPad>();
+            if (User.IsInRole("SuperAdmin"))
+            {
+                payPads = await ComboHelper.GetAllsPaypads();
+            }
+            else if (User.IsInRole("Admin"))
+            {
+                payPads = await ComboHelper.GetAllsPaypadsForCustomer(userCurrent.CUSTOMER_ID);
+            }
+            else
+            {
+                payPads = await ComboHelper.GetAllsPaypadsForCustomer(userCurrent.USER_ID);
+            }
 
-            return View();
-        }
-
-        [CustomAuthorize(Roles ="Admin")]
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        [CustomAuthorize(Roles = "SuperAdmin")]
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
+            ViewBag.PayPadId = new SelectList(payPads, nameof(PayPad.PAYPAD_ID), nameof(PayPad.NAME), 0);
             return View();
         }
     }

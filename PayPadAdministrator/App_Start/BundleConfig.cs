@@ -37,6 +37,8 @@ namespace PayPadAdministrator
                   "~/Scripts/pages/legacy.min.js",
                   "~/Scripts/plugins/sweetalert/dist/sweetalert.min.js",
                   "~/Scripts/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js",
+                  "~/Scripts/plugins/waypoints/lib/jquery.waypoints.js",
+                  "~/Scripts/plugins/counterup/jquery.counterup.min.js",
                   "~/Scripts/ModalGeneric.js",
                   "~/Scripts/jquery.table2excel.js",
                   "~/Scripts/PayPad.js"

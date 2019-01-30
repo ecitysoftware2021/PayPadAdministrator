@@ -214,18 +214,24 @@ namespace PayPadAdministrator.Controllers
                 return View(office);
             }
 
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);            
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó la oficina ", office.NAME), url);
             return RedirectToAction("ShowOfficeForCustomer", new { id = office.CUSTOMER_ID, Message = "Se creó el cliente correctamente" });
         }
 
         [CustomAuthorize(Roles = "SuperAdmin")]
         public async Task<ActionResult> CreateCustomer()
         {
+            //var module = ViewData["ModuleID"].ToString();
+
             ViewBag.TYPE_CUSTOMER_ID = new SelectList(await ComboHelper.GetTypeCustomers(),
                                                     nameof(CustomerType.CUSTOMER_TYPE_ID),
                                                     nameof(CustomerType.DESCRIPTION), 0);
             ViewBag.LOCATION_ID = new SelectList(await ComboHelper.GetLocations(),
                                                     nameof(Location.LOCATION_ID),
                                                     nameof(Location.NAME), 0);
+            
             return View();
         }
 
@@ -271,6 +277,9 @@ namespace PayPadAdministrator.Controllers
                 return View(customer);
             }
 
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el cliente ", customer.NAME), url);
             return RedirectToAction("Index", new { Message = "Se creó el cliente correctamente" });
         }
 
@@ -313,6 +322,10 @@ namespace PayPadAdministrator.Controllers
                 var response = await apiService.InsertPost(customerType, "CreateTypeCustomer");
                 if (response.CodeError == 200)
                 {
+                    var usercurrent = apiService.ValidateUser(User.Identity.Name);
+                    var url = Request.Url.AbsolutePath.Split('/')[1];                    
+                    await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el tipo de cliente ", customerType.DESCRIPTION),url);
+
                     return RedirectToAction("TypeCustomers", new { Message = "Se creo correctamente" });
                 }
 
@@ -341,7 +354,7 @@ namespace PayPadAdministrator.Controllers
             {
                 officeUserViewModel.UserViewModels = JsonConvert.DeserializeObject<List<UserViewModel>>(responseUsers.Data.ToString());
             }
-
+            
             return View(officeUserViewModel);
         }
     }

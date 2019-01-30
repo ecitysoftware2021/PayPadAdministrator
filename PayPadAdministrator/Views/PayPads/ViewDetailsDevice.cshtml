@@ -21,7 +21,7 @@
                                 {
                                     var base64 = Convert.ToBase64String(Model.Device.IMAGE);
                                     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                    <img src="@imgSrc" alt="img" class="img-circle thumb-lg m-r-15">
+                                    <img src="@imgSrc" alt="img" class="thumb-lg m-r-15">
                                 }
                             </div>
 
@@ -43,8 +43,7 @@
                             </div>
 
                             <div class="table-detail table-actions-bar">
-                                <a href="#" class="table-action-btn"><i class="md md-edit"></i></a>
-                                <a href="#" class="table-action-btn"><i class="md md-close"></i></a>
+
                             </div>
                         </div>
                     </div>
@@ -80,45 +79,51 @@
                             <th data-field="stacketotal">
                                 Total Disponible
                             </th>
+                            <th data-field="mini">
+                                Mínimo Disponible
+                            </th>
                             <th data-field="Administracion">Administración</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.DevicePayPadDetails)
                         {
-                            <tr>
-                                <td>
-                                    @if (item.CURRENCY_IMAGE != null)
-                                    {
-                                        var base64 = Convert.ToBase64String(item.CURRENCY_IMAGE);
-                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                        <img src="@imgSrc" alt="Image" style="width:80px; height: auto;" />
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CASHBOX_QUANTITY)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TOTAL_CASHBOX)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.STACKER_QUANTITY)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TOTAL_STACKER)
-                                </td>
-                                <td>
-                                    <ul class="social-links list-inline m-0">
-                                        <li>
-                                            <a title="Editar Cantidad" data-placement="top"
-                                               data-toggle="tooltip" class="tooltips"
-                                               href="javascript:void(0)"
-                                               onclick="EditQuantity(@JsonConvert.SerializeObject(item))"
-                                               data-original-title="Editar Cantidad"><i class="fa fa-plus-circle"></i></a>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                @if (item.CURRENCY_IMAGE != null)
+        {
+            var base64 = Convert.ToBase64String(item.CURRENCY_IMAGE);
+            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        <img src="@imgSrc" alt="Image" style="width:80px; height: auto;" />
+}
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CASHBOX_QUANTITY)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TOTAL_CASHBOX)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.STACKER_QUANTITY)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TOTAL_STACKER)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MIN_STACKER_QUANTITY)
+                            </td>
+                            <td>
+                                <ul class="social-links list-inline m-0">
+                                    <li>
+                                        <a title="Editar Cantidad" data-placement="top"
+                                           data-toggle="tooltip" class="tooltips"
+                                           href="javascript:void(0)"
+                                           onclick="EditQuantity(@JsonConvert.SerializeObject(item))"
+                                           data-original-title="Editar Cantidad"><i class="fa fa-plus-circle"></i></a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -137,7 +142,7 @@
 
     <script type="text/javascript">
 
-        function EditQuantity(json) {               
+        function EditQuantity(json) {
                 var title = "Crear SubMódulo";
                 $('#Details .modal-title').html(title);
                 var url = '@Url.Action("EditQuantitiesDevicePayPad")';
@@ -154,23 +159,22 @@
                         $(".tochpinPrueba").TouchSpin({
                             min: 0
                         });
-                        //$("#CASHBOX_QUANTITY").val(json.CASHBOX_QUANTITY);
-                        //$("#STACKER_QUANTITY").val(json.STACKER_QUANTITY);
-                    });                
+
+                    });
                 }
-            }
+        }
     </script>
 }
 
-    <div class="modal fade" id="Details" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-        <div class="modal-dialog" style="width: 970px !important;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body"><div class="te">Please wait...</div></div>
+<div class="modal fade" id="Details" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" style="width: 970px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"></h4>
             </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
         </div>
     </div>
+</div>
