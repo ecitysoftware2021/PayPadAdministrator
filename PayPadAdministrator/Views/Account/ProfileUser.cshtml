@@ -1,6 +1,6 @@
 ﻿@model PayPadAdministrator.Models.UserViewModel
 @{
-   
+
 }
 
 <div class="wraper container-fluid">
@@ -17,7 +17,7 @@
                     }
 
                     <h4 class="m-b-5"><b>@Model.USERNAME</b></h4>
-                    <p class="text-muted"><i class="fa fa-map-marker"></i> @Model.ROL_NAME</p>
+                    <p class="text-muted"><i class="fa fa-map-marker"></i> @Model.USERNAME</p>
                 </div>
             </div>
             <!--/ meta -->
@@ -67,59 +67,14 @@
         <div class="col-md-8">
 
             <div class="card-box m-t-20">
-                <h4 class="m-t-0 header-title"><b>Activity</b></h4>
+                <h4 class="m-t-0 header-title"><b>Actividades</b></h4>
                 <div class="p-20">
-                    <div class="timeline-2">
-                        <div class="time-item">
-                            <div class="item-info">
-                                <div class="text-muted">5 minutes ago</div>
-                                <p><strong><a href="#" class="text-info">John Doe</a></strong> Uploaded a photo <strong>"DSC000586.jpg"</strong></p>
-                            </div>
-                        </div>
-
-                        <div class="time-item">
-                            <div class="item-info">
-                                <div class="text-muted">30 minutes ago</div>
-                                <p><a href="" class="text-info">Lorem</a> commented your post.</p>
-                                <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
-                            </div>
-                        </div>
-
-                        <div class="time-item">
-                            <div class="item-info">
-                                <div class="text-muted">59 minutes ago</div>
-                                <p><a href="" class="text-info">Jessi</a> attended a meeting with<a href="#" class="text-success">John Doe</a>.</p>
-                                <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
-                            </div>
-                        </div>
-
-                        <div class="time-item">
-                            <div class="item-info">
-                                <div class="text-muted">5 minutes ago</div>
-                                <p><strong><a href="#" class="text-info">John Doe</a></strong>Uploaded 2 new photos</p>
-                            </div>
-                        </div>
-
-                        <div class="time-item">
-                            <div class="item-info">
-                                <div class="text-muted">30 minutes ago</div>
-                                <p><a href="" class="text-info">Lorem</a> commented your post.</p>
-                                <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
-                            </div>
-                        </div>
-
-                        <div class="time-item">
-                            <div class="item-info">
-                                <div class="text-muted">59 minutes ago</div>
-                                <p><a href="" class="text-info">Jessi</a> attended a meeting with<a href="#" class="text-success">John Doe</a>.</p>
-                                <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
-                            </div>
-                        </div>
+                    <div class="timeline-2" id="dashboardLog">
                     </div>
                 </div>
             </div>
 
-            <div class="card-box">
+            @*<div class="card-box">
                 <h4 class="m-t-0 m-b-20 header-title"><b>My Office</b></h4>
 
                 <div class="gmap">
@@ -136,15 +91,56 @@
                 </div>
 
                 <div class="clearfix"></div>
-            </div>
+            </div>*@
         </div>
 
 
     </div>
 
-
-
-
 </div>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
 
+        window.onload = function(){
+           LoadDashboardLog(@Model.USER_ID);
+        }
+
+
+function LoadDashboardLog(userId) {
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("GetDashboardLog", "Generic")',
+        dataType: 'json',
+        data: {userId:userId},
+        success: function (data) {
+            if (data.CodeError == 200) {
+                
+                var content = "";
+           $.each(data.Data, function (i, data) {
+                content += "<div class='time-item'>"+
+                            "<div class='item-info'>"+
+                    "<div class='text-muted'>" + ConvertDateV2(data.DATE)+"</div>"+
+                            "<p><strong><a href='#' class='text-info'>"+data.MODULE_DESCRIPTION+"</a>--></strong>"+ data.DESCRIPTION+"</p>"+
+                            "</div>"+
+                            "</div>";
+
+            });
+
+            $("#dashboardLog").html(content);
+
+            } else {
+                ModalMessageError("Error", data.Message);
+
+            }
+        },
+        error: function (ex) {
+            ModalMessageError("Error", 'Failed ' + ex.responseText);
+        }
+    });
+}
+
+    </script>
+}

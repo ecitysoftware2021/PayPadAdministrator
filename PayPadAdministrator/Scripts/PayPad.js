@@ -1,4 +1,39 @@
-﻿$(window).load(function(){
+﻿function Dateformat(date) {
+    var year = date.split(',')[1];
+    var mes = date.split(',')[0].split(' ')[1];
+    var day = date.split(',')[0].split(' ')[0];
+    return year + "-" + GetMonth(mes) + "-" + day;
+}
+
+function GetDateFormat(date) {
+    var datereturn = new Date(date);
+    return datereturn.getDate() + '/' +
+        (datereturn.getMonth() + 1) + '/' +
+        datereturn.getFullYear();
+}
+
+function ConvertDate(date) {
+    var myDate = new Date(date.match(/\d+/)[0] * 1);
+    var newdate = GetDateFormat(myDate);
+    return newdate;
+}
+
+function ConvertDateV2(date) {
+    var myDate = new Date(date.match(/\d+/)[0] * 1);
+    var newdate = GetDateFormatHour(myDate);
+    return newdate;
+}
+
+
+function GetDateFormatHour(date) {
+    var datereturn = new Date(date);
+    return datereturn.getDate() + '/' +
+        (datereturn.getMonth() + 1) + '/' +
+        datereturn.getFullYear() + ' ' + datereturn.getHours() + ':' + datereturn.getMinutes();
+}
+
+
+$(window).load(function () {
     var $container = $('.portfolioContainer');
     $container.isotope({
         filter: '*',
@@ -37,3 +72,4 @@ $(document).ready(function() {
         }
     });
 });
+

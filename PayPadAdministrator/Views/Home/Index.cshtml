@@ -1,6 +1,6 @@
 ﻿@model PayPadAdministrator.Models.RequestReport
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Dashboard";
 }
 
 
@@ -22,7 +22,7 @@
 
                             <div class="form-group m-b-0">
                                 <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="button" onclick="GenerateReport()" class="btn btn-info waves-effect waves-light">Generar</button>
+                                    <button type="button" onclick="GetTransactionsHome()" class="btn btn-info waves-effect waves-light">Generar</button>
                                 </div>
                             </div>
                         </div>
@@ -55,21 +55,8 @@
                 <i class="md md-attach-money text-info"></i>
             </div>
             <div class="text-right">
-                <h3 class="text-dark"><b class="counter">31,570</b></h3>
-                <p class="text-muted">Total Recaudado</p>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-
-    <div class="col-md-6 col-lg-3">
-        <div class="widget-bg-color-icon card-box">
-            <div class="bg-icon bg-icon-pink pull-left">
-                <i class="md md-add-shopping-cart text-pink"></i>
-            </div>
-            <div class="text-right">
-                <h3 class="text-dark"><b class="counter">280</b></h3>
-                <p class="text-muted">Trasacciones Aprobadas</p>
+                <h3 class="text-dark"><b class="counter" id="TotalAmount">0</b></h3>
+                <p class="text-muted">Total Recaudado Pay+</p>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -81,8 +68,8 @@
                 <i class="md md-equalizer text-purple"></i>
             </div>
             <div class="text-right">
-                <h3 class="text-dark"><b class="counter">0.16</b></h3>
-                <p class="text-muted">transaxxiones Iniciadas</p>
+                <h3 class="text-dark"><b class="counter" id="initial">0</b></h3>
+                <p class="text-muted">Total Transacciones Realizadas</p>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -91,10 +78,23 @@
     <div class="col-md-6 col-lg-3">
         <div class="widget-bg-color-icon card-box">
             <div class="bg-icon bg-icon-success pull-left">
-                <i class="md md-remove-red-eye text-success"></i>
+                <i class="md md-verified-user text-success"></i>
             </div>
             <div class="text-right">
-                <h3 class="text-dark"><b class="counter">64,570</b></h3>
+                <h3 class="text-dark"><b class="counter" id="approved">0</b></h3>
+                <p class="text-muted">Trasacciones Aprobadas</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="widget-bg-color-icon card-box">
+            <div class="bg-icon bg-icon-danger pull-left">
+                <i class="md md-not-interested text-danger"></i>
+            </div>
+            <div class="text-right">
+                <h3 class="text-dark"><b class="counter" id="cancelled">0</b></h3>
                 <p class="text-muted">Transacciones Canceladas</p>
             </div>
             <div class="clearfix"></div>
@@ -102,18 +102,160 @@
     </div>
 </div>
 
+<div class="row">
+
+    <div class="col-lg-12">
+
+        <div class="portlet">
+            <!-- /primary heading -->
+            <div class="portlet-heading">
+                <h3 class="portlet-title text-dark text-uppercase">
+                    Transacciones
+                </h3>
+                <div class="portlet-widgets">
+                    <a href="javascript:;" data-toggle="reload"><i class="ion-refresh"></i></a>
+                    <span class="divider"></span>
+                    <a data-toggle="collapse" data-parent="#accordion1" href="#portlet2"><i class="ion-minus-round"></i></a>
+                    <span class="divider"></span>
+                    <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="portlet2" class="panel-collapse collapse in">
+                <div class="portlet-body">
+                    <div class="table-responsive">
+                        <table data-toggle="table"
+                               data-show-columns="false"
+                               data-page-list="[5, 10, 20]"
+                               data-page-size="10"
+                               data-pagination="true" 
+                               data-show-pagination-switch="true" 
+                               class="table table-bordered" 
+                               id="tableTransactions">
+                            <thead>
+                                <tr>
+                                    <th data-field="id">ID</th>
+                                    <th data-field="tramite">Trámite</th>
+                                    <th data-field="fecha">Fecha</th>
+                                    <th data-field="total">Total</th>
+                                    <th data-field="totalIng">Total Ingresado</th>
+                                    <th data-field="totalDvu">Total Devuelto</th>
+                                    <th data-field="estado">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end col -->
+
+
+</div>
+
+
 @section Scripts {
 
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
 
-        window.onload = function () {
-            $('.counter').counterUp({
-                delay: 100,
-                time: 1200
+
+        function GetTransactionsHome(){
+
+           if($("#PayPadId").val() == "" || $("#PayPadId").val() =="0"){
+                ModalMessageError("Error", "Debe seleccione un Pay +");
+                return;
+            }
+
+            if($("#StartDate").val() == "" || $("#FinishDate").val() == ""){
+                ModalMessageError("Error", "Las fechas deben tener valor");
+                return;
+            }
+
+           var request = {
+                PayPadId:$("#PayPadId").val(),
+                DateStartString:$("#StartDate").val(),
+                DateFinishString:$("#FinishDate").val(),
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetTransactionHome", "Generic")',
+                dataType: 'json',
+                data: request,
+                success: function (data) {
+                    if (data.CodeError == 200) {
+                         OrganizeData(data.Data);
+                    } else {
+                        ModalMessageError("Error", data.Message);
+
+                    }
+                },
+                error: function (ex) {
+                    ModalMessageError("Error", 'Failed ' + ex.responseText);
+                }
             });
 
-            $(".knob").knob();
-        };
+        }
+
+        function ConvertCurrency(value) {
+            if (value == null || value == "") {
+                value = 0;
+            }
+
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0
+            });
+
+            return formatter.format(value).replace("$","");
+        }
+
+function OrganizeData(transactions) {
+
+    var total = 0;
+    var approved =0;
+    var initial =0;//se cambio por total de las transacciones
+    var cancelled = 0;
+    var details = "";    
+    $.each(transactions, function (i, data) {
+        var text = "info";
+        if(data.STATE == "Aprobada"){
+            approved++;
+            total += data.TOTAL_AMOUNT;
+            text = "success";
+        }else if(data.STATE == "Cancelada"){
+            cancelled++;
+            text = "danger";
+        }
+
+        initial++;
+
+        details += "<tr><td>" + data.TRANSACTION_ID+"</td>"+
+            "<td>" + data.TRANSACT +"</td >"+
+            "<td>" + ConvertDate( data.DATE_BEGIN) +"</td>"+
+            "<td>" + ConvertCurrency(data.TOTAL_AMOUNT)+"</td>"+
+            "<td>" + ConvertCurrency(data.INCOME_AMOUNT)+"</td>"+
+            "<td>" + ConvertCurrency(data.RETURN_AMOUNT )+"</td>"+
+            "<td><span class='label label-" + text + "'>" + data.STATE +"</span></td></tr>";
+
+    });
+
+    $("#TotalAmount").html(ConvertCurrency(total));
+    $("#approved").html(approved);
+    $("#initial").html(initial);
+    $("#cancelled").html(cancelled);
+    $('.counter').counterUp({
+        delay: 100,
+        time: 1200
+    });
+
+    $("#tableTransactions tbody").html(details);
+
+}
+
     </script>
 }

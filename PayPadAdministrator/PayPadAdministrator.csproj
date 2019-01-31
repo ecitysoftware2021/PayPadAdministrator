@@ -275,6 +275,7 @@
     <Compile Include="Models\Sponsor.cs" />
     <Compile Include="Models\SponsorToClientViewModel.cs" />
     <Compile Include="Models\SubModule.cs" />
+    <Compile Include="Models\TransactionHomeViewModel.cs" />
     <Compile Include="Models\Transaction_Type.cs" />
     <Compile Include="Models\UserModule.cs" />
     <Compile Include="Models\UserOffice.cs" />

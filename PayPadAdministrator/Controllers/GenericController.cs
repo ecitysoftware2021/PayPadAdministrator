@@ -1,4 +1,5 @@
-﻿using PayPadAdministrator.Classes;
+﻿using Newtonsoft.Json;
+using PayPadAdministrator.Classes;
 using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Models;
 using PayPadAdministrator.Services;
@@ -147,6 +148,20 @@ namespace PayPadAdministrator.Controllers
             return Json(response);
         }
 
+        public async Task<JsonResult> GetTransactionHome(RequestReport model)
+        {
+            model.StartDate = DateTime.ParseExact(model.DateStartString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            model.FinishDate = DateTime.ParseExact(model.DateFinishString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            List<TransactionHomeViewModel> transactions = new List<TransactionHomeViewModel>();
+            var response = await apiService.InsertPost(model, "GetTransactionHome");
+            if (response.CodeError == 200)
+            {
+                transactions = JsonConvert.DeserializeObject<List<TransactionHomeViewModel>>(response.Data.ToString());
+            }
+
+            response.Data = transactions.OrderByDescending(t=>t.DATE_BEGIN).ToList();
+            return Json(response);
+        }
 
         public async Task<JsonResult> GetTransactionForTransact(RequestReport model)
         {
@@ -161,6 +176,20 @@ namespace PayPadAdministrator.Controllers
             model.StartDate = DateTime.ParseExact(model.DateStartString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             model.FinishDate = DateTime.ParseExact(model.DateFinishString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             var response = await apiService.InsertPost(model, "GetTransactionCM");
+            return Json(response);
+        }
+
+        public async Task<JsonResult> GetDashboardLog(int userId)
+        {
+            var url = string.Concat(Utilities.GetConfiguration("GetLogDashboardForUser"),"?userId=", userId);
+            var response = await apiService.GetDataV2(url);
+            List<DasboardLogViewModel> dasboardLogs = new List<DasboardLogViewModel>();
+            if (response.CodeError == 200)
+            {
+                dasboardLogs = JsonConvert.DeserializeObject<List<DasboardLogViewModel>>(response.Data.ToString());
+            }
+
+            response.Data = dasboardLogs.OrderByDescending(d=>d.DATE).ToList();
             return Json(response);
         }
     }
