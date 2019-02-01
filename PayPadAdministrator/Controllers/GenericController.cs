@@ -167,7 +167,14 @@ namespace PayPadAdministrator.Controllers
         {
             model.StartDate = DateTime.ParseExact(model.DateStartString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             model.FinishDate = DateTime.ParseExact(model.DateFinishString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            List<TransactionForTransactViewModel> transactions = new List<TransactionForTransactViewModel>();
             var response = await apiService.InsertPost(model, "GetTransactionForTransact");
+            if (response.CodeError == 200)
+            {
+                transactions = JsonConvert.DeserializeObject<List<TransactionForTransactViewModel>>(response.Data.ToString());
+            }
+
+            response.Data = transactions.OrderByDescending(t => t.DATE_BEGIN).ToList();
             return Json(response);
         }
 
@@ -190,6 +197,19 @@ namespace PayPadAdministrator.Controllers
             }
 
             response.Data = dasboardLogs.OrderByDescending(d=>d.DATE).ToList();
+            return Json(response);
+        }
+
+        public async Task<JsonResult> AssingDetailDeviceForPayPad(int Device_Paypad_ID, int denominationId, bool state)
+        {
+            var resquest = new Device_PayPad_Detail_ViewModel
+            {
+                DEVICE_PAYPAD_ID = Device_Paypad_ID,
+                CURRENCY_DENOMINATION_ID = denominationId,
+                STATE = state
+            };
+
+            var response = await apiService.InsertPost(resquest, "AssingDevicePayPadDetail");
             return Json(response);
         }
     }

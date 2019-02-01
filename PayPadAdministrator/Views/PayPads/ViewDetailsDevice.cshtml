@@ -43,7 +43,10 @@
                             </div>
 
                             <div class="table-detail table-actions-bar">
-
+                                @if (User.IsInRole("SuperAdmin"))
+                                {
+                                    <a href="@Url.Action("AssingDetailsDevice",new { data=encryptionHelper.EncryptString(string.Concat(Model.DevicePayPad.DEVICE_PAYPAD_ID,",",Model.DevicePayPad.PAYPAD_ID,",",Model.Device.NAME)) })" class="table-action-btn"><i class="md md-edit"></i></a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -88,42 +91,42 @@
                     <tbody>
                         @foreach (var item in Model.DevicePayPadDetails)
                         {
-                        <tr>
-                            <td>
-                                @if (item.CURRENCY_IMAGE != null)
-        {
-            var base64 = Convert.ToBase64String(item.CURRENCY_IMAGE);
-            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                        <img src="@imgSrc" alt="Image" style="width:80px; height: auto;" />
-}
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CASHBOX_QUANTITY)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TOTAL_CASHBOX)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.STACKER_QUANTITY)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TOTAL_STACKER)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MIN_STACKER_QUANTITY)
-                            </td>
-                            <td>
-                                <ul class="social-links list-inline m-0">
-                                    <li>
-                                        <a title="Editar Cantidad" data-placement="top"
-                                           data-toggle="tooltip" class="tooltips"
-                                           href="javascript:void(0)"
-                                           onclick="EditQuantity(@JsonConvert.SerializeObject(item))"
-                                           data-original-title="Editar Cantidad"><i class="fa fa-plus-circle"></i></a>
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    @if (item.CURRENCY_IMAGE != null)
+                                    {
+                                        var base64 = Convert.ToBase64String(item.CURRENCY_IMAGE);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                        <img src="@imgSrc" alt="Image" style="width:80px; height: auto;" />
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CASHBOX_QUANTITY)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TOTAL_CASHBOX)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.STACKER_QUANTITY)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TOTAL_STACKER)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MIN_STACKER_QUANTITY)
+                                </td>
+                                <td>
+                                    <ul class="social-links list-inline m-0">
+                                        <li>
+                                            <a title="Editar Cantidad" data-placement="top"
+                                               data-toggle="tooltip" class="tooltips"
+                                               href="javascript:void(0)"
+                                               onclick="EditQuantity(@JsonConvert.SerializeObject(item))"
+                                               data-original-title="Editar Cantidad"><i class="fa fa-plus-circle"></i></a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>

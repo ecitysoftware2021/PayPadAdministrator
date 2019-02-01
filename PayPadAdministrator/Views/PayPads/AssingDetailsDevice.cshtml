@@ -1,0 +1,105 @@
+﻿@model IEnumerable<PayPadAdministrator.Models.Currency_Denomination>
+
+@{
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
+            <p class="text-muted font-18">
+                <a href="javascript:history.back();" class="btn btn-default waves-effect waves-light">
+                    <i class="fa fa-mail-reply m-r-5"></i> <span>Átras</span>
+                </a>
+            </p>
+
+            <table data-toggle="table"
+                   data-show-columns="false"
+                   data-page-list="[5, 10, 20]"
+                   data-page-size="10"
+                   data-pagination="true" data-show-pagination-switch="true" class="table-bordered ">
+                <thead>
+                    <tr>
+                        <th data-field="Serial">
+                            Logo
+                        </th>
+                        <th data-field="Name">
+                            Valor
+                        </th>
+                        <th data-field="administrator" class="text-center">Adminitración</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @if (item.IMAGE != null)
+                                {
+                                    var base64 = Convert.ToBase64String(item.IMAGE);
+                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                    <img src="@imgSrc" style="width:80px;" />
+                                }
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.VALUE)
+                            </td>
+                            <td>
+                                @{
+                                    string icon = item.STATE ? "fa-square" : "fa-square-o";
+                                    if (item.STATE)
+                                    {
+                                        <a title="" data-placement="top" data-toggle="tooltip" onclick="AssingDetailDeviceForPayPad(@ViewBag.DevicePayPadId,@item.CURRENCY_DENOMINATION_ID,false)" class="tooltips" href="javascript:void(0)"><i class="fa @icon fa-lg"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <a title="" data-placement="top" data-toggle="tooltip" onclick="AssingDetailDeviceForPayPad(@ViewBag.DevicePayPadId,@item.CURRENCY_DENOMINATION_ID,true)" class="tooltips" href="javascript:void(0)"><i class="fa @icon fa-lg"></i></a>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+        function AssingDetailDeviceForPayPad(AssingDetailDeviceForPayPad, denominationId, state) {
+            var data = {
+                Device_Paypad_ID: AssingDetailDeviceForPayPad,
+                denominationId: denominationId,
+                state: state
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AssingDetailDeviceForPayPad", "Generic")',
+                dataType: 'json',
+                data: data,
+                success: function (data) {
+                    if (data.CodeError == 200) {
+                        if (state) {
+                            MessageSuccess("¡Buen Trabajo!", "Se asignó el modulo correctamente");
+                        } else {
+                            MessageSuccess("¡Buen Trabajo!", "Se eliminó el modulo correctamente");
+                        }
+
+                    } else {
+                        ModalMessageError("Error", data.Message);
+                    }
+                },
+                error: function (ex) {
+                    ModalMessageError("Error", 'Failed ' + ex.responseText);
+                }
+            });
+        }
+
+    </script>
+}

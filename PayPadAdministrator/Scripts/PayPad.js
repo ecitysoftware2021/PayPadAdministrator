@@ -19,6 +19,11 @@ function ConvertDate(date) {
 }
 
 function ConvertDateV2(date) {
+    if (date == null || date == "") {
+        return "";
+    }
+
+
     var myDate = new Date(date.match(/\d+/)[0] * 1);
     var newdate = GetDateFormatHour(myDate);
     return newdate;

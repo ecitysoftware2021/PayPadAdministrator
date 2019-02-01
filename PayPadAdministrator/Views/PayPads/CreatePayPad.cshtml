@@ -112,6 +112,7 @@
     <script type="text/javascript">
         $("#CUSTOMER_ID").change(function(){
             var customerId = $("#CUSTOMER_ID").val();
+            $("#OFFICE_ID").empty();
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetOffice","Generic")',

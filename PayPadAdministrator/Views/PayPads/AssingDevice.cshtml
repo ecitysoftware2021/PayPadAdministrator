@@ -42,7 +42,11 @@
                             }
                         }
 
-                        <a href="@Url.Action("ViewDetailsDevice", new { data = encryptionHelper.EncryptString(string.Concat(ViewBag.PayPadId,",",item.DEVICE_ID))})" class="btn btn-success waves-effect waves-light w-sm">Detalle</a>
+                        @if (item.STATE)
+                        {
+                            <a href="@Url.Action("ViewDetailsDevice", new { data = encryptionHelper.EncryptString(string.Concat(ViewBag.PayPadId,",",item.DEVICE_ID))})" class="btn btn-success waves-effect waves-light w-sm">Detalle</a>
+                        }
+
 
                     </div> <!-- end Pricing_card -->
                 </div> <!-- end col -->

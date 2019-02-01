@@ -40,6 +40,7 @@
     <mvcSiteMapNode title="Dispositivos" action="Index" controller="Devices" >
       <mvcSiteMapNode title="Crear Dispositivo" action="CreateDevice" controller="Devices" />
     </mvcSiteMapNode>
+    <mvcSiteMapNode title="Reportes por trámite" action="GetTransactionForTransact" controller="Reports" />          
     <mvcSiteMapNode title="Usuarios" action="Index" controller="Users" />
     <mvcSiteMapNode title="Usuarios Responsables" action="Responsible" controller="Users">
       <mvcSiteMapNode title="Crear Usuario" action="CreateUserResponsible" controller="Users" />

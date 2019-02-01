@@ -125,6 +125,26 @@ namespace PayPadAdministrator.Helpers
             return payPads;
         }
 
+
+        public static async Task<List<PayPad>> GetAllsPaypadsForSponsor(int customerId)
+        {
+            List<PayPad> payPads = new List<PayPad>();
+            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetAllPayPadsForSponsor"), customerId));
+            if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
+            {
+                payPads = JsonConvert.DeserializeObject<List<PayPad>>(response.Data.ToString());
+            }
+
+            payPads.Add(new PayPad
+            {
+                PAYPAD_ID = 0,
+                NAME = "Seleccione un Pay +"
+            });
+
+            return payPads;
+        }
+
+
         public static async Task<List<Customer>> GetAllCustomers()
         {
             List<Customer> clients = new List<Customer>();

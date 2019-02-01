@@ -16,7 +16,7 @@ namespace PayPadAdministrator.Controllers
         ApiService apiService = new ApiService();
 
         [CustomAuthorize]
-        public async Task< ActionResult> Index()
+        public async Task<ActionResult> Index()
         {
             var userCurrent = apiService.ValidateUser(User.Identity.Name);
             List<PayPad> payPads = new List<PayPad>();
@@ -28,12 +28,17 @@ namespace PayPadAdministrator.Controllers
             {
                 payPads = await ComboHelper.GetAllsPaypadsForCustomer(userCurrent.CUSTOMER_ID);
             }
+            else if (User.IsInRole("Director"))
+            {
+                payPads = await ComboHelper.GetAllsPaypadsForSponsor(userCurrent.CUSTOMER_ID);
+            }
             else
             {
-                payPads = await ComboHelper.GetAllsPaypadsForCustomer(userCurrent.USER_ID);
+                payPads = await ComboHelper.GetAllsPaypadsForUser(userCurrent.USER_ID);
             }
 
             ViewBag.PayPadId = new SelectList(payPads, nameof(PayPad.PAYPAD_ID), nameof(PayPad.NAME), 0);
+
             return View();
         }
     }

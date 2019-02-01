@@ -5,9 +5,13 @@
 }
 
 <p>
-    <a href="@Url.Action("CreateOffice",new { id = ViewBag.CustomerId })" class="btn btn-default waves-effect waves-light">
-        <i class="fa fa-plus-circle m-r-5"></i> <span>Crear Nuevo</span>
-    </a>
+    @if (!User.IsInRole("Responsables"))
+    {
+        <a href="@Url.Action("CreateOffice",new { id = ViewBag.CustomerId })" class="btn btn-default waves-effect waves-light">
+            <i class="fa fa-plus-circle m-r-5"></i> <span>Crear Nuevo</span>
+        </a>
+    }
+
     <a href="javascript:history.back();" class="btn btn-default waves-effect waves-light">
         <i class="fa fa-mail-reply m-r-5"></i> <span>Átras</span>
     </a>
@@ -62,7 +66,11 @@
                             <td>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <a title="Mostrar Usuarios" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingUserToIffice",new { id=item.OFFICE_ID })"><i class="fa fa-user fa-lg"></i></a>
+                                        @if (!User.IsInRole("Responsables"))
+                                        {
+                                            <a title="Mostrar Usuarios" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingUserToIffice",new { id=item.OFFICE_ID })"><i class="fa fa-user fa-lg"></i></a>
+                                        }
+
                                     </div>
                                 </div>
                             </td>

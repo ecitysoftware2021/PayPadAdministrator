@@ -110,8 +110,9 @@
             $("#tblTransactions").table2excel({ filename: name });
         });
 
-        $("#PayPadId").change(function(){
+        $("#PayPadId").change(function () {
             var payPadId = $("#PayPadId").val();
+            $("#TransactId").empty();
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetTransacts", "Generic")',
@@ -186,8 +187,8 @@
                     "<td>" + data.TRANSACTION_ID + "</td>" +
                     "<td>" + data.PAYPAD_NAME + "</td>" +
                     "<td>" + data.TRANSACT + "</td>" +
-                    "<td>" + data.DATE_BEGIN + "</td>" +
-                    "<td>" + data.DATE_END + "</td>" +
+                    "<td>" + ConvertDateV2(data.DATE_BEGIN) + "</td>" +
+                    "<td>" + ConvertDateV2(data.DATE_END) + "</td>" +
                     "<td>" + data.TOTAL_AMOUNT + "</td>" +
                     "<td>" + data.INCOME_AMOUNT + "</td>" +
                     "<td>" + data.RETURN_AMOUNT + "</td>" +

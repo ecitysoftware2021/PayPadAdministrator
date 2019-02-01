@@ -245,7 +245,7 @@ namespace PayPadAdministrator.Controllers
                 if (string.IsNullOrEmpty(data))
                 {
                     //TODO:Colocar la pagina no disponible
-                    return RedirectToAction("Index");
+                    return RedirectToAction("AccessDenied","Errors");
                 }
 
                 EncryptionHelper encryptionHelper = new EncryptionHelper();
@@ -268,7 +268,32 @@ namespace PayPadAdministrator.Controllers
                 return RedirectToAction("Error500", "Errors");
             }
         }
-        
+
+        public async Task<ActionResult> AssingDetailsDevice(string data)
+        {
+            if (string.IsNullOrEmpty(data))
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
+            EncryptionHelper encryptionHelper = new EncryptionHelper();
+            var text = encryptionHelper.DecryptString(data);
+            string paypadDeviceId = text.Split(',')[0];
+            string payPadId = text.Split(',')[1];
+            List<Currency_Denomination> currency_Denominations = new List<Currency_Denomination>();
+            var url = string.Concat(Utilities.GetConfiguration("GetDenominationsForDevice"), "devicePaypad_Id=", paypadDeviceId, "&payPad_Id=", payPadId);
+            var response = await apiService.GetDataV2(url);
+            if (response.CodeError == 200)
+            {
+                currency_Denominations = JsonConvert.DeserializeObject<List<Currency_Denomination>>(response.Data.ToString());
+            }
+            
+            ViewBag.Title = "Asignar Denominaciones para " + text.Split(',')[2];
+            ViewBag.DevicePayPadId = paypadDeviceId;
+            return View(currency_Denominations);
+        }
+
+
         public ActionResult EditQuantitiesDevicePayPad(Device_PayPad_Detail_ViewModel device)
         {
             return PartialView(device);

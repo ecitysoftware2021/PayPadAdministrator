@@ -33,9 +33,13 @@ namespace PayPadAdministrator.Controllers
             {
                 payPads = await ComboHelper.GetAllsPaypadsForCustomer(userCurrent.CUSTOMER_ID);
             }
+            else if (User.IsInRole("Director"))
+            {
+                payPads = await ComboHelper.GetAllsPaypadsForSponsor(userCurrent.CUSTOMER_ID);
+            }
             else
             {
-                payPads = await ComboHelper.GetAllsPaypadsForCustomer(userCurrent.USER_ID);
+                payPads = await ComboHelper.GetAllsPaypadsForUser(userCurrent.USER_ID);
             }
 
             ViewBag.PayPadId = new SelectList(payPads, nameof(PayPad.PAYPAD_ID), nameof(PayPad.NAME), 0);
