@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Usuarios";
+
+    PayPadAdministrator.Helpers.EncryptionHelper encryptionHelper = new PayPadAdministrator.Helpers.EncryptionHelper();
 }
 
 <link href="~/Scripts/plugins/custombox/dist/custombox.min.css" rel="stylesheet">
@@ -43,7 +45,7 @@
                         <p class="text-dark"><i class="md md-business m-r-10"></i><small>@Html.DisplayFor(modelItem => item.CUSTOMER_NAME)</small></p>
                         <p class="text-dark"><i class="md md-business m-r-10"></i><small>@Html.DisplayFor(modelItem => item.ROL_NAME)</small></p>
                         <div class="contact-action">
-                            <a href="#" class="btn btn-success btn-sm"><i class="md md-mode-edit"></i></a>
+                            <a href="@Url.Action("EditUser", new {data = encryptionHelper.EncryptString(item.USERNAME) })" class="btn btn-success btn-sm"><i class="md md-mode-edit"></i></a>
                             <a href="#" class="btn btn-danger btn-sm"><i class="md md-close"></i></a>
                         </div>
                     </div>

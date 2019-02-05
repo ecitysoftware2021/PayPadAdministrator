@@ -358,5 +358,74 @@ namespace PayPadAdministrator.Controllers
             return View(officeUserViewModel);
         }
 
+        public async Task<ActionResult> EditCustomer(int id)
+        {
+            List<Customer> clients = new List<Customer>();
+            var request = new GetRequest
+            {
+                Parameter = id.ToString(),
+                Type = 2
+            };
+
+            var response = await apiService.InsertPost(request, "GetCustomers");
+            if (response.CodeError == 200)
+            {
+                clients = JsonConvert.DeserializeObject<List<Customer>>(response.Data.ToString());
+            }
+
+            var customer = clients.FirstOrDefault();
+            if (customer == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
+            ViewBag.TYPE_CUSTOMER_ID = new SelectList(await ComboHelper.GetTypeCustomers(),
+                                        nameof(CustomerType.CUSTOMER_TYPE_ID),
+                                        nameof(CustomerType.DESCRIPTION), customer.TYPE_CUSTOMER_ID);
+            ViewBag.LOCATION_ID = new SelectList(await ComboHelper.GetLocations(),
+                                                    nameof(Location.LOCATION_ID),
+                                                    nameof(Location.NAME), customer.LOCATION_ID);
+            return View(customer);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditCustomer(Customer customer)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.TYPE_CUSTOMER_ID = new SelectList(await ComboHelper.GetTypeCustomers(),
+                        nameof(CustomerType.CUSTOMER_TYPE_ID),
+                        nameof(CustomerType.DESCRIPTION), customer.TYPE_CUSTOMER_ID);
+                ViewBag.LOCATION_ID = new SelectList(await ComboHelper.GetLocations(),
+                                                        nameof(Location.LOCATION_ID),
+                                                        nameof(Location.NAME), customer.LOCATION_ID);
+                return View(customer);
+            }
+
+            if (customer.ImagePathFile != null)
+            {
+                customer.ICON = Utilities.GenerateByteArray(customer.ImagePathFile.InputStream);
+                customer.ImagePathFile = null;
+            }
+
+            var response = await apiService.InsertPost(customer, "UpdateCustomer");
+            if (response.CodeError != 200)
+            {
+                ViewBag.TYPE_CUSTOMER_ID = new SelectList(await ComboHelper.GetTypeCustomers(),
+                                                    nameof(CustomerType.CUSTOMER_TYPE_ID),
+                                                    nameof(CustomerType.DESCRIPTION), customer.TYPE_CUSTOMER_ID);
+                ViewBag.LOCATION_ID = new SelectList(await ComboHelper.GetLocations(),
+                                                        nameof(Location.LOCATION_ID),
+                                                        nameof(Location.NAME), customer.LOCATION_ID);
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View(customer);
+            }
+
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se actualizó el cliente ", customer.NAME), url);
+            return RedirectToAction("Index", new { Message = "Se actualizó el cliente correctamente" });
+        }
     }
 }

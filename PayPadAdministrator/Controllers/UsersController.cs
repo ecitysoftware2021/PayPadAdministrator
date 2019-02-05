@@ -193,5 +193,125 @@ namespace PayPadAdministrator.Controllers
 
             return password.Replace(" ", string.Empty);
         }
+
+        public async Task<ActionResult> EditUser(string data)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(data))
+                {
+                    return RedirectToAction("AccessDenied", "Errors");
+                }
+
+                EncryptionHelper encryptionHelper = new EncryptionHelper();
+                var username = encryptionHelper.DecryptString(data);
+
+                var user = apiService.ValidateUser(username);
+                if (user == null)
+                {
+                    return RedirectToAction("AccessDenied", "Errors");
+                }
+
+                ViewBag.ROLE_ID = new SelectList(await ComboHelper.GetRoles(), nameof(Role.ROLE_ID), nameof(Role.DESCRIPTION), user.ROLE_ID);
+                ViewBag.CUSTOMER_ID = new SelectList(await ComboHelper.GetAllCustomers(), nameof(Customer.CUSTOMER_ID), nameof(Customer.NAME), user.CUSTOMER_ID);
+                return View(user);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error500", "Errors");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditUser(UserViewModel user)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ROLE_ID = new SelectList(await ComboHelper.GetRoles(), nameof(Role.ROLE_ID), nameof(Role.DESCRIPTION), user.ROLE_ID);
+                ViewBag.CUSTOMER_ID = new SelectList(await ComboHelper.GetAllCustomers(), nameof(Customer.CUSTOMER_ID), nameof(Customer.NAME), user.CUSTOMER_ID);
+                return View(user);
+            }
+
+            if (user.ImagePathFile != null)
+            {
+                user.IMAGE = Utilities.GenerateByteArray(user.ImagePathFile.InputStream);
+                user.ImagePathFile = null;
+            }
+            
+            var response = await apiService.InsertPost(user, "UpdateUser");
+            if (response.CodeError != 200)
+            {
+                ViewBag.ROLE_ID = new SelectList(await ComboHelper.GetRoles(), nameof(Role.ROLE_ID), nameof(Role.DESCRIPTION), user.ROLE_ID);
+                ViewBag.CUSTOMER_ID = new SelectList(await ComboHelper.GetAllCustomers(), nameof(Customer.CUSTOMER_ID), nameof(Customer.NAME), user.CUSTOMER_ID);
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View(user);
+            }
+
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se actualizó el usuario ", user.USERNAME), url);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> EditUserResponsible(string data)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(data))
+                {
+                    return RedirectToAction("AccessDenied", "Errors");
+                }
+
+                EncryptionHelper encryptionHelper = new EncryptionHelper();
+                var username = encryptionHelper.DecryptString(data);
+
+                var user = apiService.ValidateUser(username);
+                if (user == null)
+                {
+                    return RedirectToAction("AccessDenied", "Errors");
+                }
+
+                ViewBag.ROLE_ID = new SelectList(await ComboHelper.GetRoles(), nameof(Role.ROLE_ID), nameof(Role.DESCRIPTION), user.ROLE_ID);
+                ViewBag.CUSTOMER_ID = new SelectList(await ComboHelper.GetAllCustomers(), nameof(Customer.CUSTOMER_ID), nameof(Customer.NAME), user.CUSTOMER_ID);
+                return View(user);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error500", "Errors");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditUserResponsible(UserViewModel user)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ROLE_ID = new SelectList(await ComboHelper.GetRoles(), nameof(Role.ROLE_ID), nameof(Role.DESCRIPTION), user.ROLE_ID);
+                ViewBag.CUSTOMER_ID = new SelectList(await ComboHelper.GetAllCustomers(), nameof(Customer.CUSTOMER_ID), nameof(Customer.NAME), user.CUSTOMER_ID);
+                return View(user);
+            }
+
+            if (user.ImagePathFile != null)
+            {
+                user.IMAGE = Utilities.GenerateByteArray(user.ImagePathFile.InputStream);
+                user.ImagePathFile = null;
+            }
+
+            var response = await apiService.InsertPost(user, "UpdateUser");
+            if (response.CodeError != 200)
+            {
+                ViewBag.ROLE_ID = new SelectList(await ComboHelper.GetRoles(), nameof(Role.ROLE_ID), nameof(Role.DESCRIPTION), user.ROLE_ID);
+                ViewBag.CUSTOMER_ID = new SelectList(await ComboHelper.GetAllCustomers(), nameof(Customer.CUSTOMER_ID), nameof(Customer.NAME), user.CUSTOMER_ID);
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View(user);
+            }
+
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se actualizó el usuario ", user.USERNAME), url);
+            return RedirectToAction("Index");
+        }
     }
 }

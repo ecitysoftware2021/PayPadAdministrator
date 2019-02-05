@@ -90,6 +90,12 @@
                                            href="@Url.Action("AssingModuleToCustomer","Modules",new { id = item.CUSTOMER_ID})"
                                            data-original-title="Asignar Menú"><i class="fa fa-object-group"></i></a>
                                     </li>
+                                    <li>
+                                        <a title="Editar Cliente" data-placement="top"
+                                           data-toggle="tooltip" class="tooltips"
+                                           href="@Url.Action("EditCustomer",new { id = item.CUSTOMER_ID})"
+                                           data-original-title="Editar Cliente"><i class="fa fa-edit"></i></a>
+                                    </li>
                                 </ul>
                             </td>
                         </tr>

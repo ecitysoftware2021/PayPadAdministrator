@@ -2441,6 +2441,9 @@
     <Content Include="Views\Users\UserDetails.cshtml" />
     <Content Include="Views\PayPads\EditQuantitiesDevicePayPad.cshtml" />
     <Content Include="Views\PayPads\AssingDetailsDevice.cshtml" />
+    <Content Include="Views\Customers\EditCustomer.cshtml" />
+    <Content Include="Views\Users\EditUser.cshtml" />
+    <Content Include="Views\Users\EditUserResponsible.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

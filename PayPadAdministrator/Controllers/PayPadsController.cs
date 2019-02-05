@@ -271,26 +271,33 @@ namespace PayPadAdministrator.Controllers
 
         public async Task<ActionResult> AssingDetailsDevice(string data)
         {
-            if (string.IsNullOrEmpty(data))
+            try
             {
-                return RedirectToAction("AccessDenied", "Errors");
-            }
+                if (string.IsNullOrEmpty(data))
+                {
+                    return RedirectToAction("AccessDenied", "Errors");
+                }
 
-            EncryptionHelper encryptionHelper = new EncryptionHelper();
-            var text = encryptionHelper.DecryptString(data);
-            string paypadDeviceId = text.Split(',')[0];
-            string payPadId = text.Split(',')[1];
-            List<Currency_Denomination> currency_Denominations = new List<Currency_Denomination>();
-            var url = string.Concat(Utilities.GetConfiguration("GetDenominationsForDevice"), "devicePaypad_Id=", paypadDeviceId, "&payPad_Id=", payPadId);
-            var response = await apiService.GetDataV2(url);
-            if (response.CodeError == 200)
-            {
-                currency_Denominations = JsonConvert.DeserializeObject<List<Currency_Denomination>>(response.Data.ToString());
+                EncryptionHelper encryptionHelper = new EncryptionHelper();
+                var text = encryptionHelper.DecryptString(data);
+                string paypadDeviceId = text.Split(',')[0];
+                string payPadId = text.Split(',')[1];
+                List<Currency_Denomination> currency_Denominations = new List<Currency_Denomination>();
+                var url = string.Concat(Utilities.GetConfiguration("GetDenominationsForDevice"), "devicePaypad_Id=", paypadDeviceId, "&payPad_Id=", payPadId);
+                var response = await apiService.GetDataV2(url);
+                if (response.CodeError == 200)
+                {
+                    currency_Denominations = JsonConvert.DeserializeObject<List<Currency_Denomination>>(response.Data.ToString());
+                }
+
+                ViewBag.Title = "Asignar Denominaciones para " + text.Split(',')[2];
+                ViewBag.DevicePayPadId = paypadDeviceId;
+                return View(currency_Denominations);
             }
-            
-            ViewBag.Title = "Asignar Denominaciones para " + text.Split(',')[2];
-            ViewBag.DevicePayPadId = paypadDeviceId;
-            return View(currency_Denominations);
+            catch (Exception)
+            {
+                return RedirectToAction("Error500", "Errors");
+            }
         }
 
 
