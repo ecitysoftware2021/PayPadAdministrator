@@ -15,7 +15,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.PayPadId, htmlAttributes: new { @class = "col-sm-3 control-label" })
                                 <div class="col-sm-9">
-                                    @Html.DropDownList("PayPadId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.DropDownList("PayPadId", null, htmlAttributes: new { @class = "form-control select2" })
                                     @Html.ValidationMessageFor(model => model.PayPadId, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -138,7 +138,6 @@
                                     <th data-field="estado">Administración</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
@@ -154,9 +153,12 @@
 
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
+        var datetable ="";
 
+        $(document).ready(function () {
 
-                $(document).ready(function () {
+        datetable = $('#tableTransactions').DataTable();
+
             $("body").on("click", "a.dialog-window", null, function (e) {
                 e.preventDefault();
                 var $link = $(this);
@@ -196,7 +198,7 @@
                 DateStartString:$("#StartDate").val(),
                 DateFinishString:$("#FinishDate").val(),
             }
-
+        
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetTransactionHome", "Generic")',
@@ -231,7 +233,9 @@
             return formatter.format(value).replace("$","");
         }
 
-function OrganizeData(transactions) {
+function OrganizeData(transactions) {     
+        
+     datetable.clear().draw();
 
     var total = 0;
     var approved =0;
@@ -251,19 +255,21 @@ function OrganizeData(transactions) {
 
         initial++;
 
-        details += "<tr><td>" + data.TRANSACTION_ID+"</td>"+
-            "<td>" + data.TRANSACT +"</td >"+
-            "<td>" + ConvertDate( data.DATE_BEGIN) +"</td>"+
-            "<td>" + ConvertCurrency(data.TOTAL_AMOUNT)+"</td>"+
-            "<td>" + ConvertCurrency(data.INCOME_AMOUNT)+"</td>"+
-            "<td>" + ConvertCurrency(data.RETURN_AMOUNT )+"</td>"+
-            "<td><span class='label label-" + text + "'>" + data.STATE +"</span></td>"+
-            "<td><a href='/Reports/GetDetailsFromTransactions/"+data.TRANSACTION_ID+"'"+
+        var state = "<span class='label label-" + text + "'>" + data.STATE +"</span>";
+        var admin = "<a href='/Reports/GetDetailsFromTransactions/"+data.TRANSACTION_ID+"'"+
                     "data-placement='top' data-toggle='tooltip' class='tooltips dialog-window' data-original-title='Detalle'>"+
                     "<i class='fa fa-server'></i>"+
-                    "</a>  </td>"+
-        "</tr>";
-
+                    "</a> ";
+        datetable.row.add( [
+            data.TRANSACTION_ID,
+            data.TRANSACT,
+            ConvertDate( data.DATE_BEGIN),
+            ConvertCurrency(data.TOTAL_AMOUNT),
+            ConvertCurrency(data.INCOME_AMOUNT),
+        ConvertCurrency(data.RETURN_AMOUNT ),
+        state,
+        admin
+        ] ).draw( false );
     });
 
     $("#TotalAmount").html(ConvertCurrency(total));
@@ -274,9 +280,6 @@ function OrganizeData(transactions) {
         delay: 100,
         time: 1200
     });
-
-    $("#tableTransactions tbody").html(details);
-    $('#tableTransactions').dataTable();
 
 }
 

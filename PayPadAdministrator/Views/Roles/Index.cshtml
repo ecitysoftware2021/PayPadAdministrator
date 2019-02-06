@@ -16,7 +16,7 @@
             <table data-toggle="table"
                    data-show-columns="false"
                    data-page-list="[5, 10, 20]"
-                   data-page-size="5"
+                   data-page-size="10"
                    data-pagination="true" data-show-pagination-switch="true" class="table-bordered ">
                 <thead>
                     <tr>
@@ -46,10 +46,7 @@
                             @Html.DisplayFor(modelItem => item.STATE)
                         </td>
                         <td>
-                            <a title="Editar Cliente" data-placement="top"
-                               data-toggle="tooltip" class="tooltips"
-                               href="@Url.Action("EditTransact",new { id = item.TRANSACTION_TYPE_ID})"
-                               data-original-title="Editar"><i class="fa fa-edit"></i></a>
+
                         </td>
                     </tr>
                     }
