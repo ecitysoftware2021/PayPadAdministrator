@@ -1,8 +1,9 @@
-﻿@model PayPadAdministrator.Models.Device
+﻿@model PayPadAdministrator.Models.PayPad
 
 @{
-    ViewBag.Title = "Editar Dispositivos";
+    ViewBag.Title = "Editar Pay+";
 }
+
 
 <div class="row">
     <div class="col-sm-12">
@@ -10,22 +11,14 @@
             <div class="row">
                 <div class="col-md-6">
                     <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
-
-                    @using (Html.BeginForm("EditDevice", "Devices", new { }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                    @using (Html.BeginForm("EditPayPad", "PayPads", new { }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => model.DEVICE_ID)
+                        @Html.HiddenFor(model => model.PAYPAD_ID)
                         @Html.HiddenFor(model => model.IMAGE)
                         @Html.HiddenFor(model => model.STATE)
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.SERIAL, htmlAttributes: new { @class = "col-sm-3 control-label" })
-                            <div class="col-sm-9">
-                                @Html.EditorFor(model => model.SERIAL, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.SERIAL, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.NAME, htmlAttributes: new { @class = "col-sm-3 control-label" })
                             <div class="col-sm-9">
@@ -41,19 +34,44 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.BRAND, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                            @Html.LabelFor(model => model.LONGITUDE, htmlAttributes: new { @class = "col-sm-3 control-label" })
                             <div class="col-sm-9">
-                                @Html.EditorFor(model => model.BRAND, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.BRAND, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.LONGITUDE, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.LONGITUDE, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.DEVICE_TYPE_ID, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                            @Html.LabelFor(model => model.LATITUDE, htmlAttributes: new { @class = "col-sm-3 control-label" })
                             <div class="col-sm-9">
-                                @Html.DropDownList("DEVICE_TYPE_ID", null, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.DEVICE_TYPE_ID, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.LATITUDE, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.LATITUDE, "", new { @class = "text-danger" })
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CUSTOMER_ID, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.DropDownList("CUSTOMER_ID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CUSTOMER_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OFFICE_ID, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.DropDownList("OFFICE_ID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OFFICE_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CURRENCY_ID, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.DropDownList("CURRENCY_ID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CURRENCY_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="form-group label-floating">
                                 @Html.LabelFor(model => model.ImagePathFile, htmlAttributes: new { @class = "col-sm-3 control-label" })
@@ -76,6 +94,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group m-b-0">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <button type="submit" class="btn btn-info waves-effect waves-light">Crear</button>
@@ -85,7 +104,6 @@
                             </div>
                         </div>
                     }
-
                 </div>
             </div>
         </div>
@@ -94,4 +112,30 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $("#CUSTOMER_ID").change(function(){
+            var customerId = $("#CUSTOMER_ID").val();
+            $("#OFFICE_ID").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetOffice","Generic")',
+                dataType: 'json',
+                data: {customerId : customerId},
+                success: function (data) {
+                    if (data.CodeError == 200) {
+                        $.each(data.Data, function (i, data) {
+                            $("#OFFICE_ID").append('<option value="'
+                                + data.OFFICE_ID + '">'
+                                + data.NAME + '</option>');
+                        });
+                    } else {
+                        ModalMessageError("Error", data.Message);
+                    }
+                },
+                error: function (ex) {
+                    ModalMessageError("Error", 'Failed ' + ex.responseText);
+                }
+            });
+        });
+    </script>
 }

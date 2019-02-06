@@ -60,8 +60,13 @@ namespace PayPadAdministrator.Controllers
             return RedirectToAction("Currencies");
         }
 
-        public async Task<ActionResult> ShowDenominationForCurrency(int id)
+        public async Task<ActionResult> ShowDenominationForCurrency(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
             CurrencyDenominationViewModel currency = new CurrencyDenominationViewModel();
             var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetDenominationsForCurrency"), id));
             if (response.CodeError == 200)
@@ -72,11 +77,16 @@ namespace PayPadAdministrator.Controllers
             return View(currency);
         }
 
-        public ActionResult CreateDenominationForCurrency(int id)
+        public ActionResult CreateDenominationForCurrency(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
             var Currency = new Currency_Denomination
             {
-                CURRENCY_ID = id
+                CURRENCY_ID = id.Value
             };
 
             return View(Currency);
@@ -113,8 +123,13 @@ namespace PayPadAdministrator.Controllers
         }
 
 
-        public async Task<ActionResult> EditDenominationForCurrency(int id)
+        public async Task<ActionResult> EditDenominationForCurrency(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
             Currency_Denomination currency_Denomination = new Currency_Denomination();
             var url = string.Concat(Utilities.GetConfiguration("GetCurrency_DenominationForId"), id);
             var response = await apiService.GetDataV2(url);
@@ -135,14 +150,12 @@ namespace PayPadAdministrator.Controllers
                 return View(currency_Denomination);
             }
 
-            if (currency_Denomination.ImagePathFile == null)
+            if (currency_Denomination.ImagePathFile != null)
             {
-                ModelState.AddModelError(string.Empty, "Debe ingresar el logo");
-                return View(currency_Denomination);
+                currency_Denomination.IMAGE = Utilities.GenerateByteArray(currency_Denomination.ImagePathFile.InputStream);
+                currency_Denomination.ImagePathFile = null;
             }
 
-            currency_Denomination.IMAGE = Utilities.GenerateByteArray(currency_Denomination.ImagePathFile.InputStream);
-            currency_Denomination.ImagePathFile = null;
             var response = await apiService.InsertPost(currency_Denomination, "UpdateDenominationForCurrency");
             if (response.CodeError != 200)
             {

@@ -11,12 +11,17 @@
             <div class="row">
                 <div class="col-md-12">
                     <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
-                    @using (Html.BeginForm("CreateUserResponsible", "Users", new { }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                    @using (Html.BeginForm("EditUser", "Users", new { }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.USER_ID)
                         @Html.HiddenFor(model => model.CUSTOMER_ID)
                         @Html.HiddenFor(model => model.ROLE_ID)
+                        @Html.HiddenFor(model => model.USERNAME)
+                        @Html.HiddenFor(model => model.PASSWORD)
+                        @Html.HiddenFor(model => model.IMAGE)
+                        @Html.HiddenFor(model => model.STATE)
 
                         <div class="row">
                             <div class="col-md-6">
@@ -37,7 +42,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.USERNAME, htmlAttributes: new { @class = "col-sm-3 control-label" })
                                     <div class="col-sm-9">
-                                        @Html.EditorFor(model => model.USERNAME, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.USERNAME, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
                                         @Html.ValidationMessageFor(model => model.USERNAME, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -82,7 +87,7 @@
                                 </div>
                                 <div class="form-group m-b-0">
                                     <div class="col-sm-offset-3 col-sm-9">
-                                        <button type="submit" class="btn btn-info waves-effect waves-light">Crear</button>
+                                        <button type="submit" class="btn btn-info waves-effect waves-light">Guardar</button>
                                         <a href="@Url.Action("Responsible")" class="btn btn-default waves-effect waves-light">
                                             <i class="fa fa-mail-reply m-r-5"></i> <span>Átras</span>
                                         </a>

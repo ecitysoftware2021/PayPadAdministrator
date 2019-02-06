@@ -1,7 +1,7 @@
 ﻿@model PayPadAdministrator.Models.Currency_Denomination
 
 @{
-    ViewBag.Title = "Crear denominación";
+    ViewBag.Title = "Editar denominación";
 }
 
 <div class="row">
@@ -16,7 +16,9 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.HiddenFor(model => model.CURRENCY_DENOMINATION_ID)
                         @Html.HiddenFor(model => model.CURRENCY_ID)
+                        @Html.HiddenFor(model => model.IMAGE)
                         @Html.HiddenFor(model => model.STATE)
+
                         <div class="form-group">
                             @Html.LabelFor(model => model.VALUE, htmlAttributes: new { @class = "col-sm-3 control-label" })
                             <div class="col-sm-9">

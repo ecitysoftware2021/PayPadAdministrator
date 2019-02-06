@@ -1,4 +1,6 @@
-﻿using PayPadAdministrator.Helpers;
+﻿using Newtonsoft.Json;
+using PayPadAdministrator.Classes;
+using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Models;
 using PayPadAdministrator.Services;
 using System;
@@ -67,6 +69,24 @@ namespace PayPadAdministrator.Controllers
 
             ViewBag.PayPadId = new SelectList(payPads, nameof(PayPad.PAYPAD_ID), nameof(PayPad.NAME), 0);            
             return View();
+        }
+
+        public async Task<ActionResult> GetDetailsFromTransactions(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
+            var url = string.Concat(Utilities.GetConfiguration("GetTransactionDescriptionsForId"), id);
+            var response = await apiService.GetDataV2(url);
+            if (response.CodeError != 200)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
+            var transactions = JsonConvert.DeserializeObject<TransactionViewModel>(response.Data.ToString());
+            return PartialView(transactions);
         }
     }
 }

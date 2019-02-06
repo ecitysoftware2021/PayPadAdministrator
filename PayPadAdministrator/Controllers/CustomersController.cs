@@ -104,8 +104,13 @@ namespace PayPadAdministrator.Controllers
         }
 
         [CustomAuthorize(Roles = "SuperAdmin")]
-        public async Task<ActionResult> AssingClient(int id)
+        public async Task<ActionResult> AssingClient(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
             SponsorToClientViewModelV2 sponsor = new SponsorToClientViewModelV2();
             var request = new GetRequest
             {
@@ -120,7 +125,7 @@ namespace PayPadAdministrator.Controllers
                 sponsor.Sponsor = dd[0];
                 var data = new Sponsor
                 {
-                    SPONSOR_CUSTOMER_ID = id
+                    SPONSOR_CUSTOMER_ID = id.Value
                 };
 
                 var responseClient = await apiService.InsertPost(data, "GetClientsFromSponsor");
@@ -161,8 +166,9 @@ namespace PayPadAdministrator.Controllers
         {
             if (id == null && User.IsInRole("SuperAdmin"))
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("AccessDenied", "Errors");
             }
+
             else if (id == null)
             {
                 var usercurrent = apiService.ValidateUser(User.Identity.Name);
@@ -188,11 +194,16 @@ namespace PayPadAdministrator.Controllers
         }
 
 
-        public ActionResult CreateOffice(int id)
+        public ActionResult CreateOffice(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
             var office = new Office
             {
-                CUSTOMER_ID = id
+                CUSTOMER_ID = id.Value
             };
 
             return View(office);
@@ -336,8 +347,13 @@ namespace PayPadAdministrator.Controllers
             return View(customerType);
         }
 
-        public async Task<ActionResult> AssingUserToIffice(int id)
+        public async Task<ActionResult> AssingUserToIffice(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
             OfficeUserViewModel officeUserViewModel = new OfficeUserViewModel();
             var userCurrent = apiService.ValidateUser(User.Identity.Name);
             List<Office> offices = new List<Office>();
@@ -358,8 +374,13 @@ namespace PayPadAdministrator.Controllers
             return View(officeUserViewModel);
         }
 
-        public async Task<ActionResult> EditCustomer(int id)
+        public async Task<ActionResult> EditCustomer(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
             List<Customer> clients = new List<Customer>();
             var request = new GetRequest
             {

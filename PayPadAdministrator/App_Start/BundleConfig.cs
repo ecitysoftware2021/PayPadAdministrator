@@ -31,6 +31,8 @@ namespace PayPadAdministrator
                   "~/Scripts/jquery.scrollTo.min.js",
                   "~/Scripts/jquery.core.js",
                   "~/Scripts/jquery.app.js",
+                  "~/Scripts/plugins/datatables/jquery.dataTables.min.js",
+                  "~/Scripts/plugins/datatables/dataTables.bootstrap.js",
                   "~/Scripts/plugins/bootstrap-table/dist/bootstrap-table.min.js",
                   "~/Scripts/pages/jquery.bs-table.js",
                   "~/Scripts/plugins/custombox/dist/custombox.min.js",
@@ -66,7 +68,8 @@ namespace PayPadAdministrator
                      "~/Content/Css/pages.css",
                      "~/Content/Css/responsive.css",
                      "~/Scripts/plugins/sweetalert/dist/sweetalert.css",
-                     "~/Scripts/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css"
+                     "~/Scripts/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css",
+                     "~/Scripts/plugins/datatables/jquery.dataTables.min.css"
                       ));
 
             bundles.Add(new StyleBundle("~/Content/DatePicker").Include(

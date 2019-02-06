@@ -104,17 +104,22 @@ namespace PayPadAdministrator.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> AssingModuleToUser(int userId)
+        public async Task<ActionResult> AssingModuleToUser(int? userId)
         {
+            if (userId == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
             List<ModuleViewModel> moduleViewModels = new List<ModuleViewModel>();
             if (User.IsInRole("SuperAdmin"))
             {
-                moduleViewModels = await ModuleAllUsers(userId);
+                moduleViewModels = await ModuleAllUsers(userId.Value);
             }
             else
             {
                 var usercurrent = apiService.ValidateUser(User.Identity.Name);
-                moduleViewModels = await ModuleUserResponsible(userId, usercurrent.CUSTOMER_ID);
+                moduleViewModels = await ModuleUserResponsible(userId.Value, usercurrent.CUSTOMER_ID);
             }
 
             ViewBag.UserId = userId;

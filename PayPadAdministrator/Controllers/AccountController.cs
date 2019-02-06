@@ -130,6 +130,58 @@ namespace PayPadAdministrator.Controllers
             #endregion
         }
 
+        public ActionResult ForgotPassword()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return LogOut();
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = apiService.ValidateUser(model.UserName);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty,string.Concat("¡El usuario ",model.UserName," no existe, Verifique nuevamente la información!"));
+                return View(model);
+            }
+
+
+            string body = string.Format(EmailHelper.BodyCreateUser("BodyForgotPassword"), Utilities.GetConfiguration("UrlPageWeb"), user.USERNAME, user.PASSWORD);
+            var email = new Email
+            {
+                Body = body,
+                To = user.EMAIL,
+                Subject = "Credenciales para el ingreso al Dashboard"
+            };
+
+
+            var response = await apiService.InsertPost(email, "SendEmail");
+            if (response.CodeError != 200)
+            {
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View(model);
+            }
+
+            return RedirectToAction("AfterForgotPassword");
+        }
+
+        public ActionResult AfterForgotPassword()
+        {
+            return View();
+        }
+
         public ActionResult LogOut()
         {
             HttpCookie cookie = new HttpCookie(Utilities.GetNameCookie(), "");

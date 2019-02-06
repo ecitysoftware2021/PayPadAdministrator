@@ -113,6 +113,13 @@ namespace PayPadAdministrator.Models
 
     }
 
+    public class ForgotPasswordViewModel
+    {
+        [Display(Name = "Usuario")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        public string UserName { get; set; }
+    }
+
     public class LoginViewModel
     {
         [Display(Name = "Usuario")]

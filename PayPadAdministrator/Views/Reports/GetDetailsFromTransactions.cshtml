@@ -1,0 +1,158 @@
+﻿@model PayPadAdministrator.Models.TransactionViewModel
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <ul class="nav nav-tabs tabs">
+            <li class="active tab">
+                <a href="#home-2" data-toggle="tab" aria-expanded="false">
+                    <span class="visible-xs"><i class="fa fa-home"></i></span>
+                    <span class="hidden-xs">Transacción</span>
+                </a>
+            </li>
+            <li class="tab">
+                <a href="#profile-2" data-toggle="tab" aria-expanded="false">
+                    <span class="visible-xs"><i class="fa fa-user"></i></span>
+                    <span class="hidden-xs">Descripciones</span>
+                </a>
+            </li>
+            <li class="tab">
+                <a href="#messages-2" data-toggle="tab" aria-expanded="true">
+                    <span class="visible-xs"><i class="fa fa-envelope-o"></i></span>
+                    <span class="hidden-xs">Detalle</span>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="home-2">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card-box m-t-20">
+                            <h4 class="m-t-0 header-title"><b>Informacín de la transacción @Model.Transaction.TRANSACTION_ID</b></h4>
+                            <div class="p-20">
+                                <div class="about-info-p">
+                                    <strong>Pay +</strong>
+                                    <br>
+                                    <p class="text-muted">@Model.Transaction.PAYPAD_NAME</p>
+                                </div>
+                                <div class="about-info-p">
+                                    <strong>Trámite</strong>
+                                    <br>
+                                    <p class="text-muted">@Model.Transaction.TRANSACT</p>
+                                </div>
+                                <div class="about-info-p">
+                                    <strong>Estado</strong>
+                                    <br>
+                                    <p class="text-muted">@Model.Transaction.STATE</p>
+                                </div>
+                                <div class="about-info-p">
+                                    <strong>Descripción</strong>
+                                    <br>
+                                    <p class="text-muted">@Model.Transaction.DESCRIPTION</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card-box m-t-20">                            
+                            <div class="p-20">
+                                <div class="about-info-p m-b-0">
+                                    <strong>Fecha</strong>
+                                    <br>
+                                    <p class="text-muted">@Model.Transaction.DATE_BEGIN</p>
+                                </div>
+                                <div class="about-info-p m-b-0">
+                                    <strong>Total</strong>
+                                    <br>
+                                    <p class="text-muted">@Model.Transaction.TOTAL_AMOUNT</p>
+                                </div>
+                                <div class="about-info-p m-b-0">
+                                    <strong>Total Ingresado</strong>
+                                    <br>
+                                    <p class="text-muted">@Model.Transaction.INCOME_AMOUNT</p>
+                                </div>
+                                <div class="about-info-p m-b-0">
+                                    <strong>Total Retirado</strong>
+                                    <br>
+                                    <p class="text-muted">@Model.Transaction.RETURN_AMOUNT</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+            <div class="tab-pane" id="profile-2">
+                <div class="row">
+                    <table data-toggle="table"
+                           data-show-columns="false"
+                           data-page-list="[5, 10, 20]"
+                           data-page-size="5"
+                           data-pagination="true"
+                           data-show-pagination-switch="true"
+                           id="tblTransactions"
+                           class="table table-bordered ">
+                        <thead>
+                            <tr>
+                                <th data-field="Reference" data-switchable="false">Referencia</th>
+                                <th data-field="total" data-switchable="false">Total</th>
+                                <th data-field="observacion">Observación</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.TransactionDescriptions)
+                            {
+                                <tr>
+                                    <td>@item.REFERENCE</td>
+                                    <td>@item.AMOUNT</td>
+                                    <td>@item.OBSERVATION</td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="messages-2">
+                <div class="row">
+                    <table data-toggle="table"
+                           data-show-columns="false"
+                           data-page-list="[5, 10, 20]"
+                           data-page-size="5"
+                           data-pagination="true"
+                           data-show-pagination-switch="true"
+                           id="tblTransactions"
+                           class="table table-bordered ">
+                        <thead>
+                            <tr>
+                                <th data-field="Reference" data-switchable="false">Tipo operación</th>
+                                <th data-field="total" data-switchable="false">Denominación</th>
+                                <th data-field="observacion">Dispositivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.TransactionDetails)
+                            {
+                                <tr>
+                                    <td>@item.OPERATION</td>
+                                    <td>
+                                        @if (item.CURRENCY_IMAGE != null)
+                                        {
+                                            var base64 = Convert.ToBase64String(item.CURRENCY_IMAGE);
+                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                            <img src="@imgSrc" style="width:70px;" />
+                                        }
+                                    </td>
+                                    <td>@item.DEVICE_NAME</td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->

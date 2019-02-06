@@ -222,6 +222,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Classes\Dictionaries.cs" />
+    <Compile Include="Classes\Email.cs" />
     <Compile Include="Classes\Response.cs" />
     <Compile Include="Classes\Utilities.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -247,6 +248,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ComboHelper.cs" />
+    <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\NotifyHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
@@ -277,6 +279,7 @@
     <Compile Include="Models\SubModule.cs" />
     <Compile Include="Models\TransactionForTransactViewModel.cs" />
     <Compile Include="Models\TransactionHomeViewModel.cs" />
+    <Compile Include="Models\TransactionViewModel.cs" />
     <Compile Include="Models\Transaction_Type.cs" />
     <Compile Include="Models\UserModule.cs" />
     <Compile Include="Models\UserOffice.cs" />
@@ -285,6 +288,8 @@
     <Compile Include="Services\ApiService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\BodyForgotPassword.txt" />
+    <Content Include="App_Data\ChangePassword.txt" />
     <Content Include="Content\Css\bootstrap-theme.css" />
     <Content Include="Content\Css\bootstrap-theme.min.css" />
     <Content Include="Content\Css\bootstrap.css" />
@@ -335,6 +340,7 @@
     <Content Include="Content\Logos\Logo_Bancolombia2.png" />
     <Content Include="Content\Logos\mexico.png" />
     <Content Include="favicon.ico" />
+    <Content Include="App_Data\BodyCreateUser.txt" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2444,9 +2450,12 @@
     <Content Include="Views\Customers\EditCustomer.cshtml" />
     <Content Include="Views\Users\EditUser.cshtml" />
     <Content Include="Views\Users\EditUserResponsible.cshtml" />
+    <Content Include="Views\PayPads\EditPayPad.cshtml" />
+    <Content Include="Views\Reports\GetDetailsFromTransactions.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\AfterForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Generic\" />
   </ItemGroup>
   <ItemGroup>

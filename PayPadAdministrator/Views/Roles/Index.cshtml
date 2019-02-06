@@ -29,27 +29,29 @@
                         <th data-field="State">
                             @Html.DisplayNameFor(model => model.STATE)
                         </th>
-                        <th data-field="Administracion">Administración</th>
+                        <th>Administración</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ROLE_ID)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DESCRIPTION)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.STATE)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |                                
-                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ROLE_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DESCRIPTION)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.STATE)
+                        </td>
+                        <td>
+                            <a title="Editar Cliente" data-placement="top"
+                               data-toggle="tooltip" class="tooltips"
+                               href="@Url.Action("EditTransact",new { id = item.TRANSACTION_TYPE_ID})"
+                               data-original-title="Editar"><i class="fa fa-edit"></i></a>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

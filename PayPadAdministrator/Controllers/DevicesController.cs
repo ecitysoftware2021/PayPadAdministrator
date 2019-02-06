@@ -135,13 +135,10 @@ namespace PayPadAdministrator.Controllers
 
             if (device.ImagePathFile == null)
             {
-                ModelState.AddModelError(string.Empty, "Debe ingresar una imagen");
-                ViewBag.DEVICE_TYPE_ID = new SelectList(await ComboHelper.GetDevicesType(), nameof(DeviceType.DEVICE_TYPE_ID), nameof(DeviceType.APOSTROPHE), device.DEVICE_TYPE_ID);
-                return View(device);
+                device.IMAGE = Utilities.GenerateByteArray(device.ImagePathFile.InputStream);
+                device.ImagePathFile = null;
             }
 
-            device.IMAGE = Utilities.GenerateByteArray(device.ImagePathFile.InputStream);
-            device.ImagePathFile = null;
             var response = await apiService.InsertPost(device, "UpdateDevice");
             if (response.CodeError != 200)
             {

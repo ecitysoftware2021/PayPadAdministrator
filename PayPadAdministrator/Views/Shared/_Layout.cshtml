@@ -124,6 +124,9 @@
 
     <script>
         var resizefunc = [];
+        window.onload = function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        };
     </script>
     @RenderSection("scripts", required: false)
 </body>
