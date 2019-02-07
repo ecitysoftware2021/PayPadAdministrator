@@ -64,7 +64,7 @@
                                 <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingDevice", new {id = item.PAYPAD_ID })" data-original-title="Dispositivos"><i class="fa fa-cog"></i></a>
                             </li>
                             <li>
-                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Alarma"><i class="fa fa-calendar"></i></a>
+                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("GetAlarmForPaypad","Alarms",new { id = item.PAYPAD_ID})" data-original-title="Alarma"><i class="fa fa-calendar"></i></a>
                             </li>
                         </ul>
                     </div>

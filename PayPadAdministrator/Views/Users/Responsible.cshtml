@@ -38,10 +38,18 @@
                         <p class="text-muted">@Html.DisplayFor(modelItem => item.EMAIL)</p>
                         <p class="text-dark"><i class="md md-account-circle m-r-10"></i><small>@Html.DisplayFor(modelItem => item.NAME)</small></p>
                         <p class="text-dark"><i class="md md-business m-r-10"></i><small>@Html.DisplayFor(modelItem => item.CUSTOMER_NAME)</small></p>
-                        <p class="text-dark"><i class="md md-business m-r-10"></i><small>@Html.DisplayFor(modelItem => item.ROL_NAME)</small></p>
+                        <p class="text-dark"><i class="md md-class m-r-10"></i><small>@Html.DisplayFor(modelItem => item.ROL_NAME)</small></p>
+
+                        @{
+                            var text = item.STATE ? "md-check-box" : "md-check-box-outline-blank";
+                        }
+                        <p class="text-dark"><i class="md @text m-r-10"></i></p>
                         <div class="contact-action">
-                            <a href="@Url.Action("EditUserResponsible", new {data = encryptionHelper.EncryptString(item.USERNAME) })" class="btn btn-success btn-sm"><i class="md md-mode-edit"></i></a>
-                            <a href="#" class="btn btn-danger btn-sm"><i class="md md-close"></i></a>
+                            <a href="@Url.Action("EditUser", new {data = encryptionHelper.EncryptString(item.USERNAME) })" class="btn btn-success btn-sm"><i class="md md-mode-edit"></i></a>
+                            @if (item.STATE)
+                            {
+                                <a href="Javascript:void(0)" onclick="DeleteUser('@item.USERNAME')" class="btn btn-danger btn-sm"><i class="md md-close"></i></a>
+                            }
                         </div>
                     </div>
 

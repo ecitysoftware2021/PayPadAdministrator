@@ -226,6 +226,7 @@
     <Compile Include="Classes\Response.cs" />
     <Compile Include="Classes\Utilities.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlarmsController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DenominationsController.cs" />
     <Compile Include="Controllers\DevicesController.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="Helpers\NotifyHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Alarm.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\Currency_Denomination.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -265,6 +267,7 @@
     <Compile Include="Models\Device_PayPad.cs" />
     <Compile Include="Models\GetRequest.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\LogAlarm.cs" />
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\ModuleCustomer.cs" />
     <Compile Include="Models\Notifications.cs" />
@@ -281,6 +284,7 @@
     <Compile Include="Models\TransactionHomeViewModel.cs" />
     <Compile Include="Models\TransactionViewModel.cs" />
     <Compile Include="Models\Transaction_Type.cs" />
+    <Compile Include="Models\UserAlarm.cs" />
     <Compile Include="Models\UserModule.cs" />
     <Compile Include="Models\UserOffice.cs" />
     <Compile Include="Models\UserSession.cs" />
@@ -2454,6 +2458,11 @@
     <Content Include="Views\Reports\GetDetailsFromTransactions.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\AfterForgotPassword.cshtml" />
+    <Content Include="Views\Alarms\GetAlarmForPaypad.cshtml" />
+    <Content Include="Views\Alarms\CreateAlarm.cshtml" />
+    <Content Include="Views\Alarms\GetLogAlarm.cshtml" />
+    <Content Include="Views\Users\GetUserAlarms.cshtml" />
+    <Content Include="Views\Users\CreateUserAlarms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Generic\" />

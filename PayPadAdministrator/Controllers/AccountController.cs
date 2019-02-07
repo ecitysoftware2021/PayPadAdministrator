@@ -46,7 +46,7 @@ namespace PayPadAdministrator.Controllers
             var response = await apiService.Login(model.UserName, model.Password);
             if (response == null)
             {
-                ModelState.AddModelError(string.Empty, "Something Wrong : Username or Password invalid ^_^ ");
+                ModelState.AddModelError(string.Empty, "¡Usuario y contraseña incorrectas!");
                 return View(model);
             }
 

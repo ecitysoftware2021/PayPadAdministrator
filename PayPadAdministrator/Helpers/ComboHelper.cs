@@ -284,5 +284,24 @@ namespace PayPadAdministrator.Helpers
 
             return locations;
         }
+
+        public static async Task<List<Alarm>> GetAlarms(int customerId)
+        {
+            List<Alarm> alarms = new List<Alarm>();
+            var url = string.Concat(Utilities.GetConfiguration("GetAlarmsForCustomer"), customerId);
+            var response = await apiService.GetDataV2(url);
+            if (response.CodeError == 200)
+            {
+                alarms = JsonConvert.DeserializeObject<List<Alarm>>(response.Data.ToString());
+            }
+
+            alarms.Add(new Alarm
+            {
+                ALARM_ID = 0,
+                USERNAME = "Seleccione una alarma"
+            });
+
+            return alarms.OrderBy(a=>a.ALARM_ID).ToList();
+        }
     }
 }

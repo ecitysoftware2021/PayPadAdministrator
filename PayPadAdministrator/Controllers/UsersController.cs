@@ -75,12 +75,12 @@ namespace PayPadAdministrator.Controllers
                 users = JsonConvert.DeserializeObject<List<UserViewModel>>(response.Data.ToString());
             }
 
-            if (userCurrent.ROLE_ID == 1)
+            if (User.IsInRole("SuperAdmin"))
             {
                 return View(users.Where(u => u.ROLE_ID == 3).ToList());
             }
 
-            return View(users.Where(u => u.ROLE_ID == 3 && u.CUSTOMER_ID == userCurrent.CUSTOMER_ID).ToList());
+            return View(users.Where(u => u.ROLE_ID == 3 && u.CUSTOMER_ID == userCurrent.CUSTOMER_ID && u.STATE == true).ToList());
         }
 
         public async Task<ActionResult> CreateUser()
@@ -298,6 +298,64 @@ namespace PayPadAdministrator.Controllers
             {
                 return RedirectToAction("Error500", "Errors");
             }
+        }
+
+
+        public async Task<ActionResult> GetUserAlarms()
+        {
+            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            if (userCurrent == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
+            var url = string.Concat(Utilities.GetConfiguration("GetUserAlarmForCustomer"), userCurrent.CUSTOMER_ID);
+            var response = await apiService.GetDataV2(url);
+            if (response.CodeError != 200)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
+            var users = JsonConvert.DeserializeObject<List<UserAlarm>>(response.Data.ToString());
+            return View(users);
+        }
+
+        public async Task<ActionResult> CreateUserAlarms()
+        {
+            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            if (userCurrent == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
+            var userAlarm = new UserAlarm
+            {
+                CUSTOMER_ID = userCurrent.CUSTOMER_ID,                
+            };
+
+            ViewBag.ALARM_ID = new SelectList(await ComboHelper.GetAlarms(userCurrent.CUSTOMER_ID), nameof(Alarm.ALARM_ID), nameof(Alarm.USERNAME), 0);
+            return View(userAlarm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateUserAlarms(UserAlarm userAlarm)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ALARM_ID = new SelectList(await ComboHelper.GetAlarms(userAlarm.CUSTOMER_ID.Value), nameof(Alarm.ALARM_ID), nameof(Alarm.USERNAME), userAlarm.ALARM_ID);
+                return View(userAlarm);
+            }
+
+            var response = await apiService.InsertPost(userAlarm, "CreateUserAlarm");
+            if (response.CodeError != 200)
+            {
+                ViewBag.ALARM_ID = new SelectList(await ComboHelper.GetAlarms(userAlarm.CUSTOMER_ID.Value), nameof(Alarm.ALARM_ID), nameof(Alarm.USERNAME), userAlarm.ALARM_ID);
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View(userAlarm);
+            }
+
+            return RedirectToAction("GetUserAlarms");
         }
     }
 }

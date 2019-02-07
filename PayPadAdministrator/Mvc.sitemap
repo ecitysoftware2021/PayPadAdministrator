@@ -15,6 +15,10 @@
       <mvcSiteMapNode title="Asignar Trámites" controller="PayPads" action="AssingTransact" preservedRouteParameters="id" />
       <mvcSiteMapNode title="Detalles" controller="PayPads" action="Details" preservedRouteParameters="id" />
       <mvcSiteMapNode title="Editar" controller="PayPads" action="Edit" preservedRouteParameters="id"  />
+      <mvcSiteMapNode title="Información de la Alarma" controller="Alarms" action="GetAlarmForPaypad" preservedRouteParameters="id">
+        <mvcSiteMapNode title="Log de la alarma" controller="Alarms" action="GetLogAlarm" preservedRouteParameters="id"  />
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Crear Alarma" controller="Alarms" action="CreateAlarm" preservedRouteParameters="id"  />
       <mvcSiteMapNode title="Dispositivos Asignados" controller="PayPads" action="AssingDevice" preservedRouteParameters="id">
         <mvcSiteMapNode title="Detalles del dispositivo" controller="PayPads" action="ViewDetailsDevice" preservedRouteParameters="id"  />
       </mvcSiteMapNode>
@@ -48,6 +52,9 @@
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Dispositivos" action="Index" controller="Devices" >
       <mvcSiteMapNode title="Crear Dispositivo" action="CreateDevice" controller="Devices" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Usuarios Alarma" action="GetUserAlarms" controller="Users" >
+      <mvcSiteMapNode title="Crear Usuario alarma" action="CreateUserAlarms" controller="Users" />
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Reportes por trámite" action="GetTransactionForTransact" controller="Reports" />          
     <mvcSiteMapNode title="Usuarios" action="Index" controller="Users" />

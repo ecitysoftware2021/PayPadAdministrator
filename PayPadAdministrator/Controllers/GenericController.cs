@@ -212,5 +212,17 @@ namespace PayPadAdministrator.Controllers
             var response = await apiService.InsertPost(resquest, "AssingDevicePayPadDetail");
             return Json(response);
         }
+
+        public async Task<JsonResult> DeleteUser(string data)
+        {
+            var user = new UserViewModel
+            {
+                USERNAME = data,
+                STATE = false
+            };
+
+            var response = await apiService.InsertPost(user, "DeleteUser");
+            return Json(response);
+        }
     }
 }
