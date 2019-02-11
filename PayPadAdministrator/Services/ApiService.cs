@@ -5,6 +5,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -288,6 +289,50 @@ namespace PayPadAdministrator.Services
                     CodeError = 300,
                     Message = ex.Message,
                 };
+            }
+        }
+
+        public async Task<bool> SecurityToken(RequestAuth requestAuth)
+        {
+            try
+            {
+                ServicePointManager.Expect100Continue = false;
+                var request = JsonConvert.SerializeObject(requestAuth);
+                var content = new StringContent(request, Encoding.UTF8, "Application/json");
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlApi);
+                var url = Utilities.GetConfiguration("GetToken");
+                var authentication = Encoding.ASCII.GetBytes(User4Told + ":" + Password4Told);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(authentication));
+                var response = await client.PostAsync(url, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return false;
+                }
+
+                var result = await response.Content.ReadAsStringAsync();
+                if (result != null)
+                {
+                    var requestresponse = JsonConvert.DeserializeObject<ResponseAuth>(result);
+                    if (requestresponse != null)
+                    {
+                        if (requestresponse.CodeError == 200)
+                        {
+                            Utilities.TOKEN = requestresponse.Token;
+                            Utilities.CorrespondentId = Convert.ToInt32(requestresponse.User);
+                            Utilities.Session = Convert.ToInt16(requestresponse.Session);
+                            return true;
+                        }
+
+                        return false;
+                    }
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }

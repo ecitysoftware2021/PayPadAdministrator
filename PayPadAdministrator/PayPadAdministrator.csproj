@@ -269,6 +269,7 @@
     <Compile Include="Models\Office.cs" />
     <Compile Include="Models\PayPad.cs" />
     <Compile Include="Models\PayPadTransactionType.cs" />
+    <Compile Include="Models\RequestAuth.cs" />
     <Compile Include="Models\RequestAuthentication.cs" />
     <Compile Include="Models\RequestReport.cs" />
     <Compile Include="Models\Role.cs" />
