@@ -297,6 +297,7 @@
   <ItemGroup>
     <Content Include="App_Data\BodyForgotPassword.txt" />
     <Content Include="App_Data\ChangePassword.txt" />
+    <Content Include="App_Data\keys.txt" />
     <Content Include="Content\Css\bootstrap-theme.css" />
     <Content Include="Content\Css\bootstrap-theme.min.css" />
     <Content Include="Content\Css\bootstrap.css" />

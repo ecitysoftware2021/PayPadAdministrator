@@ -99,6 +99,10 @@
                 }
             });
         });
+
+        function DeleteUser(userName){
+            ShowModalDelete("¿Está seguro que desea eliminar el usuario?",userName,'@Url.Action("DeleteUser", "Generic")');
+        }
     </script>
 }
 
