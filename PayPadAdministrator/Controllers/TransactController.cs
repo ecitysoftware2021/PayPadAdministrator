@@ -56,13 +56,19 @@ namespace PayPadAdministrator.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> EditTransact(int id)
+        public async Task<ActionResult> EditTransact(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
             Transaction_Type transaction_Type = new Transaction_Type();
-            var response = await apiService.GetData(string.Concat(Utilities.GetConfiguration("GetTransact"), id));
+            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetTransact"), id));
             if (response.CodeError == 200)
             {
-                transaction_Type = JsonConvert.DeserializeObject<Transaction_Type>(response.Data.ToString());
+                var transaction_Types = JsonConvert.DeserializeObject<List<Transaction_Type>>(response.Data.ToString());
+                transaction_Type = transaction_Types.FirstOrDefault();
             }
 
             return View(transaction_Type);
@@ -77,7 +83,7 @@ namespace PayPadAdministrator.Controllers
                 return View(transaction_Type);
             }
 
-            var response = await apiService.InsertPost(transaction_Type, "EditTransact");
+            var response = await apiService.InsertPost(transaction_Type, "UpdateTransact");
             if (response.CodeError != 200)
             {
                 ModelState.AddModelError(string.Empty, response.Message);

@@ -35,7 +35,7 @@
                     @if (User.IsInRole("SuperAdmin"))
                     {
                         <div class="product-action">
-                            <a href="#" class="btn btn-success btn-sm"><i class="md md-mode-edit"></i></a>
+                            <a href="@Url.Action("EditPayPad",new { id = item.PAYPAD_ID })" class="btn btn-success btn-sm"><i class="md md-mode-edit"></i></a>
                             <a href="#" class="btn btn-danger btn-sm"><i class="md md-close"></i></a>
                         </div>
                     }
@@ -43,7 +43,7 @@
 
                     <div class="detail">
                         <h4 class="m-t-0 m-b-5"><a href="" class="text-dark">@item.NAME</a> </h4>
-                        <h5 class="m-0"><span class="text-custom">1</span> <span class="text-muted m-l-15"> @item.OFFICE_NAME</span></h5>
+                        <h5 class="m-0"><span class="text-custom">@item.PAYPAD_ID</span> <span class="text-muted m-l-15"> @item.OFFICE_NAME</span></h5>
                         <h5 class="m-0 text-dark"><i class="md md-business m-r-10"></i><small>@item.CUSTOMER_NAME</small></h5>
                         <h5 class="m-0 text-dark"><i class="md md-business m-r-10"></i><small>@item.OFFICE_ADDRESS</small></h5>
 
@@ -64,10 +64,7 @@
                                 <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingDevice", new {id = item.PAYPAD_ID })" data-original-title="Dispositivos"><i class="fa fa-cog"></i></a>
                             </li>
                             <li>
-                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Administrar pantalla"><i class="fa fa-desktop"></i></a>
-                            </li>
-                            <li>
-                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Alarma"><i class="fa fa-calendar"></i></a>
+                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("GetAlarmForPaypad","Alarms",new { id = item.PAYPAD_ID})" data-original-title="Alarma"><i class="fa fa-calendar"></i></a>
                             </li>
                         </ul>
                     </div>

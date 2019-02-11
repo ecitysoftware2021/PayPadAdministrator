@@ -21,8 +21,7 @@
                     <tr>
                         <th data-field="@Html.DisplayNameFor(model => model.CUSTOMER_TYPE_ID)" data-switchable="false">@Html.DisplayNameFor(model => model.CUSTOMER_TYPE_ID)</th>
                         <th data-field="@Html.DisplayNameFor(model => model.DESCRIPTION)">@Html.DisplayNameFor(model => model.DESCRIPTION)</th>
-                        <th data-field="@Html.DisplayNameFor(model => model.STATE)" class="text-center">@Html.DisplayNameFor(model => model.STATE)</th>
-                        <th data-field="Adminitration" class="text-center">Administración</th>
+                        <th data-field="@Html.DisplayNameFor(model => model.STATE)" class="text-center">@Html.DisplayNameFor(model => model.STATE)</th>                        
                     </tr>
                 </thead>
 
@@ -46,10 +45,6 @@
                                 {
                                     <span class="label label-table label-danger">Suspended</span>
                                 }                                
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |                                
-                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                             </td>
                         </tr>
                     }

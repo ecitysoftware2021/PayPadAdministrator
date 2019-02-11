@@ -11,16 +11,18 @@
 
                 @foreach (var item in Model)
                 {
+                    var color = item.STATE ? "success" : "danger";
+
                     <div class="col-md-4">
                         <div class="widget-bg-color-icon card-box">
-                            <div class="bg-icon bg-icon-pink pull-left">
+                            <div class="bg-icon bg-icon-@color pull-left">
                                 @if (item.STATE)
                                 {
-                                    <a href="javascript:void(0);" onclick="AssingTransactToPayPad(@item.TRANSACTION_TYPE_ID,@ViewBag.PayPadId,false)"><i class="md md-radio-button-on text-pink"></i></a>
+                                    <a href="javascript:void(0);" onclick="AssingTransactToPayPad(@item.TRANSACTION_TYPE_ID,@ViewBag.PayPadId,false)"><i class="md md-radio-button-on text-@color"></i></a>
                                 }
                                 else
                                 {
-                                    <a href="javascript:void(0);" onclick="AssingTransactToPayPad(@item.TRANSACTION_TYPE_ID,@ViewBag.PayPadId,true)"><i class="md md-radio-button-off text-pink"></i></a>
+                                    <a href="javascript:void(0);" onclick="AssingTransactToPayPad(@item.TRANSACTION_TYPE_ID,@ViewBag.PayPadId,true)"><i class="md md-radio-button-off text-@color"></i></a>
                                 }
                             </div>
                             <div class="text-right">

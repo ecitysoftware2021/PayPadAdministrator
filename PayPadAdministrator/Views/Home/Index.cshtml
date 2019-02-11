@@ -15,7 +15,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.PayPadId, htmlAttributes: new { @class = "col-sm-3 control-label" })
                                 <div class="col-sm-9">
-                                    @Html.DropDownList("PayPadId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.DropDownList("PayPadId", null, htmlAttributes: new { @class = "form-control select2" })
                                     @Html.ValidationMessageFor(model => model.PayPadId, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -124,13 +124,7 @@
             <div id="portlet2" class="panel-collapse collapse in">
                 <div class="portlet-body">
                     <div class="table-responsive">
-                        <table data-toggle="table"
-                               data-show-columns="false"
-                               data-page-list="[5, 10, 20]"
-                               data-page-size="10"
-                               data-pagination="true" 
-                               data-show-pagination-switch="true" 
-                               class="table table-bordered" 
+                        <table class="table table-striped table-bordered"
                                id="tableTransactions">
                             <thead>
                                 <tr>
@@ -141,10 +135,9 @@
                                     <th data-field="totalIng">Total Ingresado</th>
                                     <th data-field="totalDvu">Total Devuelto</th>
                                     <th data-field="estado">Estado</th>
+                                    <th data-field="estado">Administración</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -160,6 +153,32 @@
 
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
+        var datetable ="";
+
+        $(document).ready(function () {
+
+        datetable = $('#tableTransactions').DataTable();
+
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                e.preventDefault();
+                var $link = $(this);
+                var title = "Detalle de transacción";
+                $('#Details .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#Details').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#Details .te').html(data);
+                        $('#Details').modal();
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+            });
+        });
+
+
 
 
         function GetTransactionsHome(){
@@ -179,7 +198,7 @@
                 DateStartString:$("#StartDate").val(),
                 DateFinishString:$("#FinishDate").val(),
             }
-
+        
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetTransactionHome", "Generic")',
@@ -214,13 +233,15 @@
             return formatter.format(value).replace("$","");
         }
 
-function OrganizeData(transactions) {
+function OrganizeData(transactions) {     
+        
+     datetable.clear().draw();
 
     var total = 0;
     var approved =0;
     var initial =0;//se cambio por total de las transacciones
     var cancelled = 0;
-    var details = "";    
+    var details = "";
     $.each(transactions, function (i, data) {
         var text = "info";
         if(data.STATE == "Aprobada"){
@@ -234,14 +255,21 @@ function OrganizeData(transactions) {
 
         initial++;
 
-        details += "<tr><td>" + data.TRANSACTION_ID+"</td>"+
-            "<td>" + data.TRANSACT +"</td >"+
-            "<td>" + ConvertDate( data.DATE_BEGIN) +"</td>"+
-            "<td>" + ConvertCurrency(data.TOTAL_AMOUNT)+"</td>"+
-            "<td>" + ConvertCurrency(data.INCOME_AMOUNT)+"</td>"+
-            "<td>" + ConvertCurrency(data.RETURN_AMOUNT )+"</td>"+
-            "<td><span class='label label-" + text + "'>" + data.STATE +"</span></td></tr>";
-
+        var state = "<span class='label label-" + text + "'>" + data.STATE +"</span>";
+        var admin = "<a href='/Reports/GetDetailsFromTransactions/"+data.TRANSACTION_ID+"'"+
+                    "data-placement='top' data-toggle='tooltip' class='tooltips dialog-window' data-original-title='Detalle'>"+
+                    "<i class='fa fa-server'></i>"+
+                    "</a> ";
+        datetable.row.add( [
+            data.TRANSACTION_ID,
+            data.TRANSACT,
+            ConvertDate( data.DATE_BEGIN),
+            ConvertCurrency(data.TOTAL_AMOUNT),
+            ConvertCurrency(data.INCOME_AMOUNT),
+        ConvertCurrency(data.RETURN_AMOUNT ),
+        state,
+        admin
+        ] ).draw( false );
     });
 
     $("#TotalAmount").html(ConvertCurrency(total));
@@ -253,9 +281,20 @@ function OrganizeData(transactions) {
         time: 1200
     });
 
-    $("#tableTransactions tbody").html(details);
-
 }
 
     </script>
 }
+
+<div class="modal fade" id="Details" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" style="width: 970px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>

@@ -16,7 +16,7 @@
             <table data-toggle="table"
                    data-show-columns="false"
                    data-page-list="[5, 10, 20]"
-                   data-page-size="5"
+                   data-page-size="10"
                    data-pagination="true" data-show-pagination-switch="true" class="table-bordered ">
                 <thead>
                     <tr>
@@ -29,27 +29,26 @@
                         <th data-field="State">
                             @Html.DisplayNameFor(model => model.STATE)
                         </th>
-                        <th data-field="Administracion">Administración</th>
+                        <th>Administración</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ROLE_ID)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DESCRIPTION)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.STATE)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |                                
-                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ROLE_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DESCRIPTION)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.STATE)
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

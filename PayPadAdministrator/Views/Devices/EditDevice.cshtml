@@ -16,6 +16,7 @@
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.HiddenFor(model => model.DEVICE_ID)
+                        @Html.HiddenFor(model => model.IMAGE)
                         @Html.HiddenFor(model => model.STATE)
 
                         <div class="form-group">

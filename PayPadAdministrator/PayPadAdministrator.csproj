@@ -222,9 +222,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Classes\Dictionaries.cs" />
+    <Compile Include="Classes\Email.cs" />
     <Compile Include="Classes\Response.cs" />
     <Compile Include="Classes\Utilities.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlarmsController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DenominationsController.cs" />
     <Compile Include="Controllers\DevicesController.cs" />
@@ -247,10 +249,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ComboHelper.cs" />
+    <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\NotifyHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Alarm.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\Currency_Denomination.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -263,6 +267,7 @@
     <Compile Include="Models\Device_PayPad.cs" />
     <Compile Include="Models\GetRequest.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\LogAlarm.cs" />
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\ModuleCustomer.cs" />
     <Compile Include="Models\Notifications.cs" />
@@ -278,7 +283,9 @@
     <Compile Include="Models\SubModule.cs" />
     <Compile Include="Models\TransactionForTransactViewModel.cs" />
     <Compile Include="Models\TransactionHomeViewModel.cs" />
+    <Compile Include="Models\TransactionViewModel.cs" />
     <Compile Include="Models\Transaction_Type.cs" />
+    <Compile Include="Models\UserAlarm.cs" />
     <Compile Include="Models\UserModule.cs" />
     <Compile Include="Models\UserOffice.cs" />
     <Compile Include="Models\UserSession.cs" />
@@ -286,6 +293,8 @@
     <Compile Include="Services\ApiService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\BodyForgotPassword.txt" />
+    <Content Include="App_Data\ChangePassword.txt" />
     <Content Include="Content\Css\bootstrap-theme.css" />
     <Content Include="Content\Css\bootstrap-theme.min.css" />
     <Content Include="Content\Css\bootstrap.css" />
@@ -336,6 +345,7 @@
     <Content Include="Content\Logos\Logo_Bancolombia2.png" />
     <Content Include="Content\Logos\mexico.png" />
     <Content Include="favicon.ico" />
+    <Content Include="App_Data\BodyCreateUser.txt" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2442,9 +2452,20 @@
     <Content Include="Views\Users\UserDetails.cshtml" />
     <Content Include="Views\PayPads\EditQuantitiesDevicePayPad.cshtml" />
     <Content Include="Views\PayPads\AssingDetailsDevice.cshtml" />
+    <Content Include="Views\Customers\EditCustomer.cshtml" />
+    <Content Include="Views\Users\EditUser.cshtml" />
+    <Content Include="Views\Users\EditUserResponsible.cshtml" />
+    <Content Include="Views\PayPads\EditPayPad.cshtml" />
+    <Content Include="Views\Reports\GetDetailsFromTransactions.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\AfterForgotPassword.cshtml" />
+    <Content Include="Views\Alarms\GetAlarmForPaypad.cshtml" />
+    <Content Include="Views\Alarms\CreateAlarm.cshtml" />
+    <Content Include="Views\Alarms\GetLogAlarm.cshtml" />
+    <Content Include="Views\Users\GetUserAlarms.cshtml" />
+    <Content Include="Views\Users\CreateUserAlarms.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Generic\" />
   </ItemGroup>
   <ItemGroup>

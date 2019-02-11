@@ -1,4 +1,43 @@
-﻿function MessageInfo(title, message) {
+﻿function ShowModalDelete(message, data, url) {
+    swal({
+        title: "¿Estás seguro?",
+        text: message,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Eliminar",
+        closeOnConfirm: false
+    },
+        function () {
+            DeleteItem(data, url);
+        });
+}
+
+
+
+function DeleteItem(data, url) {
+    $.ajax({
+        type: 'POST',
+        url: url,
+        dataType: 'json',
+        data: { data: data },
+        success: function (data) {
+            if (data.CodeError == 200) {
+                MessageSuccess("Buen trabajo!", data.Message);
+            } else {
+                ModalMessageError("Error", data.Message);
+            }
+        },
+        error: function (ex) {
+            ModalMessageError("Error", 'Failed ' + ex);
+        }
+    });
+}
+
+
+
+
+function MessageInfo(title, message) {
     swal({
         title: title,
         text: message,

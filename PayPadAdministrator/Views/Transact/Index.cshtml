@@ -29,7 +29,7 @@
                         <th>
                             @Html.DisplayNameFor(model => model.STATE)
                         </th>
-                        <th></th>
+                        <th>Administración</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,9 +46,10 @@
                                 @Html.DisplayFor(modelItem => item.STATE)
                             </td>
                             <td>
-                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                <a title="Editar Cliente" data-placement="top"
+                                   data-toggle="tooltip" class="tooltips"
+                                   href="@Url.Action("EditTransact",new { id = item.TRANSACTION_TYPE_ID})"
+                                   data-original-title="Editar"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>
                     }

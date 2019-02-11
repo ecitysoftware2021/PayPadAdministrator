@@ -34,14 +34,14 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.CUSTOMER_ID, htmlAttributes: new { @class = "col-sm-3 control-label" })
                                     <div class="col-sm-9">
-                                        @Html.DropDownList("CUSTOMER_ID", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.DropDownList("CUSTOMER_ID", null, htmlAttributes: new { @class = "form-control select2" })
                                         @Html.ValidationMessageFor(model => model.CUSTOMER_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.ROLE_ID, htmlAttributes: new { @class = "col-sm-3 control-label" })
                                     <div class="col-sm-9">
-                                        @Html.DropDownList("ROLE_ID", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.DropDownList("ROLE_ID", null, htmlAttributes: new { @class = "form-control select2" })
                                         @Html.ValidationMessageFor(model => model.ROLE_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>

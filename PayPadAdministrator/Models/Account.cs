@@ -113,6 +113,13 @@ namespace PayPadAdministrator.Models
 
     }
 
+    public class ForgotPasswordViewModel
+    {
+        [Display(Name = "Usuario")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        public string UserName { get; set; }
+    }
+
     public class LoginViewModel
     {
         [Display(Name = "Usuario")]
@@ -124,6 +131,30 @@ namespace PayPadAdministrator.Models
         [Required(ErrorMessage = "El campo {0} es requerido")]
         public string Password { get; set; }
 
+    }
+
+    public class ResetPasswordViewModel
+    {
+        public string UserName { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Contraseña")]
+
+        public string OldPassword { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Contraseña")]
+        public string NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirmar contraseña")]
+        [Compare("NewPassword", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
+
+        public string ConfirmPassword { get; set; }
     }
 
     public class DevicesForPayPadViewModel

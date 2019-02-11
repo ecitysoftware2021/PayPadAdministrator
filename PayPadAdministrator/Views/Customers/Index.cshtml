@@ -23,7 +23,7 @@
             <table data-toggle="table"
                    data-show-columns="false"
                    data-page-list="[5, 10, 20]"
-                   data-page-size="5"
+                   data-page-size="10"
                    data-pagination="true" data-show-pagination-switch="true" class="table-bordered ">
                 <thead>
                     <tr>
@@ -81,6 +81,11 @@
                                                data-toggle="tooltip" class="tooltips"
                                                href="@Url.Action("AssingModuleToCustomer","Modules",new { id = item.CUSTOMER_ID})"
                                                data-original-title="Asignar Menú"><i class="fa fa-object-group"></i></a>
+
+                                            <a title="Editar Cliente" data-placement="top"
+                                               data-toggle="tooltip" class="tooltips"
+                                               href="@Url.Action("EditCustomer",new { id = item.CUSTOMER_ID})"
+                                               data-original-title="Editar Cliente"><i class="fa fa-edit"></i></a>
                                         }
 
                                     </li>

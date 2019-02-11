@@ -1,0 +1,78 @@
+﻿@model PayPadAdministrator.Models.Alarm
+@{
+    ViewBag.Title = "Información de la Alarma";
+}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card-box m-t-20">
+            <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
+            <div class="p-20">
+                <div class="about-info-p">
+                    <strong>Pay +</strong>
+                    <br>
+                    <p class="text-muted">@Model.PAYPAD_NAME</p>
+                </div>
+                <div class="about-info-p m-b-0">
+                    <strong>Usuario</strong>
+                    <br>
+                    <p class="text-muted">@Model.USERNAME</p>
+                </div>
+                <div class="about-info-p">
+                    <strong>Contraseña</strong>
+                    <br>
+                    <p class="text-muted">@Model.PASSWORD</p>
+                </div>
+                <div class="about-info-p">
+                    <strong>Código Activación</strong>
+                    <br>
+                    <p class="text-muted">@Model.ACTIVATE_CODE</p>
+                </div>
+                <div class="about-info-p m-b-0">
+                    <strong>Código Desactivación</strong>
+                    <br>
+                    <p class="text-muted">@Model.DESACTIVATE_CODE</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card-box m-t-20">
+            <h4 class="m-t-0 header-title"><b></b></h4>
+            <div class="p-20">
+                <div class="about-info-p m-b-0">
+                    <strong>Wifi</strong>
+                    <br>
+                    <p class="text-muted">@Model.WIFI</p>
+                </div>
+                <div class="about-info-p m-b-0">
+                    <strong>Contraseña del Wifi</strong>
+                    <br>
+                    <p class="text-muted">@Model.PASSWORD_WIFI</p>
+                </div>
+                <div class="about-info-p m-b-0">
+                    <strong>Estado</strong>
+                    <br>
+                    <p class="text-muted">
+                        @if (Model.STATE)
+                        {
+                            <i class="md md-alarm-on md-3x"></i>
+                        }
+                        else
+                        {
+                            <i class="md md-alarm-off md-3x"></i>
+                        }
+                    </p>
+                </div>
+                <div class="about-info-p m-b-0">
+                    <strong>Eventos</strong>
+                    <br>
+                    <p class="text-muted">
+                        <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("GetLogAlarm","Alarms",new { id = Model.ALARM_ID})" data-original-title="Ver Logs"><i class="fa fa-file-archive-o fa-3x"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

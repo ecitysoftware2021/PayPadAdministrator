@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
+using PayPadAdministrator.CustomAuthentication;
 using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Models;
 using PayPadAdministrator.Services;
@@ -12,6 +13,7 @@ using System.Web.Mvc;
 
 namespace PayPadAdministrator.Controllers
 {
+    [CustomAuthorize]
     public class UsersController : Controller
     {
         static ApiService apiService = new ApiService();
@@ -73,12 +75,12 @@ namespace PayPadAdministrator.Controllers
                 users = JsonConvert.DeserializeObject<List<UserViewModel>>(response.Data.ToString());
             }
 
-            if (userCurrent.ROLE_ID == 1)
+            if (User.IsInRole("SuperAdmin"))
             {
                 return View(users.Where(u => u.ROLE_ID == 3).ToList());
             }
 
-            return View(users.Where(u => u.ROLE_ID == 3 && u.CUSTOMER_ID == userCurrent.CUSTOMER_ID).ToList());
+            return View(users.Where(u => u.ROLE_ID == 3 && u.CUSTOMER_ID == userCurrent.CUSTOMER_ID && u.STATE == true).ToList());
         }
 
         public async Task<ActionResult> CreateUser()
@@ -122,6 +124,17 @@ namespace PayPadAdministrator.Controllers
             var usercurrent = apiService.ValidateUser(User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el usuario ", user.USERNAME), url);
+
+            string body = string.Format(EmailHelper.BodyCreateUser("BodyCreateUser"),Utilities.GetConfiguration("UrlPageWeb"),user.USERNAME,user.PASSWORD);
+            var email = new Email
+            {
+                Body = body,
+                To = user.EMAIL,
+                Subject = "Credenciales Dashboard E-City Software"
+            };
+
+            var responseEmail = await EmailHelper.SendEmail(email);
+
             return RedirectToAction("Index");
         }
 
@@ -192,6 +205,157 @@ namespace PayPadAdministrator.Controllers
             }
 
             return password.Replace(" ", string.Empty);
+        }
+
+        public async Task<ActionResult> EditUser(string data)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(data))
+                {
+                    return RedirectToAction("AccessDenied", "Errors");
+                }
+
+                EncryptionHelper encryptionHelper = new EncryptionHelper();
+                var username = encryptionHelper.DecryptString(data);
+
+                var user = apiService.ValidateUser(username);
+                if (user == null)
+                {
+                    return RedirectToAction("AccessDenied", "Errors");
+                }
+
+                ViewBag.ROLE_ID = new SelectList(await ComboHelper.GetRoles(), nameof(Role.ROLE_ID), nameof(Role.DESCRIPTION), user.ROLE_ID);
+                ViewBag.CUSTOMER_ID = new SelectList(await ComboHelper.GetAllCustomers(), nameof(Customer.CUSTOMER_ID), nameof(Customer.NAME), user.CUSTOMER_ID);
+                return View(user);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error500", "Errors");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditUser(UserViewModel user)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ROLE_ID = new SelectList(await ComboHelper.GetRoles(), nameof(Role.ROLE_ID), nameof(Role.DESCRIPTION), user.ROLE_ID);
+                ViewBag.CUSTOMER_ID = new SelectList(await ComboHelper.GetAllCustomers(), nameof(Customer.CUSTOMER_ID), nameof(Customer.NAME), user.CUSTOMER_ID);
+                return View(user);
+            }
+
+            if (user.ImagePathFile != null)
+            {
+                user.IMAGE = Utilities.GenerateByteArray(user.ImagePathFile.InputStream);
+                user.ImagePathFile = null;
+            }
+            
+            var response = await apiService.InsertPost(user, "UpdateUser");
+            if (response.CodeError != 200)
+            {
+                ViewBag.ROLE_ID = new SelectList(await ComboHelper.GetRoles(), nameof(Role.ROLE_ID), nameof(Role.DESCRIPTION), user.ROLE_ID);
+                ViewBag.CUSTOMER_ID = new SelectList(await ComboHelper.GetAllCustomers(), nameof(Customer.CUSTOMER_ID), nameof(Customer.NAME), user.CUSTOMER_ID);
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View(user);
+            }
+
+            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se actualizó el usuario ", user.USERNAME), url);
+            if (User.IsInRole("SuperAdmin"))
+            {
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Responsible");
+        }
+
+        public async Task<ActionResult> EditUserResponsible(string data)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(data))
+                {
+                    return RedirectToAction("AccessDenied", "Errors");
+                }
+
+                EncryptionHelper encryptionHelper = new EncryptionHelper();
+                var username = encryptionHelper.DecryptString(data);
+
+                var user = apiService.ValidateUser(username);
+                if (user == null)
+                {
+                    return RedirectToAction("AccessDenied", "Errors");
+                }
+
+                ViewBag.ROLE_ID = new SelectList(await ComboHelper.GetRoles(), nameof(Role.ROLE_ID), nameof(Role.DESCRIPTION), user.ROLE_ID);
+                ViewBag.CUSTOMER_ID = new SelectList(await ComboHelper.GetAllCustomers(), nameof(Customer.CUSTOMER_ID), nameof(Customer.NAME), user.CUSTOMER_ID);
+                return View(user);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error500", "Errors");
+            }
+        }
+
+
+        public async Task<ActionResult> GetUserAlarms()
+        {
+            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            if (userCurrent == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
+            var url = string.Concat(Utilities.GetConfiguration("GetUserAlarmForCustomer"), userCurrent.CUSTOMER_ID);
+            var response = await apiService.GetDataV2(url);
+            if (response.CodeError != 200)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
+            var users = JsonConvert.DeserializeObject<List<UserAlarm>>(response.Data.ToString());
+            return View(users);
+        }
+
+        public async Task<ActionResult> CreateUserAlarms()
+        {
+            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            if (userCurrent == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
+            var userAlarm = new UserAlarm
+            {
+                CUSTOMER_ID = userCurrent.CUSTOMER_ID,                
+            };
+
+            ViewBag.ALARM_ID = new SelectList(await ComboHelper.GetAlarms(userCurrent.CUSTOMER_ID), nameof(Alarm.ALARM_ID), nameof(Alarm.USERNAME), 0);
+            return View(userAlarm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateUserAlarms(UserAlarm userAlarm)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ALARM_ID = new SelectList(await ComboHelper.GetAlarms(userAlarm.CUSTOMER_ID.Value), nameof(Alarm.ALARM_ID), nameof(Alarm.USERNAME), userAlarm.ALARM_ID);
+                return View(userAlarm);
+            }
+
+            var response = await apiService.InsertPost(userAlarm, "CreateUserAlarm");
+            if (response.CodeError != 200)
+            {
+                ViewBag.ALARM_ID = new SelectList(await ComboHelper.GetAlarms(userAlarm.CUSTOMER_ID.Value), nameof(Alarm.ALARM_ID), nameof(Alarm.USERNAME), userAlarm.ALARM_ID);
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View(userAlarm);
+            }
+
+            return RedirectToAction("GetUserAlarms");
         }
     }
 }

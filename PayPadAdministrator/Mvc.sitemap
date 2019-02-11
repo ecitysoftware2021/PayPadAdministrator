@@ -4,11 +4,29 @@
             xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
 
   <mvcSiteMapNode title="Dashboard" controller="Home" action="Index">
+
+    <mvcSiteMapNode title="Clientes" controller="Customers" action="Index">
+      <mvcSiteMapNode title="Crear Cliente" controller="Customers" action="CreateCustomer" />
+      <mvcSiteMapNode title="Editar Cliente" controller="Customers" action="EditCustomer" preservedRouteParameters="id"  />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Pay +" action="Index" controller="PayPads">
+      <mvcSiteMapNode title="Sucursales" controller="Customers" action="ShowOfficeForCustomer" preservedRouteParameters="id" />
+      <mvcSiteMapNode title="Crear Pay +" controller="PayPads" action="CreatePayPad" />
+      <mvcSiteMapNode title="Asignar Trámites" controller="PayPads" action="AssingTransact" preservedRouteParameters="id" />
+      <mvcSiteMapNode title="Detalles" controller="PayPads" action="Details" preservedRouteParameters="id" />
+      <mvcSiteMapNode title="Editar" controller="PayPads" action="Edit" preservedRouteParameters="id"  />
+      <mvcSiteMapNode title="Información de la Alarma" controller="Alarms" action="GetAlarmForPaypad" preservedRouteParameters="id">
+        <mvcSiteMapNode title="Log de la alarma" controller="Alarms" action="GetLogAlarm" preservedRouteParameters="id"  />
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Crear Alarma" controller="Alarms" action="CreateAlarm" preservedRouteParameters="id"  />
+      <mvcSiteMapNode title="Dispositivos Asignados" controller="PayPads" action="AssingDevice" preservedRouteParameters="id">
+        <mvcSiteMapNode title="Detalles del dispositivo" controller="PayPads" action="ViewDetailsDevice" preservedRouteParameters="id"  />
+      </mvcSiteMapNode>
+    </mvcSiteMapNode>
     <mvcSiteMapNode title="Patrocinadores" action="SponsorCustomers" controller="Customers">
       <mvcSiteMapNode title="Clientes" controller="Customers" action="Index" />
-      <mvcSiteMapNode title="Crear Cliente" controller="Customers" action="CreateCustomer" />
-      <mvcSiteMapNode title="Detalles" controller="Customers" action="Details" preservedRouteParameters="id" />
-      <mvcSiteMapNode title="Editar" controller="Customers" action="Edit" preservedRouteParameters="id"  />
+      <mvcSiteMapNode title="Crear Cliente" controller="Customers" action="CreateCustomer" />      
+      <mvcSiteMapNode title="Editar Cliente" controller="Customers" action="EditCustomer" preservedRouteParameters="id"  />
       <mvcSiteMapNode title="Tipo de Clientes" controller="Customers" action="TypeCustomers" preservedRouteParameters="id"  />
       <mvcSiteMapNode title="Crear Tipo de Clientes" controller="Customers" action="CreateTypeCustomers" preservedRouteParameters="id"  />
       <mvcSiteMapNode title="Clientes del patrocinador" controller="Customers" action="SponsorToClients" preservedRouteParameters="id"  />
@@ -16,17 +34,12 @@
         <mvcSiteMapNode title="Crear Sucursales" controller="Customers" action="CreateOffice" preservedRouteParameters="id"  />
       </mvcSiteMapNode>
     </mvcSiteMapNode>
-    <mvcSiteMapNode title="Pay +" action="Index" controller="PayPads">
-      <mvcSiteMapNode title="Crear Pay +" controller="PayPads" action="CreatePayPad" />
-      <mvcSiteMapNode title="Asignar Trámites" controller="PayPads" action="AssingTransact" preservedRouteParameters="id" />
-      <mvcSiteMapNode title="Detalles" controller="PayPads" action="Details" preservedRouteParameters="id" />
-      <mvcSiteMapNode title="Editar" controller="PayPads" action="Edit" preservedRouteParameters="id"  />
-      <mvcSiteMapNode title="Dispositivos Asignados" controller="PayPads" action="AssingDevice" preservedRouteParameters="id"  />
-    </mvcSiteMapNode>
+
     <mvcSiteMapNode title="Monedas" action="Currencies" controller="Denominations">
       <mvcSiteMapNode title="Crear Moneda" controller="Denominations" action="CreateCurrency" />
       <mvcSiteMapNode title="Denominaciones" controller="Denominations" action="ShowDenominationForCurrency" preservedRouteParameters="id">
         <mvcSiteMapNode title="Crear denominación" controller="Denominations" action="CreateDenominationForCurrency" preservedRouteParameters="id"  />
+        <mvcSiteMapNode title="Editar denominación" controller="Denominations" action="EditDenominationForCurrency" preservedRouteParameters="id"  />
       </mvcSiteMapNode>      
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Roles" action="Index" controller="Roles" >
@@ -40,6 +53,9 @@
     <mvcSiteMapNode title="Dispositivos" action="Index" controller="Devices" >
       <mvcSiteMapNode title="Crear Dispositivo" action="CreateDevice" controller="Devices" />
     </mvcSiteMapNode>
+    <mvcSiteMapNode title="Usuarios Alarma" action="GetUserAlarms" controller="Users" >
+      <mvcSiteMapNode title="Crear Usuario alarma" action="CreateUserAlarms" controller="Users" />
+    </mvcSiteMapNode>
     <mvcSiteMapNode title="Reportes por trámite" action="GetTransactionForTransact" controller="Reports" />          
     <mvcSiteMapNode title="Usuarios" action="Index" controller="Users" />
     <mvcSiteMapNode title="Usuarios Responsables" action="Responsible" controller="Users">
@@ -47,12 +63,7 @@
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Super Administradores" action="SuperAdministrators" controller="Users" />
     <mvcSiteMapNode title="Administradores" action="Administrators" controller="Users" />
-    <mvcSiteMapNode title="Módulos" action="Index" controller="Modules" />
-    <mvcSiteMapNode title="Denominaciones" action="Index" controller="Modules">
-      <mvcSiteMapNode title="Crear Denominaciones" controller="Modules" action="Create" />
-      <mvcSiteMapNode title="Detalles" controller="Modules" action="Details" preservedRouteParameters="id" />
-      <mvcSiteMapNode title="Editar" controller="Modules" action="Edit" preservedRouteParameters="id"  />
-    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Módulos" action="Index" controller="Modules" />   
   </mvcSiteMapNode>
 
 </mvcSiteMap>
