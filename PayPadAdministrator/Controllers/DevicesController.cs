@@ -19,7 +19,7 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> Index()
         {
             List<Device> devices = new List<Device>();
-            var response = await apiService.GetData("GetDevices");
+            var response = await apiService.GetData(this,"GetDevices");
             if (response.CodeError == 200)
             {
                 devices = JsonConvert.DeserializeObject<List<Device>>(response.Data.ToString());
@@ -62,7 +62,7 @@ namespace PayPadAdministrator.Controllers
                 return View(device);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el dispositivo ", device.NAME), url);
 
@@ -72,7 +72,7 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> GetDeviceTypes()
         {
             List<DeviceType> deviceTypes = new List<DeviceType>();
-            var response = await apiService.GetData("GetDeviceTypes");
+            var response = await apiService.GetData(this,"GetDeviceTypes");
             if (response.CodeError == 200)
             {
                 deviceTypes = JsonConvert.DeserializeObject<List<DeviceType>>(response.Data.ToString());
@@ -103,7 +103,7 @@ namespace PayPadAdministrator.Controllers
                 return View(device);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el tipo de dispositivo ", device.APOSTROPHE), url);
             return RedirectToAction("GetDeviceTypes");
@@ -113,7 +113,7 @@ namespace PayPadAdministrator.Controllers
         {
             var device = new Device();
             var url = string.Concat(Utilities.GetConfiguration("GetDeviceForId"), id);
-            var response = await apiService.GetDataV2(url);
+            var response = await apiService.GetDataV2(this,url);
             if (response.CodeError == 200)
             {
                 device = JsonConvert.DeserializeObject<Device>(response.Data.ToString());
@@ -147,7 +147,7 @@ namespace PayPadAdministrator.Controllers
                 return View(device);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se editó el dispositivo ", device.NAME), url);
             return RedirectToAction("Index");

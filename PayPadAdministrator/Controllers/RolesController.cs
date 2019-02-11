@@ -54,7 +54,7 @@ namespace PayPadAdministrator.Controllers
                 return View(role);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el rol ", role.DESCRIPTION), url);
             return RedirectToAction("Index");

@@ -189,7 +189,7 @@ namespace PayPadAdministrator.Controllers
         public async Task<JsonResult> GetDashboardLog(int userId)
         {
             var url = string.Concat(Utilities.GetConfiguration("GetLogDashboardForUser"),"?userId=", userId);
-            var response = await apiService.GetDataV2(url);
+            var response = await apiService.GetDataV2(this,url);
             List<DasboardLogViewModel> dasboardLogs = new List<DasboardLogViewModel>();
             if (response.CodeError == 200)
             {

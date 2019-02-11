@@ -249,6 +249,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ComboHelper.cs" />
+    <Compile Include="Helpers\CookiesHelper.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\NotifyHelper.cs" />
@@ -277,6 +278,7 @@
     <Compile Include="Models\RequestAuth.cs" />
     <Compile Include="Models\RequestAuthentication.cs" />
     <Compile Include="Models\RequestReport.cs" />
+    <Compile Include="Models\ResponseAuth.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Sponsor.cs" />
     <Compile Include="Models\SponsorToClientViewModel.cs" />

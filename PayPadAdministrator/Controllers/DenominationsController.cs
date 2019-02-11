@@ -24,7 +24,7 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> Currencies()
         {
             List<Currency> currencies = new List<Currency>();
-            var response = await apiService.GetData("GetCurrencies");
+            var response = await apiService.GetData(this,"GetCurrencies");
             if (response.CodeError == 200)
             {
                 currencies = JsonConvert.DeserializeObject<List<Currency>>(response.Data.ToString());
@@ -54,7 +54,7 @@ namespace PayPadAdministrator.Controllers
                 return View(currency);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this, User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó la moneda ", currency.DESCRIPTION), url);
             return RedirectToAction("Currencies");
@@ -68,7 +68,7 @@ namespace PayPadAdministrator.Controllers
             }
 
             CurrencyDenominationViewModel currency = new CurrencyDenominationViewModel();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetDenominationsForCurrency"), id));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetDenominationsForCurrency"), id));
             if (response.CodeError == 200)
             {
                 currency = JsonConvert.DeserializeObject<CurrencyDenominationViewModel>(response.Data.ToString());
@@ -116,7 +116,7 @@ namespace PayPadAdministrator.Controllers
                 return View(currency_Denomination);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó la denominación ", currency_Denomination.VALUE), url);
             return RedirectToAction("ShowDenominationForCurrency", new { id = currency_Denomination.CURRENCY_ID });
@@ -132,7 +132,7 @@ namespace PayPadAdministrator.Controllers
 
             Currency_Denomination currency_Denomination = new Currency_Denomination();
             var url = string.Concat(Utilities.GetConfiguration("GetCurrency_DenominationForId"), id);
-            var response = await apiService.GetDataV2(url);
+            var response = await apiService.GetDataV2(this,url);
             if (response.CodeError == 200)
             {
                 currency_Denomination = JsonConvert.DeserializeObject<Currency_Denomination>(response.Data.ToString());
@@ -163,7 +163,7 @@ namespace PayPadAdministrator.Controllers
                 return View(currency_Denomination);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se editó la denominación ", currency_Denomination.VALUE), url);
             return RedirectToAction("ShowDenominationForCurrency", new { id = currency_Denomination.CURRENCY_ID });

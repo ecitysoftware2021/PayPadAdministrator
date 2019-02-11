@@ -22,7 +22,6 @@ namespace PayPadAdministrator.Helpers
 
         public static string BodyCreateUser(string fileName)
         {            
-            string startupPath = Environment.CurrentDirectory;
             var fileContents = File.ReadAllText(HttpContext.Current.Server.MapPath(string.Concat("~/App_Data/", fileName,".txt")));
             return fileContents;
         }

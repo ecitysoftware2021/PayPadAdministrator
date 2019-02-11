@@ -18,7 +18,7 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> GetAlarmForPaypad(int id)
         {
             var url = string.Concat(Utilities.GetConfiguration("GetAlarmForPaypad"), id);
-            var response = await apiService.GetDataV2(url);
+            var response = await apiService.GetDataV2(this,url);
             if (response.CodeError != 200)
             {
                 return RedirectToAction("AccessDenied", "Errors");
@@ -67,7 +67,7 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> GetLogAlarm(int id)
         {
             var url = string.Concat(Utilities.GetConfiguration("GetLogAlarm"), id);
-            var response = await apiService.GetDataV2(url);
+            var response = await apiService.GetDataV2(this,url);
             if (response.CodeError != 200)
             {
                 return RedirectToAction("AccessDenied", "Errors");

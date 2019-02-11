@@ -22,7 +22,7 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> Index()
         {
             List<ModuleViewModel> moduleViewModels = new List<ModuleViewModel>();
-            var response = await apiService.GetData("GetModules");
+            var response = await apiService.GetData(this,"GetModules");
             if (response.CodeError == 200)
             {
                 var modules = JsonConvert.DeserializeObject<List<Module>>(response.Data.ToString());
@@ -30,7 +30,7 @@ namespace PayPadAdministrator.Controllers
                 {
                     ModuleViewModel moduleViewModel = new ModuleViewModel();
                     List<SubModule> subModules = new List<SubModule>();
-                    var responseSM = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetSubModules"), module.MODULE_ID));
+                    var responseSM = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetSubModules"), module.MODULE_ID));
                     if (responseSM.CodeError == 200)
                     {
                         subModules = JsonConvert.DeserializeObject<List<SubModule>>(responseSM.Data.ToString());
@@ -66,7 +66,7 @@ namespace PayPadAdministrator.Controllers
                 return View(module);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el modulo ", module.DESCRIPTION), url);
             return RedirectToAction("Index");
@@ -98,7 +98,7 @@ namespace PayPadAdministrator.Controllers
                 return PartialView(module);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el submodulo ", module.DESCRIPTION), url);
             return RedirectToAction("Index");
@@ -118,7 +118,7 @@ namespace PayPadAdministrator.Controllers
             }
             else
             {
-                var usercurrent = apiService.ValidateUser(User.Identity.Name);
+                var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
                 moduleViewModels = await ModuleUserResponsible(userId.Value, usercurrent.CUSTOMER_ID);
             }
 
@@ -129,7 +129,7 @@ namespace PayPadAdministrator.Controllers
         private async Task<List<ModuleViewModel>> ModuleUserResponsible(int userId, int customerId)
         {
             List<ModuleViewModel> moduleViewModels = new List<ModuleViewModel>();
-            var response = await apiService.GetDataV2(
+            var response = await apiService.GetDataV2(this,
                 string.Concat(
                     Utilities.GetConfiguration("GetValidateModulesAssingForUserResponsible"),
                     "?userId=", userId,
@@ -145,7 +145,7 @@ namespace PayPadAdministrator.Controllers
         private async Task<List<ModuleViewModel>> ModuleAllUsers(int userId)
         {
             List<ModuleViewModel> moduleViewModels = new List<ModuleViewModel>();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetValidateModulesAssingForUser"), userId));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetValidateModulesAssingForUser"), userId));
             if (response.CodeError == 200)
             {
                 moduleViewModels = JsonConvert.DeserializeObject<List<ModuleViewModel>>(response.Data.ToString());
@@ -157,7 +157,7 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> AssingModuleToCustomer(int id)
         {
             List<ModuleViewModel> moduleViewModels = new List<ModuleViewModel>();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetValidateModulesAssingForCustomer"), id));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetValidateModulesAssingForCustomer"), id));
             if (response.CodeError == 200)
             {
                 moduleViewModels = JsonConvert.DeserializeObject<List<ModuleViewModel>>(response.Data.ToString());

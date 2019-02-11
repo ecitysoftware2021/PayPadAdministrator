@@ -19,7 +19,7 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> Index()
         {
             List<Transaction_Type> transaction_Types = new List<Transaction_Type>();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetTransact"), 0));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetTransact"), 0));
             if (response.CodeError == 200)
             {
                 transaction_Types = JsonConvert.DeserializeObject<List<Transaction_Type>>(response.Data.ToString());
@@ -49,7 +49,7 @@ namespace PayPadAdministrator.Controllers
                 return View(transaction_Type);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el trámite ", transaction_Type.DESCRIPTION), url);
 
@@ -64,7 +64,7 @@ namespace PayPadAdministrator.Controllers
             }
 
             Transaction_Type transaction_Type = new Transaction_Type();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetTransact"), id));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetTransact"), id));
             if (response.CodeError == 200)
             {
                 var transaction_Types = JsonConvert.DeserializeObject<List<Transaction_Type>>(response.Data.ToString());
@@ -90,7 +90,7 @@ namespace PayPadAdministrator.Controllers
                 return View(transaction_Type);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se editó el trámite ", transaction_Type.DESCRIPTION), url);
             return RedirectToAction("Index");

@@ -43,7 +43,24 @@ namespace PayPadAdministrator.Controllers
                 return View(model);
             }
 
-            var response = await apiService.Login(model.UserName, model.Password);
+            var data = new RequestAuth
+            {
+                Password = model.Password,
+                Type = 2,
+                UserName = model.UserName
+            };
+
+            var request = await apiService.SecurityToken(data);
+            if (request == null)
+            {
+                ModelState.AddModelError(string.Empty, "¡Usuario y contraseña incorrectas!");
+                return View(model);
+            }
+
+            var cookie = CookiesHelper.CreateTokenCookie(request.Token);
+            Response.Cookies.Add(cookie);
+
+            var response = await apiService.Login(model.UserName, model.Password, request.Token);
             if (response == null)
             {
                 ModelState.AddModelError(string.Empty, "¡Usuario y contraseña incorrectas!");
@@ -150,10 +167,10 @@ namespace PayPadAdministrator.Controllers
                 return View(model);
             }
 
-            var user = apiService.ValidateUser(model.UserName);
+            var user = apiService.ValidateUser(this, model.UserName);
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty,string.Concat("¡El usuario ",model.UserName," no existe, Verifique nuevamente la información!"));
+                ModelState.AddModelError(string.Empty, string.Concat("¡El usuario ", model.UserName, " no existe, Verifique nuevamente la información!"));
                 return View(model);
             }
 
@@ -210,13 +227,13 @@ namespace PayPadAdministrator.Controllers
 
         public ActionResult ProfileUser()
         {
-            var user = apiService.ValidateUser(User.Identity.Name);
+            var user = apiService.ValidateUser(this, User.Identity.Name);
             if (user == null)
             {
                 return RedirectToAction("AccessDenied", "Errors");
             }
 
-            ViewBag.Title = string.Concat("Perfil de ",user.USERNAME);
+            ViewBag.Title = string.Concat("Perfil de ", user.USERNAME);
             return View(user);
         }
 
@@ -224,32 +241,32 @@ namespace PayPadAdministrator.Controllers
         public ActionResult GetModule()
         {
             List<ModuleViewModel> modules = new List<ModuleViewModel>();
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);
             if (userCurrent == null)
             {
                 return PartialView(modules);
             }
 
-            var response = apiService.GetDataRest(string.Concat(Utilities.GetConfiguration("GetModuleForUser"), userCurrent.USER_ID));
+            var response = apiService.GetDataRest(this, string.Concat(Utilities.GetConfiguration("GetModuleForUser"), userCurrent.USER_ID));
             if (response.CodeError == 200)
             {
                 modules = JsonConvert.DeserializeObject<List<ModuleViewModel>>(response.Data.ToString());
             }
-            
+
             return PartialView(modules);
         }
 
         [ChildActionOnly]
         public ActionResult GetPhotoProfile()
         {
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);
             return PartialView(userCurrent);
         }
 
         [ChildActionOnly]
         public ActionResult GetDataLogoCustomer()
         {
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);
             return PartialView(userCurrent);
         }
 

@@ -12,6 +12,9 @@ namespace PayPadAdministrator.Classes
 {
     public class Utilities
     {
+
+        public static string Token { get; set; }
+
         public static string GetConfiguration(string key)
         {
             return ConfigurationManager.AppSettings[key];

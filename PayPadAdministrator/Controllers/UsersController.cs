@@ -21,7 +21,7 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> Index()
         {
             List<UserViewModel> users = new List<UserViewModel>();
-            var response = await apiService.GetData("GetAllUsers");
+            var response = await apiService.GetData(this,"GetAllUsers");
             if (response.CodeError == 200)
             {
                 users = JsonConvert.DeserializeObject<List<UserViewModel>>(response.Data.ToString());
@@ -32,7 +32,7 @@ namespace PayPadAdministrator.Controllers
 
         public ActionResult UserDetails(string userName)
         {
-            var user = apiService.ValidateUser(userName);
+            var user = apiService.ValidateUser(this, userName);
             if (user == null)
             {
                 return RedirectToAction("Error500", "Errors");
@@ -44,7 +44,7 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> SuperAdministrators()
         {
             List<UserViewModel> users = new List<UserViewModel>();
-            var response = await apiService.GetData("GetAllUsers");
+            var response = await apiService.GetData(this,"GetAllUsers");
             if (response.CodeError == 200)
             {
                 users = JsonConvert.DeserializeObject<List<UserViewModel>>(response.Data.ToString());
@@ -56,7 +56,7 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> Administrators()
         {
             List<UserViewModel> users = new List<UserViewModel>();
-            var response = await apiService.GetData("GetAllUsers");
+            var response = await apiService.GetData(this,"GetAllUsers");
             if (response.CodeError == 200)
             {
                 users = JsonConvert.DeserializeObject<List<UserViewModel>>(response.Data.ToString());
@@ -68,8 +68,8 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> Responsible()
         {
             List<UserViewModel> users = new List<UserViewModel>();
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
-            var response = await apiService.GetData("GetAllUsers");
+            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);
+            var response = await apiService.GetData(this,"GetAllUsers");
             if (response.CodeError == 200)
             {
                 users = JsonConvert.DeserializeObject<List<UserViewModel>>(response.Data.ToString());
@@ -121,11 +121,11 @@ namespace PayPadAdministrator.Controllers
                 return View(user);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this, User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el usuario ", user.USERNAME), url);
 
-            string body = string.Format(EmailHelper.BodyCreateUser("BodyCreateUser"),Utilities.GetConfiguration("UrlPageWeb"),user.USERNAME,user.PASSWORD);
+            string body = string.Format(EmailHelper.BodyCreateUser("BodyCreateUser"), Utilities.GetConfiguration("UrlPageWeb"), user.USERNAME, user.PASSWORD);
             var email = new Email
             {
                 Body = body,
@@ -140,7 +140,7 @@ namespace PayPadAdministrator.Controllers
 
         public ActionResult CreateUserResponsible()
         {
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);
             if (userCurrent == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -182,7 +182,7 @@ namespace PayPadAdministrator.Controllers
                 return View(user);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this, User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el usuario ", user.USERNAME), url);
             return RedirectToAction("Responsible");
@@ -193,7 +193,7 @@ namespace PayPadAdministrator.Controllers
             Random random = new Random();
             string character = Dictionaries.SpecialCharacters[random.Next(1, Dictionaries.SpecialCharacters.Count)];
             string password = string.Empty;
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetNameCustomerForId"), customerId));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetNameCustomerForId"), customerId));
             if (response.CodeError == 200)
             {
                 password = string.Concat(Utilities.RemoveAccentsWithNormalization(response.Data.ToString()),
@@ -219,7 +219,7 @@ namespace PayPadAdministrator.Controllers
                 EncryptionHelper encryptionHelper = new EncryptionHelper();
                 var username = encryptionHelper.DecryptString(data);
 
-                var user = apiService.ValidateUser(username);
+                var user = apiService.ValidateUser(this, username);
                 if (user == null)
                 {
                     return RedirectToAction("AccessDenied", "Errors");
@@ -251,7 +251,7 @@ namespace PayPadAdministrator.Controllers
                 user.IMAGE = Utilities.GenerateByteArray(user.ImagePathFile.InputStream);
                 user.ImagePathFile = null;
             }
-            
+
             var response = await apiService.InsertPost(user, "UpdateUser");
             if (response.CodeError != 200)
             {
@@ -261,7 +261,7 @@ namespace PayPadAdministrator.Controllers
                 return View(user);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this, User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se actualizó el usuario ", user.USERNAME), url);
             if (User.IsInRole("SuperAdmin"))
@@ -284,7 +284,7 @@ namespace PayPadAdministrator.Controllers
                 EncryptionHelper encryptionHelper = new EncryptionHelper();
                 var username = encryptionHelper.DecryptString(data);
 
-                var user = apiService.ValidateUser(username);
+                var user = apiService.ValidateUser(this, username);
                 if (user == null)
                 {
                     return RedirectToAction("AccessDenied", "Errors");
@@ -303,14 +303,14 @@ namespace PayPadAdministrator.Controllers
 
         public async Task<ActionResult> GetUserAlarms()
         {
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);
             if (userCurrent == null)
             {
                 return RedirectToAction("AccessDenied", "Errors");
             }
 
             var url = string.Concat(Utilities.GetConfiguration("GetUserAlarmForCustomer"), userCurrent.CUSTOMER_ID);
-            var response = await apiService.GetDataV2(url);
+            var response = await apiService.GetDataV2(this,url);
             if (response.CodeError != 200)
             {
                 return RedirectToAction("AccessDenied", "Errors");
@@ -322,7 +322,7 @@ namespace PayPadAdministrator.Controllers
 
         public async Task<ActionResult> CreateUserAlarms()
         {
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);
             if (userCurrent == null)
             {
                 return RedirectToAction("AccessDenied", "Errors");
@@ -330,7 +330,7 @@ namespace PayPadAdministrator.Controllers
 
             var userAlarm = new UserAlarm
             {
-                CUSTOMER_ID = userCurrent.CUSTOMER_ID,                
+                CUSTOMER_ID = userCurrent.CUSTOMER_ID,
             };
 
             ViewBag.ALARM_ID = new SelectList(await ComboHelper.GetAlarms(userCurrent.CUSTOMER_ID), nameof(Alarm.ALARM_ID), nameof(Alarm.USERNAME), 0);

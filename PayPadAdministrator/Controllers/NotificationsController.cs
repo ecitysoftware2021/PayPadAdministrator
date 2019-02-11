@@ -19,14 +19,14 @@ namespace PayPadAdministrator.Controllers
         public async Task<ActionResult> Index()
         {
             List<Notifications> notifications = new List<Notifications>();
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(this,User.Identity.Name);
             if (userCurrent == null)
             {
                 return RedirectToAction("AccessDenied", "Errors");
             }
 
             var url = string.Concat(Utilities.GetConfiguration("GetNotficationsForCustomer"), userCurrent.CUSTOMER_ID);
-            var response = await apiService.GetDataV2(url);
+            var response = await apiService.GetDataV2(this,url);
             if (response.CodeError == 200)
             {
                 notifications = JsonConvert.DeserializeObject<List<Notifications>>(response.Data.ToString());
@@ -39,14 +39,14 @@ namespace PayPadAdministrator.Controllers
         public ActionResult GetTenNotificstions()
         {
             List<Notifications> notifications = new List<Notifications>();
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(this,User.Identity.Name);
             if (userCurrent == null)
             {
                 return RedirectToAction("AccessDenied", "Errors");
             }
 
             var url = string.Concat(Utilities.GetConfiguration("GetTenNotficationsForCustomer"), userCurrent.CUSTOMER_ID);
-            var response = apiService.GetDataRest(url);
+            var response = apiService.GetDataRest(this, url);
             if (response.CodeError == 200)
             {
                 notifications = JsonConvert.DeserializeObject<List<Notifications>>(response.Data.ToString());

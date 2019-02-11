@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
+using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Models;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,40 +13,43 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PayPadAdministrator.Services
 {
     public class ApiService
     {
 
-        string userAPi = string.Empty;
-
         string urlApi = string.Empty;
+
+        string userAPi = string.Empty;
 
         string passwordAPi = string.Empty;
 
+
         public ApiService()
         {
-            userAPi = Utilities.GetConfiguration("UrlApi");
             urlApi = Utilities.GetConfiguration("UrlApi");
-            passwordAPi = "34";
+            ReadKeys();
         }
 
-        public async Task<UserSession> Login(string username, string password)
+        public async Task<UserSession> Login(string username, string password, string token)
         {
             try
             {
                 var reques = new RequestAuthentication
                 {
-                    Password = password,                    
+                    Password = password,
                     UserName = username
                 };
 
+                ServicePointManager.Expect100Continue = false;
                 var json = JsonConvert.SerializeObject(reques);
                 var content = new StringContent(json, Encoding.UTF8, "Application/json");
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlApi);
-                var url = "ApiAdministrator/api/Users/Login";                
+                var url = "ApiAdministrator/api/Users/Login";
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var response = await client.PostAsync(url, content);
                 if (!response.IsSuccessStatusCode)
                 {
@@ -79,61 +84,35 @@ namespace PayPadAdministrator.Services
                             ROLE_ID = user.ROLE_ID
                         }
                     },
-                   
+
                 };
-                
+
                 return userSession;
             }
             catch (Exception ex)
             {
                 return null;
             }
-        }
-
-        public async Task<UserSession> LoginApi(string username, string password)
-        {
-            try
-            {
-                var reques = new RequestAuthentication
-                {
-                    Password = password,
-                    Type = 2,
-                    UserName = username
-                };
-
-                var json = JsonConvert.SerializeObject(reques);
-                var content = new StringContent(json, Encoding.UTF8, "Application/json");
-                var client = new HttpClient();
-                client.BaseAddress = new Uri(urlApi);
-                var url = "/ApiAdministrator/api/Authentication/AuthenticateRepo";
-
-                //var authentication = Encoding.ASCII.GetBytes(userAPi + ":" + passwordAPi);
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authentication));
-                var response = await client.PostAsync(url, content);
-                if (!response.IsSuccessStatusCode)
-                {
-                    return null;
-                }
-
-                var result = await response.Content.ReadAsStringAsync();
-                var requestresponse = JsonConvert.DeserializeObject<UserSession>(result);
-                return requestresponse;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
+        }       
 
         public async Task<Response> InsertPost<T>(T model, string controller)
         {
             try
             {
+                var controllerP = new Controllers.ErrorsController();
                 var request = JsonConvert.SerializeObject(model);
                 var content = new StringContent(request, Encoding.UTF8, "Application/json");
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(urlApi);
                 var url = Utilities.GetConfiguration(controller);
+                string token = string.Empty;
+                if (controllerP.Request.Cookies["TokenDashboard"] != null)
+                {
+                    token = controllerP.Request.Cookies["TokenDashboard"].Value;
+                }
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
                 var response = await client.PostAsync(url, content);
                 if (!response.IsSuccessStatusCode)
                 {
@@ -158,13 +137,21 @@ namespace PayPadAdministrator.Services
             }
         }
 
-        public async Task<Response> GetData(string controller)
+        public async Task<Response> GetData(Controller controllerP, string controller)
         {
             try
-            {                               
+            {
+                ServicePointManager.Expect100Continue = false;
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(urlApi);
                 var url = Utilities.GetConfiguration(controller);
+                string token = string.Empty;
+                if (controllerP.Request.Cookies["TokenDashboard"] != null)
+                {
+                    token = controllerP.Request.Cookies["TokenDashboard"].Value;
+                }
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var response = await client.GetAsync(url);
                 if (!response.IsSuccessStatusCode)
                 {
@@ -189,72 +176,59 @@ namespace PayPadAdministrator.Services
             }
         }
 
-        public async Task<Response> GetDataV2(string url)
+        public async Task<Response> GetDataV2(Controller controller,string url)
         {
             try
             {
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(urlApi);                
-                var response = await client.GetAsync(url);
-                if (!response.IsSuccessStatusCode)
-                {
-                    return new Response
-                    {
-                        CodeError = 100,
-                        Message = response.ReasonPhrase,
-                    };
-                }
-
-                var result = await response.Content.ReadAsStringAsync();
-                var responseApi = JsonConvert.DeserializeObject<Response>(result);
-                return responseApi;
-            }
-            catch (Exception ex)
-            {
-                return new Response
-                {
-                    CodeError = 300,
-                    Message = ex.Message,
-                };
-            }
-        }
-
-        public async Task<UserViewModel> ValidateUserAsync(string name)
-        {
-            try
-            {
+                ServicePointManager.Expect100Continue = false;
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(urlApi);
-                var url = string.Concat("ApiAdministrator/api/Users/GetUserForUserName?userName=", name);
+                string token = string.Empty;
+                if (controller.Request.Cookies["TokenDashboard"] != null)
+                {
+                    token = controller.Request.Cookies["TokenDashboard"].Value;
+                }
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var response = await client.GetAsync(url);
                 if (!response.IsSuccessStatusCode)
                 {
-                    return null;
+                    return new Response
+                    {
+                        CodeError = 100,
+                        Message = response.ReasonPhrase,
+                    };
                 }
 
                 var result = await response.Content.ReadAsStringAsync();
                 var responseApi = JsonConvert.DeserializeObject<Response>(result);
-                if (responseApi.CodeError != 200)
-                {
-                    return null;
-                }
-
-                var userCurrent = JsonConvert.DeserializeObject<UserViewModel>(responseApi.Data.ToString());
-                return userCurrent;
+                return responseApi;
             }
             catch (Exception ex)
             {
-                return null;
+                return new Response
+                {
+                    CodeError = 300,
+                    Message = ex.Message,
+                };
             }
         }
 
-        public UserViewModel ValidateUser(string name)
+
+        public UserViewModel ValidateUser(Controller controller, string name)
         {
             try
             {
                 var url = string.Concat(urlApi, "ApiAdministrator/api/Users/GetUserForUserName?userName=", name);
                 var client = new RestClient(url);
                 var request = new RestRequest(Method.GET);
+                string token = string.Empty;
+                if (controller.Request.Cookies["TokenDashboard"] != null)
+                {
+                    token = controller.Request.Cookies["TokenDashboard"].Value;
+                }
+
+                request.AddHeader("Authorization", string.Format("Bearer {0}", token));
                 IRestResponse iResponse = client.Execute(request);
                 var responseApi = JsonConvert.DeserializeObject<Response>(iResponse.Content.ToString());
                 if (responseApi.CodeError != 200)
@@ -271,13 +245,20 @@ namespace PayPadAdministrator.Services
             }
         }
 
-        public Response GetDataRest(string controller)
+        public Response GetDataRest(Controller controllerP, string controller)
         {
             try
             {
                 var url = string.Concat(urlApi, controller);
                 var client = new RestClient(url);
                 var request = new RestRequest(Method.GET);
+                string token = string.Empty;
+                if (controllerP.Request.Cookies["TokenDashboard"] != null)
+                {
+                    token = controllerP.Request.Cookies["TokenDashboard"].Value;
+                }
+
+                request.AddHeader("Authorization", string.Format("Bearer {0}", token));
                 IRestResponse iResponse = client.Execute(request);
                 var response = JsonConvert.DeserializeObject<Response>(iResponse.Content.ToString());
                 return response;
@@ -292,7 +273,7 @@ namespace PayPadAdministrator.Services
             }
         }
 
-        public async Task<bool> SecurityToken(RequestAuth requestAuth)
+        public async Task<ResponseAuth> SecurityToken(RequestAuth requestAuth)
         {
             try
             {
@@ -302,12 +283,12 @@ namespace PayPadAdministrator.Services
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlApi);
                 var url = Utilities.GetConfiguration("GetToken");
-                var authentication = Encoding.ASCII.GetBytes(User4Told + ":" + Password4Told);
+                var authentication = Encoding.ASCII.GetBytes(userAPi + ":" + passwordAPi);
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(authentication));
                 var response = await client.PostAsync(url, content);
                 if (!response.IsSuccessStatusCode)
                 {
-                    return false;
+                    return null;
                 }
 
                 var result = await response.Content.ReadAsStringAsync();
@@ -318,21 +299,30 @@ namespace PayPadAdministrator.Services
                     {
                         if (requestresponse.CodeError == 200)
                         {
-                            Utilities.TOKEN = requestresponse.Token;
-                            Utilities.CorrespondentId = Convert.ToInt32(requestresponse.User);
-                            Utilities.Session = Convert.ToInt16(requestresponse.Session);
-                            return true;
+                            return requestresponse;
                         }
 
-                        return false;
+                        return null;
                     }
                 }
 
-                return false;
+                return null;
             }
             catch (Exception ex)
             {
-                return false;
+                return null;
+            }
+        }
+
+        private void ReadKeys()
+        {
+            string path = HttpContext.Current.Server.MapPath(string.Concat("~/App_Data/keys.txt"));
+            string[] text = File.ReadAllLines(path);
+            if (text.Length > 0)
+            {
+                string[] line1 = text[0].Split(';');
+                userAPi = line1[0].Split(':')[1];
+                passwordAPi = line1[1].Split(':')[1];
             }
         }
     }

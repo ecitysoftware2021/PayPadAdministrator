@@ -25,7 +25,7 @@ namespace PayPadAdministrator.Controllers
 
         public async Task<ActionResult> GetTransactionForTransact()
         {
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);
             List<PayPad> payPads = new List<PayPad>();
             if (User.IsInRole("SuperAdmin"))
             {
@@ -52,7 +52,7 @@ namespace PayPadAdministrator.Controllers
 
         public async Task<ActionResult> GetTransactionCM()
         {
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);
             List<PayPad> payPads = new List<PayPad>();
             if (User.IsInRole("SuperAdmin"))
             {
@@ -79,7 +79,7 @@ namespace PayPadAdministrator.Controllers
             }
 
             var url = string.Concat(Utilities.GetConfiguration("GetTransactionDescriptionsForId"), id);
-            var response = await apiService.GetDataV2(url);
+            var response = await apiService.GetDataV2(this,url);
             if (response.CodeError != 200)
             {
                 return RedirectToAction("AccessDenied", "Errors");

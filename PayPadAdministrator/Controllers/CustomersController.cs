@@ -41,9 +41,9 @@ namespace PayPadAdministrator.Controllers
                 return View(clients);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = string.Concat(Utilities.GetConfiguration("GetCustomersFromSponsor"), usercurrent.CUSTOMER_ID);
-            var responseclients = await apiService.GetDataV2(url);
+            var responseclients = await apiService.GetDataV2(this,url);
             if (responseclients.CodeError == 200)
             {
                 clients = JsonConvert.DeserializeObject<List<Customer>>(responseclients.Data.ToString());
@@ -171,7 +171,7 @@ namespace PayPadAdministrator.Controllers
 
             else if (id == null)
             {
-                var usercurrent = apiService.ValidateUser(User.Identity.Name);
+                var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
                 id = usercurrent.CUSTOMER_ID;
             }
 
@@ -225,7 +225,7 @@ namespace PayPadAdministrator.Controllers
                 return View(office);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);            
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);            
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó la oficina ", office.NAME), url);
             return RedirectToAction("ShowOfficeForCustomer", new { id = office.CUSTOMER_ID, Message = "Se creó el cliente correctamente" });
@@ -288,7 +288,7 @@ namespace PayPadAdministrator.Controllers
                 return View(customer);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el cliente ", customer.NAME), url);
             return RedirectToAction("Index", new { Message = "Se creó el cliente correctamente" });
@@ -333,7 +333,7 @@ namespace PayPadAdministrator.Controllers
                 var response = await apiService.InsertPost(customerType, "CreateTypeCustomer");
                 if (response.CodeError == 200)
                 {
-                    var usercurrent = apiService.ValidateUser(User.Identity.Name);
+                    var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
                     var url = Request.Url.AbsolutePath.Split('/')[1];                    
                     await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el tipo de cliente ", customerType.DESCRIPTION),url);
 
@@ -355,9 +355,9 @@ namespace PayPadAdministrator.Controllers
             }
 
             OfficeUserViewModel officeUserViewModel = new OfficeUserViewModel();
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(this,User.Identity.Name);
             List<Office> offices = new List<Office>();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetOfficeForId"), id));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetOfficeForId"), id));
             if (response.CodeError == 200)
             {
                 officeUserViewModel.Office = JsonConvert.DeserializeObject<Office>(response.Data.ToString());
@@ -365,7 +365,7 @@ namespace PayPadAdministrator.Controllers
 
             //officeUserViewModel.Office = offices.Where(o => o.OFFICE_ID == id).FirstOrDefault();
 
-            var responseUsers = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("ValidateOfficeUsers"), id));
+            var responseUsers = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("ValidateOfficeUsers"), id));
             if (responseUsers.CodeError == 200)
             {
                 officeUserViewModel.UserViewModels = JsonConvert.DeserializeObject<List<UserViewModel>>(responseUsers.Data.ToString());
@@ -443,7 +443,7 @@ namespace PayPadAdministrator.Controllers
                 return View(customer);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se actualizó el cliente ", customer.NAME), url);
             return RedirectToAction("Index", new { Message = "Se actualizó el cliente correctamente" });

@@ -28,7 +28,7 @@ namespace PayPadAdministrator.Controllers
                 return View(payPads);
             }
 
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(this,User.Identity.Name);
             if (User.IsInRole("Admin"))
             {
                 payPads = await GetAllsPaypadsForCustomer(userCurrent.CUSTOMER_ID);
@@ -48,7 +48,7 @@ namespace PayPadAdministrator.Controllers
         private async Task<List<PayPad>> GetAllsPaypads()
         {
             List<PayPad> payPads = new List<PayPad>();
-            var response = await apiService.GetData("GetAllPayPads");
+            var response = await apiService.GetData(this,"GetAllPayPads");
             if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
                 payPads = JsonConvert.DeserializeObject<List<PayPad>>(response.Data.ToString());
@@ -60,7 +60,7 @@ namespace PayPadAdministrator.Controllers
         private async Task<List<PayPad>> GetAllsPaypadsForCustomer(int customerId)
         {
             List<PayPad> payPads = new List<PayPad>();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetAllPayPadsForCustomer"), customerId));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetAllPayPadsForCustomer"), customerId));
             if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
                 payPads = JsonConvert.DeserializeObject<List<PayPad>>(response.Data.ToString());
@@ -72,7 +72,7 @@ namespace PayPadAdministrator.Controllers
         private async Task<List<PayPad>> GetAllsPaypadsForSponsor(int customerId)
         {
             List<PayPad> payPads = new List<PayPad>();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetAllPayPadsForSponsor"), customerId));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetAllPayPadsForSponsor"), customerId));
             if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
                 payPads = JsonConvert.DeserializeObject<List<PayPad>>(response.Data.ToString());
@@ -84,7 +84,7 @@ namespace PayPadAdministrator.Controllers
         private async Task<List<PayPad>> GetAllsPaypadsForUser(int userId)
         {
             List<PayPad> payPads = new List<PayPad>();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetAllPayPadsForUserOffice"), userId));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetAllPayPadsForUserOffice"), userId));
             if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
                 payPads = JsonConvert.DeserializeObject<List<PayPad>>(response.Data.ToString());
@@ -168,7 +168,7 @@ namespace PayPadAdministrator.Controllers
                 return View(payPad);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se creó el Pay+ ", payPad.NAME), url);
             return RedirectToAction("Index", new { Message = "Se creó correctamente" });
@@ -183,7 +183,7 @@ namespace PayPadAdministrator.Controllers
 
             PayPad payPad = new PayPad();
             var url = string.Concat(Utilities.GetConfiguration("GetPayPadForId"), id);
-            var response = await apiService.GetDataV2(url);
+            var response = await apiService.GetDataV2(this,url);
             if (response.CodeError == 200)
             {
                 payPad = JsonConvert.DeserializeObject<PayPad>(response.Data.ToString());
@@ -253,7 +253,7 @@ namespace PayPadAdministrator.Controllers
                 return View(payPad);
             }
 
-            var usercurrent = apiService.ValidateUser(User.Identity.Name);
+            var usercurrent = apiService.ValidateUser(this,User.Identity.Name);
             var url = Request.Url.AbsolutePath.Split('/')[1];
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se actualizó el Pay+ ", payPad.NAME), url);
             return RedirectToAction("Index", new { Message = "Se actualizó correctamente" });
@@ -268,14 +268,14 @@ namespace PayPadAdministrator.Controllers
 
             DevicesForPayPadViewModel viewModel = new DevicesForPayPadViewModel();
 
-            var responsePaypad = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetPayPadForId"), id));
+            var responsePaypad = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetPayPadForId"), id));
             if (responsePaypad.CodeError == 200)
             {
                 viewModel.PayPad = JsonConvert.DeserializeObject<PayPad>(responsePaypad.Data.ToString());
             }
 
             List<Device> devices = new List<Device>();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetDenominationsForCurrency"), id));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetDenominationsForCurrency"), id));
             if (response.CodeError == 200)
             {
                 devices = JsonConvert.DeserializeObject<List<Device>>(response.Data.ToString());
@@ -293,7 +293,7 @@ namespace PayPadAdministrator.Controllers
             }
 
             List<TransactPaypadViewModel> transacts = new List<TransactPaypadViewModel>();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetTransactsForPaypad"), id));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetTransactsForPaypad"), id));
             if (response.CodeError == 200)
             {
                 transacts = JsonConvert.DeserializeObject<List<TransactPaypadViewModel>>(response.Data.ToString());
@@ -310,7 +310,7 @@ namespace PayPadAdministrator.Controllers
             }
 
             List<Transaction_Type> transaction_Types = new List<Transaction_Type>();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetAllsTransactForPayPad"), id));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetAllsTransactForPayPad"), id));
             if (response.CodeError == 200)
             {
                 transaction_Types = JsonConvert.DeserializeObject<List<Transaction_Type>>(response.Data.ToString());
@@ -328,7 +328,7 @@ namespace PayPadAdministrator.Controllers
             }
 
             List<Device> devices = new List<Device>();
-            var response = await apiService.GetDataV2(string.Concat(Utilities.GetConfiguration("GetAllsDevicesForPayPad"), id));
+            var response = await apiService.GetDataV2(this,string.Concat(Utilities.GetConfiguration("GetAllsDevicesForPayPad"), id));
             if (response.CodeError == 200)
             {
                 devices = JsonConvert.DeserializeObject<List<Device>>(response.Data.ToString());
@@ -359,7 +359,7 @@ namespace PayPadAdministrator.Controllers
                 string deviceId = text.Split(',')[1];
                 DeviceDetailViewModel device = new DeviceDetailViewModel();
                 var url = string.Concat(Utilities.GetConfiguration("GetDetailsDevicesForPayPad"), "payPad_Id=", paypadId, "&deviceId=", deviceId);
-                var response = await apiService.GetDataV2(url);
+                var response = await apiService.GetDataV2(this,url);
                 if (response.CodeError == 200)
                 {
                     device = JsonConvert.DeserializeObject<DeviceDetailViewModel>(response.Data.ToString());
@@ -389,7 +389,7 @@ namespace PayPadAdministrator.Controllers
                 string payPadId = text.Split(',')[1];
                 List<Currency_Denomination> currency_Denominations = new List<Currency_Denomination>();
                 var url = string.Concat(Utilities.GetConfiguration("GetDenominationsForDevice"), "devicePaypad_Id=", paypadDeviceId, "&payPad_Id=", payPadId);
-                var response = await apiService.GetDataV2(url);
+                var response = await apiService.GetDataV2(this,url);
                 if (response.CodeError == 200)
                 {
                     currency_Denominations = JsonConvert.DeserializeObject<List<Currency_Denomination>>(response.Data.ToString());

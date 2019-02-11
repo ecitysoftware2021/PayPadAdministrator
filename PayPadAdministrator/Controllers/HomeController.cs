@@ -8,6 +8,7 @@ using PayPadAdministrator.CustomAuthentication;
 using System.Threading.Tasks;
 using PayPadAdministrator.Services;
 using PayPadAdministrator.Models;
+using PayPadAdministrator.Classes;
 
 namespace PayPadAdministrator.Controllers
 {
@@ -18,7 +19,9 @@ namespace PayPadAdministrator.Controllers
         [CustomAuthorize]
         public async Task<ActionResult> Index()
         {
-            var userCurrent = apiService.ValidateUser(User.Identity.Name);
+            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);
+            ComboHelper.Controller = this;
+
             List<PayPad> payPads = new List<PayPad>();
             if (User.IsInRole("SuperAdmin"))
             {
