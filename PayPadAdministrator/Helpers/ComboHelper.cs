@@ -44,9 +44,8 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<DeviceType>> GetDevicesType()
         {
-            List<DeviceType> deviceTypes = new List<DeviceType>();
-            var data = new Controllers.ErrorsController();
-            var response = await apiService.GetData(data, "GetDeviceTypes");
+            List<DeviceType> deviceTypes = new List<DeviceType>();            
+            var response = await apiService.GetData(Controller, "GetDeviceTypes");
             if (response.CodeError == 200)
             {
                 deviceTypes = JsonConvert.DeserializeObject<List<DeviceType>>(response.Data.ToString());
@@ -63,9 +62,8 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<PayPad>> GetAllsPaypads()
         {
-            List<PayPad> payPads = new List<PayPad>();
-            var data = new Controllers.ErrorsController();
-            var response = await apiService.GetData(data,"GetAllPayPads");
+            List<PayPad> payPads = new List<PayPad>();            
+            var response = await apiService.GetData(Controller, "GetAllPayPads");
             if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
                 payPads = JsonConvert.DeserializeObject<List<PayPad>>(response.Data.ToString());
@@ -81,9 +79,8 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<TransactPaypadViewModel>> GetTransact(int payPadId)
         {
-            List<TransactPaypadViewModel> transacts = new List<TransactPaypadViewModel>();
-            var controller = new Controllers.ErrorsController();
-            var response = await apiService.GetDataV2(controller, string.Concat(Utilities.GetConfiguration("GetTransactsForPaypad"), payPadId));
+            List<TransactPaypadViewModel> transacts = new List<TransactPaypadViewModel>();            
+            var response = await apiService.GetDataV2(Controller, string.Concat(Utilities.GetConfiguration("GetTransactsForPaypad"), payPadId));
             if (response.CodeError == 200)
             {
                 transacts = JsonConvert.DeserializeObject<List<TransactPaypadViewModel>>(response.Data.ToString());
@@ -99,9 +96,8 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<PayPad>> GetAllsPaypadsForCustomer(int customerId)
         {
-            List<PayPad> payPads = new List<PayPad>();
-            var controller = new Controllers.ErrorsController();
-            var response = await apiService.GetDataV2(controller, string.Concat(Utilities.GetConfiguration("GetAllPayPadsForCustomer"), customerId));
+            List<PayPad> payPads = new List<PayPad>();            
+            var response = await apiService.GetDataV2(Controller, string.Concat(Utilities.GetConfiguration("GetAllPayPadsForCustomer"), customerId));
             if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
                 payPads = JsonConvert.DeserializeObject<List<PayPad>>(response.Data.ToString());
@@ -117,9 +113,8 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<PayPad>> GetAllsPaypadsForUser(int userId)
         {
-            List<PayPad> payPads = new List<PayPad>();
-            var controller = new Controllers.ErrorsController();
-            var response = await apiService.GetDataV2(controller, string.Concat(Utilities.GetConfiguration("GetAllPayPadsForUserOffice"), userId));
+            List<PayPad> payPads = new List<PayPad>();            
+            var response = await apiService.GetDataV2(Controller, string.Concat(Utilities.GetConfiguration("GetAllPayPadsForUserOffice"), userId));
             if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
                 payPads = JsonConvert.DeserializeObject<List<PayPad>>(response.Data.ToString());
@@ -135,9 +130,8 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<PayPad>> GetAllsPaypadsForSponsor(int customerId)
         {
-            List<PayPad> payPads = new List<PayPad>();
-            var controller = new Controllers.ErrorsController();
-            var response = await apiService.GetDataV2(controller,string.Concat(Utilities.GetConfiguration("GetAllPayPadsForSponsor"), customerId));
+            List<PayPad> payPads = new List<PayPad>();            
+            var response = await apiService.GetDataV2(Controller, string.Concat(Utilities.GetConfiguration("GetAllPayPadsForSponsor"), customerId));
             if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
                 payPads = JsonConvert.DeserializeObject<List<PayPad>>(response.Data.ToString());
@@ -228,9 +222,8 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<Currency>> GetCurrencies()
         {
-            List<Currency> currencies = new List<Currency>();
-            var data = new Controllers.ErrorsController();
-            var response = await apiService.GetData(data,"GetCurrencies");
+            List<Currency> currencies = new List<Currency>();            
+            var response = await apiService.GetData(Controller, "GetCurrencies");
             if (response.CodeError == 200)
             {
                 currencies = JsonConvert.DeserializeObject<List<Currency>>(response.Data.ToString());
@@ -296,9 +289,8 @@ namespace PayPadAdministrator.Helpers
         public static async Task<List<Alarm>> GetAlarms(int customerId)
         {
             List<Alarm> alarms = new List<Alarm>();
-            var url = string.Concat(Utilities.GetConfiguration("GetAlarmsForCustomer"), customerId);
-            var controller = new Controllers.ErrorsController();
-            var response = await apiService.GetDataV2(controller, url);
+            var url = string.Concat(Utilities.GetConfiguration("GetAlarmsForCustomer"), customerId);            
+            var response = await apiService.GetDataV2(Controller, url);
             if (response.CodeError == 200)
             {
                 alarms = JsonConvert.DeserializeObject<List<Alarm>>(response.Data.ToString());

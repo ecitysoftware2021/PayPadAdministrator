@@ -99,16 +99,15 @@ namespace PayPadAdministrator.Services
         {
             try
             {
-                var controllerP = new Controllers.ErrorsController();
                 var request = JsonConvert.SerializeObject(model);
                 var content = new StringContent(request, Encoding.UTF8, "Application/json");
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(urlApi);
                 var url = Utilities.GetConfiguration(controller);
                 string token = string.Empty;
-                if (controllerP.Request.Cookies["TokenDashboard"] != null)
+                if (ComboHelper.Controller.Request.Cookies["TokenDashboard"] != null)
                 {
-                    token = controllerP.Request.Cookies["TokenDashboard"].Value;
+                    token = ComboHelper.Controller.Request.Cookies["TokenDashboard"].Value;
                 }
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -146,9 +145,9 @@ namespace PayPadAdministrator.Services
                 client.BaseAddress = new Uri(urlApi);
                 var url = Utilities.GetConfiguration(controller);
                 string token = string.Empty;
-                if (controllerP.Request.Cookies["TokenDashboard"] != null)
+                if (ComboHelper.Controller.Request.Cookies["TokenDashboard"] != null)
                 {
-                    token = controllerP.Request.Cookies["TokenDashboard"].Value;
+                    token = ComboHelper.Controller.Request.Cookies["TokenDashboard"].Value;
                 }
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);

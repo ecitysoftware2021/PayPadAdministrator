@@ -17,6 +17,11 @@ namespace PayPadAdministrator.Controllers
     public class UsersController : Controller
     {
         static ApiService apiService = new ApiService();
+
+        public UsersController()
+        {
+            ComboHelper.Controller = this;
+        }
         // GET: Users
         public async Task<ActionResult> Index()
         {

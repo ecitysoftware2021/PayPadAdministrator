@@ -38,9 +38,8 @@ namespace PayPadAdministrator.Helpers
 
         public static int GetModule(int userId, string url)
         {
-            List<ModuleViewModel> modules = new List<ModuleViewModel>();
-            var data = new Controllers.AccountController();
-            var response = apiService.GetDataRest(data, string.Concat(Utilities.GetConfiguration("GetModuleForUser"), userId));
+            List<ModuleViewModel> modules = new List<ModuleViewModel>();            
+            var response = apiService.GetDataRest(ComboHelper.Controller, string.Concat(Utilities.GetConfiguration("GetModuleForUser"), userId));
             if (response.CodeError == 200)
             {
                 modules = JsonConvert.DeserializeObject<List<ModuleViewModel>>(response.Data.ToString());

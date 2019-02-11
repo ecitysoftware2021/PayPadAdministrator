@@ -12,15 +12,20 @@ using PayPadAdministrator.Classes;
 
 namespace PayPadAdministrator.Controllers
 {
+    [CustomAuthorize]
     public class HomeController : Controller
     {
         ApiService apiService = new ApiService();
 
+        public HomeController()
+        {
+            ComboHelper.Controller = this;
+        }
+
         [CustomAuthorize]
         public async Task<ActionResult> Index()
         {
-            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);
-            ComboHelper.Controller = this;
+            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);            
 
             List<PayPad> payPads = new List<PayPad>();
             if (User.IsInRole("SuperAdmin"))

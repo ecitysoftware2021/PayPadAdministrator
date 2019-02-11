@@ -16,6 +16,11 @@ namespace PayPadAdministrator.Controllers
     public class GenericController : Controller
     {
         static ApiService apiService = new ApiService();
+
+        public GenericController()
+        {
+            ComboHelper.Controller = this;
+        }
         // GET: Generic
         public ActionResult Index()
         {

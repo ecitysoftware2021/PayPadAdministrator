@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PayPadAdministrator.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,10 @@ namespace PayPadAdministrator.Controllers
 {
     public class ErrorsController : Controller
     {
+        public ErrorsController()
+        {
+            ComboHelper.Controller = this;
+        }
         // GET: Errors
         public ActionResult Index()
         {

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
+using PayPadAdministrator.CustomAuthentication;
 using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Models;
 using PayPadAdministrator.Services;
@@ -12,9 +13,15 @@ using System.Web.Mvc;
 
 namespace PayPadAdministrator.Controllers
 {
+    [CustomAuthorize]
     public class TransactController : Controller
     {
         static ApiService apiService = new ApiService();
+
+        public TransactController()
+        {
+            ComboHelper.Controller = this;
+        }
         // GET: Transact
         public async Task<ActionResult> Index()
         {

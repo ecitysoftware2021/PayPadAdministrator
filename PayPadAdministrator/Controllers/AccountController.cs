@@ -19,6 +19,11 @@ namespace PayPadAdministrator.Controllers
 
         ApiService apiService = new ApiService();
 
+        public AccountController()
+        {
+            ComboHelper.Controller = this;
+        }
+
         public ActionResult Login(string ReturnUrl = "")
         {
             if (User.Identity.IsAuthenticated)
@@ -208,6 +213,7 @@ namespace PayPadAdministrator.Controllers
             return RedirectToAction("Login", "Account", null);
         }
 
+        [CustomAuthorize]
         public async Task<ActionResult> Locations()
         {
             List<Location> locations = new List<Location>();
@@ -225,6 +231,7 @@ namespace PayPadAdministrator.Controllers
             return View(locations);
         }
 
+        [CustomAuthorize]
         public ActionResult ProfileUser()
         {
             var user = apiService.ValidateUser(this, User.Identity.Name);
@@ -237,7 +244,7 @@ namespace PayPadAdministrator.Controllers
             return View(user);
         }
 
-        [ChildActionOnly]
+        [ChildActionOnly]        
         public ActionResult GetModule()
         {
             List<ModuleViewModel> modules = new List<ModuleViewModel>();
