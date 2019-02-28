@@ -20,6 +20,7 @@ namespace PayPadAdministrator.Models
         public int STATE_TRANSACTION_ID { get; set; }
         public string PAYPAD_NAME { get; set; }
         public string TRANSACT { get; set; }
+        public int? TRANSACT_OPERATION_TYPE_ID { get; set; }
         public string STATE { get; set; }
     }
 }

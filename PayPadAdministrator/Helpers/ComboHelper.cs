@@ -60,6 +60,24 @@ namespace PayPadAdministrator.Helpers
             return deviceTypes;
         }
 
+        public static async Task<List<OperationType>> GetOperations()
+        {
+            List<OperationType> operations = new List<OperationType>();
+            var response = await apiService.GetData(Controller, "GetOperations");
+            if (response.CodeError == 200)
+            {
+                operations = JsonConvert.DeserializeObject<List<OperationType>>(response.Data.ToString());
+            }
+
+            operations.Add(new OperationType
+            {
+                DESCRIPTION = "Seleccione una operación",
+                TYPE_OPERATION_ID = 0
+            });
+
+            return operations;
+        }
+
         public static async Task<List<PayPad>> GetAllsPaypads()
         {
             List<PayPad> payPads = new List<PayPad>();            

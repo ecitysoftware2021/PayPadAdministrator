@@ -34,6 +34,11 @@ namespace PayPadAdministrator.Controllers
             }
 
             var userCurrent = apiService.ValidateUser(this,User.Identity.Name);
+            if (userCurrent == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             if (User.IsInRole("Admin"))
             {
                 payPads = await GetAllsPaypadsForCustomer(userCurrent.CUSTOMER_ID);

@@ -25,7 +25,12 @@ namespace PayPadAdministrator.Controllers
         [CustomAuthorize]
         public async Task<ActionResult> Index()
         {
-            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);            
+            var userCurrent = apiService.ValidateUser(this, User.Identity.Name);
+
+            if (userCurrent == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
             List<PayPad> payPads = new List<PayPad>();
             if (User.IsInRole("SuperAdmin"))

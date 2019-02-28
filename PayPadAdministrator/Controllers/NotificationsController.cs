@@ -50,7 +50,7 @@ namespace PayPadAdministrator.Controllers
             var userCurrent = apiService.ValidateUser(this,User.Identity.Name);
             if (userCurrent == null)
             {
-                return RedirectToAction("AccessDenied", "Errors");
+                return PartialView(notifications);
             }
 
             var url = string.Concat(Utilities.GetConfiguration("GetTenNotficationsForCustomer"), userCurrent.CUSTOMER_ID);

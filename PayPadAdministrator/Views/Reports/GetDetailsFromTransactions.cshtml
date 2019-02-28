@@ -22,6 +22,12 @@
                     <span class="hidden-xs">Detalle</span>
                 </a>
             </li>
+            <li class="tab">
+                <a href="#device-2" data-toggle="tab" aria-expanded="true">
+                    <span class="visible-xs"><i class="fa fa-envelope-o"></i></span>
+                    <span class="hidden-xs">Log Dispositivo</span>
+                </a>
+            </li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="home-2">
@@ -146,6 +152,42 @@
                                     </td>
                                     <td>@item.DEVICE_NAME</td>
                                 </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            <div id="device-2" class="tab-pane">
+                <div class="row">
+                    <table data-toggle="table"
+                           data-show-columns="false"
+                           data-page-list="[5, 10, 20]"
+                           data-page-size="5"
+                           data-pagination="true"
+                           data-show-pagination-switch="true"
+                           id="tblLogDevice"
+                           class="table table-bordered ">
+                        <thead>
+                            <tr>
+                                <th data-field="Reference" data-switchable="false">Tipo operación</th>
+                                <th data-field="total" data-switchable="false">Denominación</th>
+                                <th data-field="observacion">Dispositivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LogDevices)
+                            {
+                            <tr>
+                                <td>@item.DEVICE_NAME</td>
+                                <td>
+                                    @item.PAYPAD_NAME
+                                </td>
+                                <td>
+                                    @item.DESCRIPTION
+                                </td>
+                                <td>@item.DATETIME.ToString("dd/MM/yyyy HH:mm")</td>
+                            </tr>
                             }
                         </tbody>
 

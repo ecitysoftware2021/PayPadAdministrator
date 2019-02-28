@@ -241,12 +241,15 @@ function OrganizeData(transactions) {
     var approved =0;
     var initial =0;//se cambio por total de las transacciones
     var cancelled = 0;
-    var details = "";
+
     $.each(transactions, function (i, data) {
         var text = "info";
         if(data.STATE == "Aprobada"){
             approved++;
-            total += data.TOTAL_AMOUNT;
+            if (data.TRANSACT_OPERATION_TYPE_ID == 2) {
+                total += data.TOTAL_AMOUNT;
+            }
+            
             text = "success";
         }else if(data.STATE == "Cancelada"){
             cancelled++;

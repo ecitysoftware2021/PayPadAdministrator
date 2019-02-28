@@ -35,8 +35,9 @@ namespace PayPadAdministrator.Controllers
             return View(transaction_Types);
         }
 
-        public ActionResult CreateTransact()
+        public async Task<ActionResult> CreateTransact()
         {
+            ViewBag.OPERATION_TYPE_ID = new SelectList(await ComboHelper.GetOperations(), nameof(OperationType.TYPE_OPERATION_ID), nameof(OperationType.DESCRIPTION), 0);
             return View();
         }
 
@@ -46,6 +47,7 @@ namespace PayPadAdministrator.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.OPERATION_TYPE_ID = new SelectList(await ComboHelper.GetOperations(), nameof(OperationType.TYPE_OPERATION_ID), nameof(OperationType.DESCRIPTION), transaction_Type.OPERATION_TYPE_ID);
                 return View(transaction_Type);
             }
 
@@ -53,6 +55,7 @@ namespace PayPadAdministrator.Controllers
             if (response.CodeError != 200)
             {
                 ModelState.AddModelError(string.Empty, response.Message);
+                ViewBag.OPERATION_TYPE_ID = new SelectList(await ComboHelper.GetOperations(), nameof(OperationType.TYPE_OPERATION_ID), nameof(OperationType.DESCRIPTION), transaction_Type.OPERATION_TYPE_ID);
                 return View(transaction_Type);
             }
 
@@ -78,6 +81,7 @@ namespace PayPadAdministrator.Controllers
                 transaction_Type = transaction_Types.FirstOrDefault();
             }
 
+            ViewBag.OPERATION_TYPE_ID = new SelectList(await ComboHelper.GetOperations(), nameof(OperationType.TYPE_OPERATION_ID), nameof(OperationType.DESCRIPTION), transaction_Type.OPERATION_TYPE_ID);
             return View(transaction_Type);
         }
 
@@ -87,6 +91,7 @@ namespace PayPadAdministrator.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.OPERATION_TYPE_ID = new SelectList(await ComboHelper.GetOperations(), nameof(OperationType.TYPE_OPERATION_ID), nameof(OperationType.DESCRIPTION), transaction_Type.OPERATION_TYPE_ID);
                 return View(transaction_Type);
             }
 
@@ -94,6 +99,7 @@ namespace PayPadAdministrator.Controllers
             if (response.CodeError != 200)
             {
                 ModelState.AddModelError(string.Empty, response.Message);
+                ViewBag.OPERATION_TYPE_ID = new SelectList(await ComboHelper.GetOperations(), nameof(OperationType.TYPE_OPERATION_ID), nameof(OperationType.DESCRIPTION), transaction_Type.OPERATION_TYPE_ID);
                 return View(transaction_Type);
             }
 

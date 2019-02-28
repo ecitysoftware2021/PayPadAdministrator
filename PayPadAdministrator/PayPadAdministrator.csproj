@@ -273,6 +273,7 @@
     <Compile Include="Models\ModuleCustomer.cs" />
     <Compile Include="Models\Notifications.cs" />
     <Compile Include="Models\Office.cs" />
+    <Compile Include="Models\OperationType.cs" />
     <Compile Include="Models\PayPad.cs" />
     <Compile Include="Models\PayPadTransactionType.cs" />
     <Compile Include="Models\RequestAuth.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="Models\UserModule.cs" />
     <Compile Include="Models\UserOffice.cs" />
     <Compile Include="Models\UserSession.cs" />
+    <Compile Include="Models\VideoTransactionsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiService.cs" />
   </ItemGroup>
