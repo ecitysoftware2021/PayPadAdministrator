@@ -72,7 +72,7 @@ namespace PayPadAdministrator.Controllers
                 payPads = await ComboHelper.GetAllsPaypadsForCustomer(userCurrent.USER_ID);
             }
 
-            ViewBag.PayPadId = new SelectList(payPads, nameof(PayPad.PAYPAD_ID), nameof(PayPad.NAME), 0);            
+            ViewBag.PayPadId = new SelectList(payPads, nameof(PayPad.PAYPAD_ID), nameof(PayPad.NAME), 0);
             return View();
         }
 
@@ -84,7 +84,7 @@ namespace PayPadAdministrator.Controllers
             }
 
             var url = string.Concat(Utilities.GetConfiguration("GetTransactionDescriptionsForId"), id);
-            var response = await apiService.GetDataV2(this,url);
+            var response = await apiService.GetDataV2(this, url);
             if (response.CodeError != 200)
             {
                 return RedirectToAction("AccessDenied", "Errors");
@@ -92,6 +92,20 @@ namespace PayPadAdministrator.Controllers
 
             var transactions = JsonConvert.DeserializeObject<TransactionViewModel>(response.Data.ToString());
             return PartialView(transactions);
+        }
+
+        public async Task<ActionResult> GetVideo(int transactionId)
+        {
+            List<VideoTransactionsViewModel> videos = new List<VideoTransactionsViewModel>();
+            var url = string.Concat(Utilities.GetConfiguration("GetVideoForTransaction"), transactionId);
+            var response = await apiService.GetDataV2(this, url);
+            if (response.CodeError != 200)
+            {
+                return RedirectToAction("NotExistData", "Errors",new { Message = response.Message});
+            }
+
+            videos = JsonConvert.DeserializeObject<List<VideoTransactionsViewModel>>(response.Data.ToString());
+            return PartialView(videos);
         }
     }
 }

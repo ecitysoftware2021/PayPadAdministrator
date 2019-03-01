@@ -262,7 +262,11 @@ function OrganizeData(transactions) {
         var admin = "<a href='/Reports/GetDetailsFromTransactions/"+data.TRANSACTION_ID+"'"+
                     "data-placement='top' data-toggle='tooltip' class='tooltips dialog-window' data-original-title='Detalle'>"+
                     "<i class='fa fa-server'></i>"+
-                    "</a> ";
+            "</a> "+
+           " <a href = '/Reports/GetVideo/"+data.TRANSACTION_ID+"'"+
+            "data-placement='top' data-toggle='tooltip' class='tooltips dialog-window' data-original-title='Video'>" +
+            "<i class='fa fa-video-camera'></i>" +
+                    "</a>";
         datetable.row.add( [
             data.TRANSACTION_ID,
             data.TRANSACT,

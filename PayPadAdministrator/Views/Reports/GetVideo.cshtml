@@ -1,0 +1,29 @@
+﻿@model IEnumerable<PayPadAdministrator.Models.VideoTransactionsViewModel>
+
+@{
+    ViewBag.Title = "Video por transacción";
+}
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-block p-3">
+                    <!--Title-->
+                    <h3 class="text-center font-up font-bold indigo-text py-2 mb-3"><strong>@item.NameVideo</strong></h3>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        @if (item.Video != null)
+                        {
+                            var base64 = Convert.ToBase64String(item.Video);
+                            <video class="responsive-video" controls>
+                                <source type="video/mp4" src="data:video/mp4;base64,@base64">
+                            </video>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

@@ -28,5 +28,11 @@ namespace PayPadAdministrator.Controllers
         {
             return View();
         }
+
+        public ActionResult NotExistData(string message)
+        {
+            ViewBag.Title = message;
+            return View();
+        }
     }
 }

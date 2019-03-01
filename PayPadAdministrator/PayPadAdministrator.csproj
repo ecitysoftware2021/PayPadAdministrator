@@ -2469,6 +2469,8 @@
     <Content Include="Views\Alarms\GetLogAlarm.cshtml" />
     <Content Include="Views\Users\GetUserAlarms.cshtml" />
     <Content Include="Views\Users\CreateUserAlarms.cshtml" />
+    <Content Include="Views\Reports\GetVideo.cshtml" />
+    <Content Include="Views\Errors\NotExistData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Generic\" />
