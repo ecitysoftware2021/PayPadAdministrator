@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -40,14 +41,31 @@ namespace PayPadAdministrator.Models
 
     public class LogDevice
     {
+        [Display(Name ="ID")]
         public int DEVICE_LOG_ID { get; set; }
+
+        [Display(Name = "ID")]
         public int DEVICE_PAYPAD_ID { get; set; }
+
+        [Display(Name = "Transacción")]
         public int? TRANSACTION_ID { get; set; }
+
+        [Display(Name = "Descripción")]
         public string DESCRIPTION { get; set; }
+
+        [Display(Name = "Fecha/Hora")]
         public DateTime DATETIME { get; set; }
+
+        [Display(Name = "Fecha/Hora de Inserción")]
         public DateTime DATETIME_INSERT { get; set; }
+
+        [Display(Name = "Descripción del dispositivo")]
         public string DEVICE_DESCRIPTION { get; set; }
+
+        [Display(Name = "Dispositivo")]
         public string DEVICE_NAME { get; set; }
+
+        [Display(Name = "Pay +")]
         public string PAYPAD_NAME { get; set; }
     }
 }

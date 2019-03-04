@@ -159,5 +159,19 @@ namespace PayPadAdministrator.Controllers
             await NotifyHelper.SaveLog(usercurrent, string.Concat("Se editó el dispositivo ", device.NAME), url);
             return RedirectToAction("Index");
         }
+
+        public async Task<ActionResult> ShowLogDevice(int id)
+        {
+            List<LogDevice> logDevices = new List<LogDevice>();
+            var url = string.Concat(Utilities.GetConfiguration("GetLogDevice"), id);
+            var response = await apiService.GetDataV2(this, url);
+            if (response.CodeError == 200)
+            {
+                logDevices = JsonConvert.DeserializeObject<List<LogDevice>>(response.Data.ToString());
+            }
+
+            ViewBag.DeviceId = id;
+            return View(logDevices.OrderByDescending(l=>l.DATETIME).ToList());
+        }
     }
 }

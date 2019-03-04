@@ -32,6 +32,7 @@
       <mvcSiteMapNode title="Clientes del patrocinador" controller="Customers" action="SponsorToClients" preservedRouteParameters="id"  />
       <mvcSiteMapNode title="Sucursales" controller="Customers" action="ShowOfficeForCustomer" preservedRouteParameters="id" >
         <mvcSiteMapNode title="Crear Sucursales" controller="Customers" action="CreateOffice" preservedRouteParameters="id"  />
+        <mvcSiteMapNode title="Editar Sucursales" controller="Customers" action="EditOffice" preservedRouteParameters="id"  />
       </mvcSiteMapNode>
     </mvcSiteMapNode>
 

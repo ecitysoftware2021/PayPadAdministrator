@@ -197,6 +197,40 @@ namespace PayPadAdministrator.Controllers
             return View(offices);
         }
 
+        public async Task<ActionResult> EditOffice(int id)
+        {
+            var response = await apiService.GetDataV2(this, string.Concat(Utilities.GetConfiguration("GetOfficeForId"), id));
+            if (response.CodeError != 200)
+            {
+                return RedirectToAction("NotExistData", "Errors", new { Message = response.Message });
+            }
+
+            var office = JsonConvert.DeserializeObject<Office>(response.Data.ToString());
+            return View(office);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditOffice(Office office)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(office);
+            }
+
+            var response = await apiService.InsertPost(office, "UpdateOfficeForClient");
+            if (response.CodeError != 200)
+            {
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View(office);
+            }
+
+            var usercurrent = apiService.ValidateUser(this, User.Identity.Name);
+            var url = Request.Url.AbsolutePath.Split('/')[1];
+            await NotifyHelper.SaveLog(usercurrent, string.Concat("Se editó la oficina ", office.NAME), url);
+            return RedirectToAction("ShowOfficeForCustomer", new { id = office.CUSTOMER_ID, Message = "Se editó el cliente correctamente" });
+        }
+
 
         public ActionResult CreateOffice(int? id)
         {

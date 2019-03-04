@@ -99,12 +99,16 @@ namespace PayPadAdministrator.Controllers
             List<VideoTransactionsViewModel> videos = new List<VideoTransactionsViewModel>();
             var url = string.Concat(Utilities.GetConfiguration("GetVideoForTransaction"), transactionId);
             var response = await apiService.GetDataV2(this, url);
+            ViewBag.Title = "Video por transacción";
             if (response.CodeError != 200)
             {
-                return RedirectToAction("NotExistData", "Errors",new { Message = response.Message});
+                ViewBag.Title = response.Message;
+            }
+            else
+            {
+                videos = JsonConvert.DeserializeObject<List<VideoTransactionsViewModel>>(response.Data.ToString());
             }
 
-            videos = JsonConvert.DeserializeObject<List<VideoTransactionsViewModel>>(response.Data.ToString());
             return PartialView(videos);
         }
     }
