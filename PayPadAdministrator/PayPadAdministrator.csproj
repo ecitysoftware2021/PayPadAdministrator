@@ -1027,9 +1027,17 @@
     <Content Include="Scripts\plugins\custombox\src\js\legacy.js" />
     <Content Include="Scripts\plugins\d3\d3.js" />
     <Content Include="Scripts\plugins\d3\d3.min.js" />
+    <Content Include="Scripts\plugins\datatables\buttons.dataTables.min.css" />
+    <Content Include="Scripts\plugins\datatables\buttons.flash.min.js" />
+    <Content Include="Scripts\plugins\datatables\buttons.html5.min.js" />
+    <Content Include="Scripts\plugins\datatables\buttons.print.min.js" />
     <Content Include="Scripts\plugins\datatables\dataTables.bootstrap.js" />
+    <Content Include="Scripts\plugins\datatables\dataTables.buttons.min.js" />
     <Content Include="Scripts\plugins\datatables\jquery.dataTables.min.css" />
     <Content Include="Scripts\plugins\datatables\jquery.dataTables.min.js" />
+    <Content Include="Scripts\plugins\datatables\jszip.min.js" />
+    <Content Include="Scripts\plugins\datatables\pdfmake.min.js" />
+    <Content Include="Scripts\plugins\datatables\vfs_fonts.js" />
     <Content Include="Scripts\plugins\doc-ready\doc-ready.js" />
     <Content Include="Scripts\plugins\dropzone\dist\basic.css" />
     <Content Include="Scripts\plugins\dropzone\dist\dropzone-amd-module.js" />

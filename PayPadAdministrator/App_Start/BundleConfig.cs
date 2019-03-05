@@ -33,6 +33,13 @@ namespace PayPadAdministrator
                   "~/Scripts/jquery.app.js",
                   "~/Scripts/plugins/select2/select2.min.js",
                   "~/Scripts/plugins/datatables/jquery.dataTables.min.js",
+                  "~/Scripts/plugins/datatables/dataTables.buttons.min.js",
+                  "~/Scripts/plugins/datatables/buttons.flash.min.js",
+                  "~/Scripts/plugins/datatables/jszip.min.js",
+                  "~/Scripts/plugins/datatables/pdfmake.min.js",
+                  "~/Scripts/plugins/datatables/vfs_fonts.js",
+                  "~/Scripts/plugins/datatables/buttons.html5.min.js",
+                  "~/Scripts/plugins/datatables/buttons.print.min.js",
                   "~/Scripts/plugins/datatables/dataTables.bootstrap.js",
                   "~/Scripts/plugins/bootstrap-table/dist/bootstrap-table.min.js",
                   "~/Scripts/pages/jquery.bs-table.js",
@@ -71,6 +78,7 @@ namespace PayPadAdministrator
                      "~/Scripts/plugins/sweetalert/dist/sweetalert.css",
                      "~/Scripts/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css",
                      "~/Scripts/plugins/datatables/jquery.dataTables.min.css",
+                     "~/Scripts/plugins/datatables/buttons.dataTables.min.css",
                      "~/Scripts/plugins/select2/select2.css"
                       ));
 

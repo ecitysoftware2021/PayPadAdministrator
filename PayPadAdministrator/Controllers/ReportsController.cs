@@ -111,5 +111,35 @@ namespace PayPadAdministrator.Controllers
 
             return PartialView(videos);
         }
+
+        //public ActionResult PostReportPartial(ReportVM model)
+        //{
+
+        //    // Validate the Model is correct and contains valid data
+        //    // Generate your report output based on the model parameters
+        //    // This can be an Excel, PDF, Word file - whatever you need.
+
+        //    // As an example lets assume we've generated an EPPlus ExcelPackage
+
+        //    ExcelPackage workbook = new ExcelPackage();
+        //    // Do something to populate your workbook
+
+        //    // Generate a new unique identifier against which the file can be stored
+        //    string handle = Guid.NewGuid().ToString();
+
+        //    using (MemoryStream memoryStream = new MemoryStream())
+        //    {
+        //        workbook.SaveAs(memoryStream);
+        //        memoryStream.Position = 0;
+        //        TempData[handle] = memoryStream.ToArray();
+        //    }
+
+        //    // Note we are returning a filename as well as the handle
+        //    return new JsonResult()
+        //    {
+        //        Data = new { FileGuid = handle, FileName = "TestReportOutput.xlsx" }
+        //    };
+
+        //}
     }
 }

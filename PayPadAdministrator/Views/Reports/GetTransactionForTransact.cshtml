@@ -63,26 +63,21 @@
     <div class="col-sm-12">
         <div class="card-box">
             <div class="row">
-                <table data-toggle="table"
-                       data-show-columns="false"
-                       data-page-list="[5, 10, 20]"
-                       data-page-size="5"
-                       data-pagination="true" 
-                       data-show-pagination-switch="true" 
+                <table 
                        id="tblTransactions"
-                       class="table-bordered ">
+                       class="table-bordered display nowrap">
                     <thead>
                         <tr>
-                            <th data-field="TransactionId" data-switchable="false">TransactionId</th>
-                            <th data-field="PayPad" data-switchable="false">Pay+</th>
-                            <th data-field="tramite">Trámites</th>
-                            <th data-field="dateStart">Fecha de inicio</th>
-                            <th data-field="DateFinish">Fecha final</th>
-                            <th data-field="total">Total</th>
-                            <th data-field="totalIngresado">Total ingresado</th>
-                            <th data-field="total devuelto">Total devuelto</th>
-                            <th data-field="Estado">Estado</th>
-                            <th data-field="description" class="text-center">Descripcion</th>                            
+                            <th>TransactionId</th>
+                            <th>Pay+</th>
+                            <th>Trámites</th>
+                            <th>Fecha de inicio</th>
+                            <th>Fecha final</th>
+                            <th>Total</th>
+                            <th>Total ingresado</th>
+                            <th>Total devuelto</th>
+                            <th>Estado</th>
+                            <th>Descripcion</th>                            
                         </tr>
                     </thead>
                     <tbody>
@@ -98,16 +93,42 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
+        var datetable = "";
+
         window.onload = function(){
             $("#transactionsDiv").css("display", "none");
             $("#btnDownload").attr("disabled", "disabled");
+            datetable = $('#tblTransactions').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'csv', 'excel', 'pdf', 'print'
+                ]
+            });
         }
 
         $("#btnDownload").on("click", function (e) {
             e.preventDefault();
             var name = "Transaccion" + $("#StartDate").val() + "Hasta" + $("#FinishDate").val();
             name = name.replace(/ /g, "");
+
+            $("#tblTransactions th").each(function () {
+                // first copy the attributes to remove
+                // if we don't do this it causes problems
+                // iterating over the array we're removing
+                // elements from
+                var attributes = $.map(this.attributes, function (item) {
+                    return item.name;
+                });
+
+                // now use jQuery to remove the attributes
+                var img = $(this);
+                $.each(attributes, function (i, item) {
+                    img.removeAttr(item);
+                });
+            });
+
             $("#tblTransactions").table2excel({ filename: name });
+
         });
 
         $("#PayPadId").change(function () {
@@ -181,25 +202,27 @@
         }
 
         function FillTable(data) {
-            var content = "";
+            datetable.clear().draw();
+
             $.each(data.Data, function (i, data) {
-                content += "<tr>" +
-                    "<td>" + data.TRANSACTION_ID + "</td>" +
-                    "<td>" + data.PAYPAD_NAME + "</td>" +
-                    "<td>" + data.TRANSACT + "</td>" +
-                    "<td>" + ConvertDateV2(data.DATE_BEGIN) + "</td>" +
-                    "<td>" + ConvertDateV2(data.DATE_END) + "</td>" +
-                    "<td>" + data.TOTAL_AMOUNT + "</td>" +
-                    "<td>" + data.INCOME_AMOUNT + "</td>" +
-                    "<td>" + data.RETURN_AMOUNT + "</td>" +
-                    "<td>" + data.STATE_TRANSACTION + "</td>" +
-                    "<td>" + data.DESCRIPTION + "</td>" +
-                    "</tr>";
+                datetable.row.add([
+                    data.TRANSACTION_ID,
+                    data.PAYPAD_NAME,
+                    data.TRANSACT,
+                    ConvertDateV2(data.DATE_BEGIN),
+                    ConvertDateV2(data.DATE_END),
+                    data.TOTAL_AMOUNT,
+                    data.INCOME_AMOUNT,
+                    data.RETURN_AMOUNT,
+                    data.STATE_TRANSACTION,
+                    data.DESCRIPTION
+                ]).draw(false);
             });
 
             $("#btnDownload").removeAttr("disabled");
             $("#transactionsDiv").css("display", "block");
-            $("#tblTransactions tbody").html(content);
+            //$("#tblTransactions tbody").html(content);
+
         }
     </script>
 }
