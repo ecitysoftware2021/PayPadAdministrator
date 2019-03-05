@@ -1,5 +1,5 @@
 ﻿using PayPadAdministrator.Classes;
-using PayPadAdministrator.Models;
+using PayPlusModels;
 using PayPadAdministrator.Services;
 using PayPadAdministrator.CustomAuthentication;
 using System;

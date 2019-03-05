@@ -2,7 +2,7 @@
 using PayPadAdministrator.Classes;
 using PayPadAdministrator.CustomAuthentication;
 using PayPadAdministrator.Helpers;
-using PayPadAdministrator.Models;
+using PayPlusModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using PayPadAdministrator.CustomAuthentication;
 using System.Threading.Tasks;
 using PayPadAdministrator.Services;
-using PayPadAdministrator.Models;
+using PayPlusModels;
 using PayPadAdministrator.Classes;
 
 namespace PayPadAdministrator.Controllers

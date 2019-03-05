@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2DEC1A91-62DD-4037-9C5F-E994B59C7A86}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PayPlusModels</RootNamespace>
+    <AssemblyName>PayPlusModels</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account.cs" />
+    <Compile Include="Alarm.cs" />
+    <Compile Include="Currency.cs" />
+    <Compile Include="Currency_Denomination.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="CustomerType.cs" />
+    <Compile Include="CustomSerializeModel.cs" />
+    <Compile Include="DashboardLog.cs" />
+    <Compile Include="Device.cs" />
+    <Compile Include="DeviceDetailViewModel.cs" />
+    <Compile Include="DeviceType.cs" />
+    <Compile Include="Device_PayPad.cs" />
+    <Compile Include="GetRequest.cs" />
+    <Compile Include="Location.cs" />
+    <Compile Include="LogAlarm.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="ModuleCustomer.cs" />
+    <Compile Include="Notifications.cs" />
+    <Compile Include="Office.cs" />
+    <Compile Include="OperationType.cs" />
+    <Compile Include="PayPad.cs" />
+    <Compile Include="PayPadTransactionType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestAuth.cs" />
+    <Compile Include="RequestAuthentication.cs" />
+    <Compile Include="RequestReport.cs" />
+    <Compile Include="ResponseAuth.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="Sponsor.cs" />
+    <Compile Include="SponsorToClientViewModel.cs" />
+    <Compile Include="SubModule.cs" />
+    <Compile Include="TransactionForTransactViewModel.cs" />
+    <Compile Include="TransactionHomeViewModel.cs" />
+    <Compile Include="TransactionViewModel.cs" />
+    <Compile Include="Transaction_Type.cs" />
+    <Compile Include="UserAlarm.cs" />
+    <Compile Include="UserModule.cs" />
+    <Compile Include="UserOffice.cs" />
+    <Compile Include="UserSession.cs" />
+    <Compile Include="VideoTransactionsViewModel.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

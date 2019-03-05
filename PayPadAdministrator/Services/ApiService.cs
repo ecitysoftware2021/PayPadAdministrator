@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
 using PayPadAdministrator.Helpers;
-using PayPadAdministrator.Models;
+using PayPlusModels;
 using RestSharp;
 using System;
 using System.Collections.Generic;

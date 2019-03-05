@@ -254,45 +254,6 @@
     <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\NotifyHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
-    <Compile Include="Models\Account.cs" />
-    <Compile Include="Models\Alarm.cs" />
-    <Compile Include="Models\Currency.cs" />
-    <Compile Include="Models\Currency_Denomination.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\CustomerType.cs" />
-    <Compile Include="Models\CustomSerializeModel.cs" />
-    <Compile Include="Models\DashboardLog.cs" />
-    <Compile Include="Models\Device.cs" />
-    <Compile Include="Models\DeviceDetailViewModel.cs" />
-    <Compile Include="Models\DeviceType.cs" />
-    <Compile Include="Models\Device_PayPad.cs" />
-    <Compile Include="Models\GetRequest.cs" />
-    <Compile Include="Models\Location.cs" />
-    <Compile Include="Models\LogAlarm.cs" />
-    <Compile Include="Models\Module.cs" />
-    <Compile Include="Models\ModuleCustomer.cs" />
-    <Compile Include="Models\Notifications.cs" />
-    <Compile Include="Models\Office.cs" />
-    <Compile Include="Models\OperationType.cs" />
-    <Compile Include="Models\PayPad.cs" />
-    <Compile Include="Models\PayPadTransactionType.cs" />
-    <Compile Include="Models\RequestAuth.cs" />
-    <Compile Include="Models\RequestAuthentication.cs" />
-    <Compile Include="Models\RequestReport.cs" />
-    <Compile Include="Models\ResponseAuth.cs" />
-    <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\Sponsor.cs" />
-    <Compile Include="Models\SponsorToClientViewModel.cs" />
-    <Compile Include="Models\SubModule.cs" />
-    <Compile Include="Models\TransactionForTransactViewModel.cs" />
-    <Compile Include="Models\TransactionHomeViewModel.cs" />
-    <Compile Include="Models\TransactionViewModel.cs" />
-    <Compile Include="Models\Transaction_Type.cs" />
-    <Compile Include="Models\UserAlarm.cs" />
-    <Compile Include="Models\UserModule.cs" />
-    <Compile Include="Models\UserOffice.cs" />
-    <Compile Include="Models\UserSession.cs" />
-    <Compile Include="Models\VideoTransactionsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiService.cs" />
   </ItemGroup>
@@ -2483,6 +2444,7 @@
     <Content Include="Views\Customers\EditOffice.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\" />
     <Folder Include="Views\Generic\" />
   </ItemGroup>
   <ItemGroup>
@@ -2497,6 +2459,12 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PayPlusModels\PayPlusModels.csproj">
+      <Project>{2dec1a91-62dd-4037-9c5f-e994b59c7a86}</Project>
+      <Name>PayPlusModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
