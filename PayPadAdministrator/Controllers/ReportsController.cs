@@ -1,15 +1,11 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
-using PayPadAdministrator.CustomAuthentication;
 using PayPadAdministrator.Helpers;
 using PayPlusModels;
+using PayPlusModels.CustomAuthentication;
 using PayPadAdministrator.Services;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PayPadAdministrator.Controllers

@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
-using PayPadAdministrator.CustomAuthentication;
 using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Services;
 using PayPlusModels;
+using PayPlusModels.CustomAuthentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;

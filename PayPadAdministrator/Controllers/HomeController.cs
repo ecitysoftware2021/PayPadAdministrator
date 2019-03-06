@@ -1,14 +1,10 @@
 ﻿using PayPadAdministrator.Helpers;
-using System;
+using PayPlusModels.CustomAuthentication;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using PayPadAdministrator.CustomAuthentication;
 using System.Threading.Tasks;
 using PayPadAdministrator.Services;
 using PayPlusModels;
-using PayPadAdministrator.Classes;
 
 namespace PayPadAdministrator.Controllers
 {
