@@ -20,11 +20,51 @@ namespace PaypadConsoleLog
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                "~/Scripts/umd/popper.js",
+                      "~/Scripts/bootstrap.min.js",
+                      "~/Scripts/js/wow.min.js",
+                      "~/Scripts/js/jquery-price-slider.js",
+                      "~/Scripts/js/jquery.meanmenu.js",
+                      "~/Scripts/js/owl.carousel.min.js",
+                      "~/Scripts/js/jquery.sticky.js",
+                      "~/Scripts/js/jquery.scrollUp.min.js",
+                      "~/Scripts/js/scrollbar/jquery.mCustomScrollbar.concat.min.js",
+                      "~/Scripts/js/scrollbar/mCustomScrollbar-active.js",
+                      "~/Scripts/js/metisMenu/metisMenu.min.js",
+                      "~/Scripts/s/metisMenu/metisMenu-active.js",
+                      "~/Scripts/js/sparkline/jquery.sparkline.min.js",
+                      "~/Scripts/js/sparkline/jquery.charts-sparkline.js",
+                      "~/Scripts/js/calendar/moment.min.js",
+                      "~/Scripts/js/calendar/fullcalendar.min.js",
+                      "~/Scripts/js/calendar/fullcalendar-active.js",
+                      "~/Scripts/js/plugins.js",
+                      "~/Scripts/js/main.js",
+                      "~/Scripts/js/flot/jquery.flot.js",
+                      "~/Scripts/js/flot/jquery.flot.resize.js",
+                      "~/Scripts/js/flot/curvedLines.js",
+                      "~/Scripts/js/flot/flot-active.js"
+                      ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/css/bootstrap.min.css",
+                      "~/Content/css/font-awesome.min.css",
+                      "~/Content/css/nalika-icon.css",
+                      "~/Content/css/owl.carousel.css",
+                      "~/Content/css/owl.theme.css",
+                      "~/Content/css/owl.transitions.css",
+                      "~/Content/css/animate.css",
+                      "~/Content/css/normalize.css",
+                      "~/Content/css/meanmenu.min.css",
+                      "~/Content/css/main.css",
+                      "~/Content/css/morrisjs/morris.css",
+                      "~/Content/css/scrollbar/jquery.mCustomScrollbar.min.css",
+                      "~/Content/css/metisMenu/metisMenu.min.css",
+                      "~/Content/css/metisMenu/metisMenu-vertical.css",
+                      "~/Content/css/calendar/fullcalendar.min.css",
+                      "~/Content/css/calendar/fullcalendar.print.min.css",
+                      "~/Content/css/style.css",
+                      "~/Content/css/responsive.css"
+                      ));
         }
     }
 }
