@@ -423,6 +423,22 @@ namespace PayPadAdministrator.Controllers
         public async Task<JsonResult> EditQuantitiesDevicePayPadP(Device_PayPad_Detail_ViewModel device)
         {
             var response = await apiService.InsertPost(device, "UpdateDevicePayPadDetail");
+
+            if (response.CodeError == 200)
+            {
+                try
+                {
+                    var usercurrent = apiService.ValidateUser(this, User.Identity.Name);
+                    var url = Request.Url.AbsolutePath.Split('/')[1];
+                    var message = string.Concat("se actualizó la denominación con la cantidad disponible en ", device.STACKER_QUANTITY,
+                        ", la cantidad del baúl en ", device.CASHBOX_QUANTITY);
+                    await NotifyHelper.SaveLog(usercurrent, message, url);
+                }
+                catch (Exception)
+                {
+                }
+            }
+
             return Json(response);
         }
     }

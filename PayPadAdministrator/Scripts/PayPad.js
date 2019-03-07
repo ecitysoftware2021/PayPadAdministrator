@@ -38,7 +38,7 @@ function GetDateFormatHour(date) {
 }
 
 
-$(window).load(function () {
+$(window).on('load',function () {
     var $container = $('.portfolioContainer');
     $container.isotope({
         filter: '*',

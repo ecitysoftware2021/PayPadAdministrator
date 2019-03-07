@@ -15,8 +15,7 @@
         @Styles.Render("~/Content/Login")
     }
 
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")    
 </head>
 <body>
     @if (User.Identity.IsAuthenticated)
@@ -111,6 +110,7 @@
     }
 
 
+    @Scripts.Render("~/bundles/jquery")
     @if (User.Identity.IsAuthenticated)
     {
         @Scripts.Render("~/bundles/bootstrap")
