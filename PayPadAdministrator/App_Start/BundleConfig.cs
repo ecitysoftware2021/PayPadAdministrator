@@ -21,7 +21,7 @@ namespace PayPadAdministrator
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 //"~/Scripts/umd/popper.js",   
-                   "~/Scripts/bootstrap.min.js",
+                   "~/Scripts/js/bootstrap.min.js",
                   "~/Scripts/detect.js",
                   "~/Scripts/fastclick.js",
                   "~/Scripts/jquery.slimscroll.js",
