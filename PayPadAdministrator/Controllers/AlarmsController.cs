@@ -7,6 +7,7 @@ using PayPadAdministrator.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using PayPlusModels.Classes;
 
 namespace PayPadAdministrator.Controllers
 {

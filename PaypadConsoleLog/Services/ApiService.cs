@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using PayPadAdministrator.Classes;
-using PayPadAdministrator.Helpers;
 using PayPlusModels;
 using PayPlusModels.Classes;
 using RestSharp;
@@ -16,11 +14,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace PayPadAdministrator.Services
+namespace PaypadConsoleLog.Services
 {
     public class ApiService
     {
-
         string urlApi = string.Empty;
 
         string userAPi = string.Empty;
@@ -94,9 +91,9 @@ namespace PayPadAdministrator.Services
             {
                 return null;
             }
-        }       
+        }
 
-        public async Task<Response> InsertPost<T>(T model, string controller)
+        public async Task<Response> InsertPost<T>(T model, string controller, Controller controllerP)
         {
             try
             {
@@ -106,9 +103,9 @@ namespace PayPadAdministrator.Services
                 client.BaseAddress = new Uri(urlApi);
                 var url = Utilities.GetConfiguration(controller);
                 string token = string.Empty;
-                if (ComboHelper.Controller.Request.Cookies["TokenDashboard"] != null)
+                if (controllerP.Request.Cookies["TokenDashboard"] != null)
                 {
-                    token = ComboHelper.Controller.Request.Cookies["TokenDashboard"].Value;
+                    token = controllerP.Request.Cookies["TokenDashboard"].Value;
                 }
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -146,9 +143,9 @@ namespace PayPadAdministrator.Services
                 client.BaseAddress = new Uri(urlApi);
                 var url = Utilities.GetConfiguration(controller);
                 string token = string.Empty;
-                if (ComboHelper.Controller.Request.Cookies["TokenDashboard"] != null)
+                if (controllerP.Request.Cookies["TokenDashboard"] != null)
                 {
-                    token = ComboHelper.Controller.Request.Cookies["TokenDashboard"].Value;
+                    token = controllerP.Request.Cookies["TokenDashboard"].Value;
                 }
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -176,7 +173,7 @@ namespace PayPadAdministrator.Services
             }
         }
 
-        public async Task<Response> GetDataV2(Controller controller,string url)
+        public async Task<Response> GetDataV2(Controller controller, string url)
         {
             try
             {

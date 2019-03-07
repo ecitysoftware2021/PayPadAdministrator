@@ -3,6 +3,7 @@ using PayPadAdministrator.Classes;
 using PayPadAdministrator.Helpers;
 using PayPadAdministrator.Services;
 using PayPlusModels;
+using PayPlusModels.Classes;
 using PayPlusModels.CustomAuthentication;
 using System;
 using System.Collections.Generic;
