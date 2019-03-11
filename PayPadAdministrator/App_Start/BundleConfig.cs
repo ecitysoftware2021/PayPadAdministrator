@@ -52,6 +52,8 @@ namespace PayPadAdministrator
                   "~/Scripts/plugins/counterup/jquery.counterup.min.js",
                   "~/Scripts/ModalGeneric.js",
                   "~/Scripts/jquery.table2excel.js",
+                  "~/Scripts/jspdf.debug.js",
+                  "~/Scripts/html2canvas.js",
                   "~/Scripts/PayPad.js"
                   ));
 

@@ -3,6 +3,9 @@
 
 <div class="row">
     <div class="col-lg-12">
+
+        <button id="cmdDowload" onclick="DowloadPDF('contentPDF','detalleTransaccion')">Descargar</button>
+
         <ul class="nav nav-tabs tabs">
             <li class="active tab">
                 <a href="#home-2" data-toggle="tab" aria-expanded="false">
@@ -29,7 +32,7 @@
                 </a>
             </li>
         </ul>
-        <div class="tab-content">
+        <div class="tab-content" id="contentPDF">
             <div class="tab-pane active" id="home-2">
                 <div class="row">
                     <div class="col-lg-6">
@@ -60,7 +63,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="card-box m-t-20">                            
+                        <div class="card-box m-t-20">
                             <div class="p-20">
                                 <div class="about-info-p m-b-0">
                                     <strong>Fecha</strong>
@@ -86,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-                
+
 
             </div>
             <div class="tab-pane" id="profile-2">
@@ -103,7 +106,7 @@
                             <tr>
                                 <th data-field="Reference" data-switchable="false">Referencia</th>
                                 <th data-field="total" data-switchable="false">Total</th>
-                                <th data-field="observacion">Observación</th>                                
+                                <th data-field="observacion">Observación</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -178,16 +181,16 @@
                         <tbody>
                             @foreach (var item in Model.LogDevices)
                             {
-                            <tr>
-                                <td>@item.DEVICE_NAME</td>
-                                <td>
-                                    @item.PAYPAD_NAME
-                                </td>
-                                <td>
-                                    @item.DESCRIPTION
-                                </td>
-                                <td>@item.DATETIME.ToString("dd/MM/yyyy HH:mm")</td>
-                            </tr>
+                                <tr>
+                                    <td>@item.DEVICE_NAME</td>
+                                    <td>
+                                        @item.PAYPAD_NAME
+                                    </td>
+                                    <td>
+                                        @item.DESCRIPTION
+                                    </td>
+                                    <td>@item.DATETIME.ToString("dd/MM/yyyy HH:mm")</td>
+                                </tr>
                             }
                         </tbody>
 
@@ -198,3 +201,22 @@
     </div>
 </div>
 <!-- end row -->
+<script>
+
+    var doc = new jsPDF('p', 'pt', 'letter');
+
+    var element = document.getElementById("contentPDF");
+
+    doc.html(element, {
+        callback: function (pdf) {
+            var iframe = document.createElement('iframe');
+            iframe.setAttribute('style', 'position:absolute;right:0; top:0; bottom:0; height:100%; width:500px');
+            //document.body.appendChild(iframe);
+            iframe.src = pdf.output('datauristring');
+        }
+    });
+
+    function DowloadPDF(content, name) {
+        doc.save(name + '.pdf');
+    }
+</script>

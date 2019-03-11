@@ -25,6 +25,11 @@ namespace PayPadAdministrator.Controllers
         // GET: Users
         public async Task<ActionResult> Index()
         {
+            if (!User.IsInRole("SuperAdmin"))
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
             List<UserViewModel> users = new List<UserViewModel>();
             var response = await apiService.GetData(this,"GetAllUsers");
             if (response.CodeError == 200)
