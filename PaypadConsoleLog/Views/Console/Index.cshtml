@@ -1,0 +1,123 @@
+﻿@model IEnumerable<PayPlusModels.ConsoleErrorLog>
+
+@{
+    ViewBag.Title = "Logs Del PayPad";
+}
+
+<div class="product-status mg-b-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="product-status-wrap">
+                    <h4>@ViewBag.Title</h4>
+                    <div class="add-product">
+                        <a href="product-edit.html">Add Product</a>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PAYPAD_CONSOLE_ERROR_ID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PAYPAD_ID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ERROR_ID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ERROR_LEVEL_ID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DEVICE_PAYPAD_ID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DESCRIPTION)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DATE)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.OBSERVATION)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.STATE)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PAYPAD_NAME)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ERROR_DESCRIPTION)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CODE_ERROR)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ERROR_LEVEL_DESCRIPTION)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DEVICE_NAME)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PAYPAD_CONSOLE_ERROR_ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PAYPAD_ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ERROR_ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ERROR_LEVEL_ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DEVICE_PAYPAD_ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DESCRIPTION)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DATE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OBSERVATION)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.STATE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PAYPAD_NAME)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ERROR_DESCRIPTION)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CODE_ERROR)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ERROR_LEVEL_DESCRIPTION)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DEVICE_NAME)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

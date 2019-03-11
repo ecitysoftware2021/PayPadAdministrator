@@ -81,6 +81,7 @@
     <Compile Include="Alarm.cs" />
     <Compile Include="Classes\Response.cs" />
     <Compile Include="Classes\Utilities.cs" />
+    <Compile Include="ConsoleErrorLog.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="Currency_Denomination.cs" />
     <Compile Include="CustomAuthentication\CustomAuthorizeAttribute.cs" />
