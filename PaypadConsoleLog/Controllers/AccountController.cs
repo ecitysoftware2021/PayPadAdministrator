@@ -114,5 +114,13 @@ namespace PaypadConsoleLog.Controllers
             return RedirectToAction("Login", "Account", null);
         }
 
+        [CustomAuthorize]
+        [ChildActionOnly]
+        public ActionResult ProfileUser()
+        {
+            var user = apiService.ValidateUser(this, User.Identity.Name);
+
+            return PartialView(user);
+        }
     }
 }

@@ -249,6 +249,17 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Scripts\datatables\buttons.dataTables.min.css" />
+    <Content Include="Scripts\datatables\buttons.flash.min.js" />
+    <Content Include="Scripts\datatables\buttons.html5.min.js" />
+    <Content Include="Scripts\datatables\buttons.print.min.js" />
+    <Content Include="Scripts\datatables\dataTables.bootstrap.js" />
+    <Content Include="Scripts\datatables\dataTables.buttons.min.js" />
+    <Content Include="Scripts\datatables\jquery.dataTables.min.css" />
+    <Content Include="Scripts\datatables\jquery.dataTables.min.js" />
+    <Content Include="Scripts\datatables\jszip.min.js" />
+    <Content Include="Scripts\datatables\pdfmake.min.js" />
+    <Content Include="Scripts\datatables\vfs_fonts.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -433,6 +444,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Console\Index.cshtml" />
+    <Content Include="Views\Account\ProfileUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

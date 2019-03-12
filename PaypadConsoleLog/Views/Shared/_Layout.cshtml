@@ -19,18 +19,9 @@
                     <a href="@Url.Action("Index","Home")"><img class="main-logo" width="70" src="~/Content/Images/login-logo.png" alt="" /></a>
                     <strong><img src="~/Content/Images/login-logo.png" alt="" /></strong>
                 </div>
-                <div class="nalika-profile">
-                    <div class="profile-dtl">
-                        <h2>Lakian <span class="min-dtn">Das</span></h2>
-                    </div>
-                    <div class="profile-social-dtl">
-                        <ul class="dtl-social">
-                            @*<li><a href="#"><i class="icon nalika-facebook"></i></a></li>
-                            <li><a href="#"><i class="icon nalika-twitter"></i></a></li>
-                            <li><a href="#"><i class="icon nalika-linkedin"></i></a></li>*@
-                        </ul>
-                    </div>
-                </div>
+
+                @{ Html.RenderAction("ProfileUser", "Account");}
+
                 <div class="left-custom-menu-adp-wrap comment-scrollbar">
                     <nav class="sidebar-nav left-sidebar-menu-pro">
                         <ul class="metismenu" id="menu1">
@@ -99,7 +90,7 @@
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                 <div class="breadcomb-report">
-                                                    <button data-toggle="tooltip" data-placement="left" title="Download Report" class="btn"><i class="icon nalika-download"></i></button>
+                                                    <a  href="@Url.Action("LogOut","Account")" data-toggle="tooltip" data-placement="left" title="Download Report" class="btn"><i class="icon nalika-download"></i></a>
                                                 </div>
                                             </div>
                                         </div>

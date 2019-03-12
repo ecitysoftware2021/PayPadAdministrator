@@ -42,7 +42,16 @@ namespace PaypadConsoleLog
                       "~/Scripts/js/flot/jquery.flot.js",
                       "~/Scripts/js/flot/jquery.flot.resize.js",
                       "~/Scripts/js/flot/curvedLines.js",
-                      "~/Scripts/js/flot/flot-active.js"
+                      "~/Scripts/js/flot/flot-active.js",
+                      "~/Scripts/datatables/jquery.dataTables.min.js",
+                      "~/Scripts/datatables/dataTables.buttons.min.js",
+                     "~/Scripts/datatables/buttons.flash.min.js",
+                      "~/Scripts/datatables/jszip.min.js",
+                      "~/Scripts/datatables/pdfmake.min.js",
+                      "~/Scripts/datatables/vfs_fonts.js",
+                      "~/Scripts/datatables/buttons.html5.min.js",
+                      "~/Scripts/datatables/buttons.print.min.js",
+                      "~/Scripts/datatables/dataTables.bootstrap.js"
                       ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -63,7 +72,9 @@ namespace PaypadConsoleLog
                       "~/Content/css/calendar/fullcalendar.min.css",
                       "~/Content/css/calendar/fullcalendar.print.min.css",
                       "~/Content/css/style.css",
-                      "~/Content/css/responsive.css"
+                      "~/Content/css/responsive.css",
+                     "~/Scripts/datatables/jquery.dataTables.min.css",
+                     "~/Scripts/datatables/buttons.dataTables.min.css"
                       ));
         }
     }

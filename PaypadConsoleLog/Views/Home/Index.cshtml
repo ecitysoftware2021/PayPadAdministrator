@@ -32,7 +32,12 @@
                                 <h5 class="m-0 text-dark"><i class="md md-business m-r-10"></i><small>@item.OFFICE_ADDRESS</small></h5>
 
                                 <ul class="social-links list-inline m-0">
-
+                                    <li>
+                                        <a href="@Url.Action("Index","Console", new {id = item.PAYPAD_ID })"
+                                           data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Ver trámites">
+                                            <i class="fa fa-book"></i>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
