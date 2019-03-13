@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
+    <Compile Include="Action.cs" />
     <Compile Include="Alarm.cs" />
     <Compile Include="Classes\Response.cs" />
     <Compile Include="Classes\Utilities.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Office.cs" />
     <Compile Include="OperationType.cs" />
     <Compile Include="PayPad.cs" />
+    <Compile Include="PaypadActionLog.cs" />
     <Compile Include="PayPadTransactionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestAuth.cs" />

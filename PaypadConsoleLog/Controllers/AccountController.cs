@@ -60,7 +60,7 @@ namespace PaypadConsoleLog.Controllers
                 return View(model);
             }
 
-            var cookie = CookiesHelper.CreateTokenCookie(request.Token);
+            var cookie = CookiesHelper.CreateTokenCookie(request.Token,"TokenDashboard");
             Response.Cookies.Add(cookie);
 
             var response = await apiService.Login(model.UserName, model.Password, request.Token);

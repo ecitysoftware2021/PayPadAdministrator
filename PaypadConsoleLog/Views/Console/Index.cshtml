@@ -85,7 +85,12 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.OBSERVATION)
                                         </td>
-                                        <td></td>
+                                        <td>
+                                            <a href="@Url.Action("GetActionsForError", new {id = item.ERROR_ID,paypadId = item.PAYPAD_ID,deviceId = item.DEVICE_PAYPAD_ID })"
+                                               data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" gtitle="Acciones del error @item.ERROR_DESCRIPTION" data-original-title="Actiones">
+                                                <i class="fa fa-server"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
@@ -101,7 +106,7 @@
 
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
-        var datetable ="";
+        var datetable = "";
         $(document).ready(function () {
 
             datetable = $('#tableConsole').DataTable({
@@ -109,13 +114,13 @@
                 buttons: [
                     'excel', 'pdf'
                 ],
-                order:[[0,"desc"]]
+                order: [[0, "desc"]]
             });
 
             $("body").on("click", "a.dialog-window", null, function (e) {
                 e.preventDefault();
                 var $link = $(this);
-                var title = "Detalle de transacción";
+                var title = $(this).attr('gtitle');
                 $('#Details .modal-title').html(title);
                 var url = $(this).attr('href');
                 if (url.indexOf('#') == 0) {
@@ -129,14 +134,14 @@
 
                 }
             });
-        });      
+        });
     </script>
 }
 
 <div class="modal fade" id="Details" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
     <div class="modal-dialog" style="width: 970px !important;">
-        <div class="modal-content">
+        <div class="modal-content" style="background:#78a4b9 !important;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title"></h4>

@@ -9,7 +9,7 @@ namespace PaypadConsoleLog
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -20,8 +20,7 @@ namespace PaypadConsoleLog
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/umd/popper.js",
-                      "~/Scripts/bootstrap.min.js",
+                      "~/Scripts/js/bootstrap.min.js",
                       "~/Scripts/js/wow.min.js",
                       "~/Scripts/js/jquery-price-slider.js",
                       "~/Scripts/js/jquery.meanmenu.js",
@@ -51,7 +50,9 @@ namespace PaypadConsoleLog
                       "~/Scripts/datatables/vfs_fonts.js",
                       "~/Scripts/datatables/buttons.html5.min.js",
                       "~/Scripts/datatables/buttons.print.min.js",
-                      "~/Scripts/datatables/dataTables.bootstrap.js"
+                      "~/Scripts/datatables/dataTables.bootstrap.js",
+                      "~/Scripts/datepicker/dist/js/bootstrap-datepicker.min.js",
+                      "~/Scripts/Datetimepicker/bootstrap-datetimepicker.js"
                       ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -74,7 +75,10 @@ namespace PaypadConsoleLog
                       "~/Content/css/style.css",
                       "~/Content/css/responsive.css",
                      "~/Scripts/datatables/jquery.dataTables.min.css",
-                     "~/Scripts/datatables/buttons.dataTables.min.css"
+                     "~/Scripts/datatables/buttons.dataTables.min.css",
+                     "~/Scripts/datepicker/dist/css/bootstrap-datepicker.min.css",
+                     "~/Scripts/datepicker/dist/css/bootstrap-datepicker.standalone.min.css",
+                     "~/Scripts/Datetimepicker/bootstrap-datetimepicker.css"
                       ));
         }
     }
