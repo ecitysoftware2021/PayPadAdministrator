@@ -1,18 +1,24 @@
 ﻿@model PayPlusModels.UserViewModel
 @{
+                /**/
 
 }
 
-<div class="nalika-profile">
-    <div class="profile-dtl">
-        <h2><span>@Model.USERNAME</span></h2>
+@if (Model != null)
+{
+    <div class="nalika-profile">
+        <div class="profile-dtl">
+            <h2><span>@Model.USERNAME</span></h2>
+        </div>
+        <div class="profile-social-dtl">
+            <ul class="dtl-social">
+                @*<li><a href="#"><i class="icon nalika-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon nalika-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon nalika-linkedin"></i></a></li>*@
+            </ul>
+        </div>
     </div>
-    <div class="profile-social-dtl">
-        <ul class="dtl-social">
-            @*<li><a href="#"><i class="icon nalika-facebook"></i></a></li>
-                <li><a href="#"><i class="icon nalika-twitter"></i></a></li>
-                <li><a href="#"><i class="icon nalika-linkedin"></i></a></li>*@
-        </ul>
-    </div>
-</div>
+}
+
+
 

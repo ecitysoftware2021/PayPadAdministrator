@@ -19,6 +19,10 @@ namespace PayPlusModels.CustomAuthentication
             {
                 return false;
             }
+            else if (HttpContext.Current.Request.Cookies["TokenDashboard"] == null)
+            {
+                return false;
+            }
             else
             {
                 if (!string.IsNullOrEmpty(Roles) && !CurrentUser.IsInRole(Roles))
@@ -34,7 +38,7 @@ namespace PayPlusModels.CustomAuthentication
         {
             RedirectToRouteResult routeData = null;
 
-            if (CurrentUser == null)
+            if (CurrentUser == null || HttpContext.Current.Request.Cookies["TokenDashboard"] == null)
             {
                 routeData = new RedirectToRouteResult
                     (new System.Web.Routing.RouteValueDictionary
