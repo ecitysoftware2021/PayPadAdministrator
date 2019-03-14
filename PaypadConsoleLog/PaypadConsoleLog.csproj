@@ -572,6 +572,7 @@
     <Content Include="Views\Account\ProfileUser.cshtml" />
     <Content Include="Views\Console\GetActionsForError.cshtml" />
     <Content Include="Views\Console\CreatePaypadActionLog.cshtml" />
+    <Content Include="Views\Console\GetPaypadActionLogForPaypad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

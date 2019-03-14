@@ -1,0 +1,106 @@
+﻿@model IEnumerable<PayPlusModels.PaypadActionLog>
+
+@{
+    ViewBag.Title = "Acciones log en paypad";
+}
+
+
+<div class="product-status mg-b-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="product-status-wrap">
+                    <h4>@ViewBag.Title</h4>
+                    <div class="table-responsive">
+                        <table class="table" id="tableConsole">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.PAYPAD_ACTION_LOG_ID)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.PAYPAD_NAME)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.DESCRIPTION_ACTION)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CODE_ACTION)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.DEVICE_NAME)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.DESCRIPTION)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.DATE_CREATION)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.DATE_ACTION)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.DATE_EXECUTE)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.USERNAME)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.STATE)
+                                    </th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PAYPAD_ACTION_LOG_ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PAYPAD_NAME)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DESCRIPTION_ACTION)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CODE_ACTION)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DEVICE_NAME)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DESCRIPTION)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DATE_CREATION)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DATE_ACTION)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DATE_EXECUTE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.USERNAME)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.STATE)
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("GetActionsForError", new {id = item.PAYPAD_ACTION_LOG_ID})"
+                                           data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" gtitle="" data-original-title="Actiones">
+                                            <i class="fa fa-server"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

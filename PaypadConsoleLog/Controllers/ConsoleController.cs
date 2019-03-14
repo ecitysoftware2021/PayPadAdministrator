@@ -29,6 +29,19 @@ namespace PaypadConsoleLog.Controllers
             return View(consoleErrorLogs.OrderByDescending(c => c.DATE).ToList());
         }
 
+        public async Task<ActionResult> GetPaypadActionLogForPaypad(int id)
+        {
+            List<PaypadActionLog> paypadActionLogs = new List<PaypadActionLog>();
+            var url = string.Concat(Utilities.GetConfiguration("GetPaypadActionLogForPaypad"), id);
+            var response = await apiService.GetDataV2(this, url);
+            if (response.CodeError == 200)
+            {
+                paypadActionLogs = JsonConvert.DeserializeObject<List<PaypadActionLog>>(response.Data.ToString());
+            }
+
+            return View(paypadActionLogs);
+        }
+
         public async Task<ActionResult> GetActionsForError(int id, int paypadId, int? deviceId)
         {
             List<PayPlusModels.Action> actions = new List<PayPlusModels.Action>();
