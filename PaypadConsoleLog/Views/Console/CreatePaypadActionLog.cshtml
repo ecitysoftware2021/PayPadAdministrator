@@ -6,72 +6,53 @@
 
 
 
-<!-- Single pro tab start-->
-<div class="single-product-tab-area mg-tb-80">
-    <!-- Single pro tab review Start-->
-    <div class="single-pro-review-area">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="review-tab-pro-inner">
-                        <ul id="myTab3" class="tab-review-design">
-                            <li class="active"><a href="#description"><i class="icon nalika-new-file" aria-hidden="true"></i> @ViewBag.Title</a></li>
-                        </ul>
-                        <div id="myTabContent" class="tab-content custom-product-edit">
-                            @using (Html.BeginForm("CreatePaypadActionLog", "Console", new { }, FormMethod.Post, new { @class = "", role = "form" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-6">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            @using (Html.BeginForm("CreatePaypadActionLog", "Console", new { }, FormMethod.Post, new { @class = "", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                                @Html.HiddenFor(model => model.ACTION_ID)
-                                @Html.HiddenFor(model => model.DATE_EXECUTE)
-                                @Html.HiddenFor(model => model.DATE_CREATION)
-                                @Html.HiddenFor(model => model.DEVICE_PAYPAD_ID)
-                                @Html.HiddenFor(model => model.PAYPAD_ID)
-                                @Html.HiddenFor(model => model.STATE)
-                                @Html.HiddenFor(model => model.USER_ID)
-                                <div class="product-tab-list tab-pane fade active in" id="description">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="review-content-section">
-                                                <div class="input-group mg-b-pro-edt">
-                                                    <span class="input-group-addon"><i class="icon nalika-new-file" aria-hidden="true"></i></span>
-                                                    @Html.EditorFor(model => model.DESCRIPTION, new { htmlAttributes = new { @class = "form-control", @placeholder = "Descripción" } })
-                                                    @Html.ValidationMessageFor(model => model.DESCRIPTION, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="review-content-section">
-                                                <div class="input-group mg-b-pro-edt">
-                                                    <span class="input-group-addon"><i class="icon nalika-alarm" aria-hidden="true"></i></span>
-                                                    @Html.EditorFor(model => model.DATE_ACTION, new { htmlAttributes = new { @class = "form-control", @placeholder = "Fecha de acción" } })
-                                                    @Html.ValidationMessageFor(model => model.DATE_ACTION, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="text-center custom-pro-edt-ds">
-                                                <button type="submit" class="btn btn-ctl-bt waves-effect waves-light m-r-10">
-                                                    Crear
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
+                @Html.HiddenFor(model => model.ACTION_ID)
+                @Html.HiddenFor(model => model.DATE_EXECUTE)
+                @Html.HiddenFor(model => model.DATE_CREATION)
+                @Html.HiddenFor(model => model.DEVICE_PAYPAD_ID)
+                @Html.HiddenFor(model => model.PAYPAD_ID)
+                @Html.HiddenFor(model => model.STATE)
+                @Html.HiddenFor(model => model.USER_ID)
 
-                        </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Decripción</label>
+
+                        @Html.EditorFor(model => model.DESCRIPTION, new { htmlAttributes = new { @class = "form-control", @placeholder = "Descripción" } })
+                        @Html.ValidationMessageFor(model => model.DESCRIPTION, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Fecha de Acción</label>
+                        @Html.EditorFor(model => model.DATE_ACTION, new { htmlAttributes = new { @class = "form-control", @placeholder = "Fecha de acción" } })
+                        @Html.ValidationMessageFor(model => model.DATE_ACTION, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            }
+
+
         </div>
     </div>
+    <!--/.col (left) -->
 </div>
-
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -79,14 +60,14 @@
     <script type="text/javascript">
         $(function () {
             var today = new Date();
-            
 
 
-                $('#DATE_ACTION').datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm',
-                    minDate: '2019-03-13 04:49'
-                });
+
+            $('#DATE_ACTION').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm',
+                minDate: '2019-03-13 04:49'
             });
+        });
     </script>
 }
 

@@ -4,103 +4,101 @@
     ViewBag.Title = "Logs Del PayPad";
 }
 
-<div class="product-status mg-tb-30">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="product-status-wrap">
-                    <h4>@ViewBag.Title</h4>
-                    <div class="table-responsive">
-                        <table class="table" id="tableConsole">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.PAYPAD_CONSOLE_ERROR_ID)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.PAYPAD_NAME)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.ERROR_DESCRIPTION)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.ERROR_LEVEL_DESCRIPTION)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.DEVICE_NAME)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.DESCRIPTION)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.DATE)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.OBSERVATION)
-                                    </th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PAYPAD_CONSOLE_ERROR_ID)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PAYPAD_NAME)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ERROR_DESCRIPTION)
-                                        </td>
-                                        <td>
-                                            @{
-                                                string text = "danger";
-                                                if (item.ERROR_LEVEL_ID == 2)
-                                                {
-                                                    text = "warning";
-                                                }
-                                                else if (item.ERROR_LEVEL_ID == 2)
-                                                {
-                                                    text = "info";
-                                                }
-                                            }
-
-                                            <h4>
-                                                <span class="label label-@text">
-                                                    @Html.DisplayFor(modelItem => item.ERROR_LEVEL_DESCRIPTION)
-                                                </span>
-                                            </h4>
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DEVICE_NAME)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DESCRIPTION)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DATE)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.OBSERVATION)
-                                        </td>
-                                        <td>
-                                            <a href="@Url.Action("GetActionsForError", new {id = item.ERROR_ID,paypadId = item.PAYPAD_ID,deviceId = item.DEVICE_PAYPAD_ID })"
-                                               data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" gtitle="Acciones del error @item.ERROR_DESCRIPTION" data-original-title="Actiones">
-                                                <i class="fa fa-server"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">@ViewBag.Title</h3>
+    </div>
+    <div class="box-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="tableConsole">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PAYPAD_CONSOLE_ERROR_ID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PAYPAD_NAME)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ERROR_DESCRIPTION)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ERROR_LEVEL_DESCRIPTION)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DEVICE_NAME)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DESCRIPTION)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DATE)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OBSERVATION)
+                        </th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PAYPAD_CONSOLE_ERROR_ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PAYPAD_NAME)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ERROR_DESCRIPTION)
+                            </td>
+                            <td>
+                                @{
+                                    string text = "danger";
+                                    if (item.ERROR_LEVEL_ID == 2)
+                                    {
+                                        text = "warning";
+                                    }
+                                    else if (item.ERROR_LEVEL_ID == 2)
+                                    {
+                                        text = "info";
+                                    }
                                 }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+
+                                <h4>
+                                    <span class="label label-@text">
+                                        @Html.DisplayFor(modelItem => item.ERROR_LEVEL_DESCRIPTION)
+                                    </span>
+                                </h4>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DEVICE_NAME)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DESCRIPTION)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DATE)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OBSERVATION)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("GetActionsForError", new {id = item.ERROR_ID,paypadId = item.PAYPAD_ID,deviceId = item.DEVICE_PAYPAD_ID })"
+                                   data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" gtitle="Acciones del error @item.ERROR_DESCRIPTION" data-original-title="Actiones">
+                                    <i class="fa fa-server"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
+
     </div>
 </div>
+
 
 @section Scripts {
 
@@ -141,7 +139,7 @@
 <div class="modal fade" id="Details" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
     <div class="modal-dialog" style="width: 970px !important;">
-        <div class="modal-content" style="background:#78a4b9 !important;">
+        <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title"></h4>

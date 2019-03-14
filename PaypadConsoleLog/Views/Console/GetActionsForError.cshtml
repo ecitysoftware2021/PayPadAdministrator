@@ -4,32 +4,26 @@
     ViewBag.Title = "Actiones";
 }
 
-<div class="widgets-programs-area mg-t-15">
-    <div class="container-fluid">
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="hpanel responsive-mg-b-30">
-                        <div class="panel-body">
-                            <div class="stats-title pull-left">
-                                <h4>@item.CODE_ACTION</h4>
-                            </div>
-                            <div class="stats-icon pull-right">
-                                <a href="@Url.Action("CreatePaypadActionLog",new { id = item.ACTION_ID})">
-                                    <i class="fa fa-desktop" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                            <div class="m-t-xl">
-                                <h1 class="text-success">@item.ACTION_ID</h1>
-                                <small>
-                                    @item.DESCRIPTION
-                                </small>
-                            </div>
-                        </div>
-                    </div>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua">
+                    <a href="@Url.Action("CreatePaypadActionLog",new { id = item.ACTION_ID})">
+                        <i class="fa fa-desktop"></i>
+                    </a>                    
+                </span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text"> @item.DESCRIPTION</span>
+                    <span class="info-box-number">@item.CODE_ACTION</span>
                 </div>
-            }
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
         </div>
-    </div>
+        <!-- /.col -->
+    }
+
 </div>

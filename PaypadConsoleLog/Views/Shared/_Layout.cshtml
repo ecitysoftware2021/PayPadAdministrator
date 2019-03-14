@@ -5,121 +5,98 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Consola PayPad</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body>
+
+@{ 
+    string classes = (User.Identity.IsAuthenticated) ? "hold-transition skin-blue sidebar-mini" : "hold-transition login-page";
+}
+
+<body class="@classes">
 
     @if (User.Identity.IsAuthenticated)
     {
-        <div class="left-sidebar-pro">
-            <nav id="sidebar" class="">
-                <div class="sidebar-header">
-                    <a href="@Url.Action("Index","Home")"><img class="main-logo" width="70" src="~/Content/Images/login-logo.png" alt="" /></a>
-                    <strong><img src="~/Content/Images/login-logo.png" alt="" /></strong>
-                </div>
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="@Url.Action("Index","Home")" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>E</b>CS</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>E-</b>City Sofware</span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
 
-                @{ Html.RenderAction("ProfileUser", "Account");}
-
-                <div class="left-custom-menu-adp-wrap comment-scrollbar">
-                    <nav class="sidebar-nav left-sidebar-menu-pro">
-                        <ul class="metismenu" id="menu1">
-                            <li class="active"><a title="Consola" href="@Url.Action("Index","Home")"><span class="mini-sub-pro">Consola</span></a></li>
-                        </ul>
-                    </nav>
+                        <!-- User Account: style can be found in dropdown.less -->
+                        @{ Html.RenderAction("ProfileUser", "Account");}
+                    </ul>
                 </div>
             </nav>
+        </header>
+
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">NAVEGACIÓN</li>
+                    <li class="active treeview">
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i> <span>Consola</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="active"><a href="@Url.Action("Index","Home")"><i class="fa fa-circle-o"></i> Corresponsales</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Start Welcome area -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    Consola
+                    <small>Control de logs</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i> Inicio</a></li>
+                </ol>
+            </section>
+            <section class="content">
+                @RenderBody()
+            </section>
         </div>
+
+    }
+    else
+    {
+        @RenderBody()
     }
 
 
-    <!-- Start Welcome area -->
-        <div class="all-content-wrapper">
-
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="logo-pro">
-                                <a href="@Url.Action("Index","Home")"><img class="main-logo" src="~/Content/img/logo/logo.png" alt="" /></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="header-advance-area">
-                    <div class="header-top-area">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="header-top-wraper">
-                                        <div class="row">
-                                            <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
-                                                <div class="menu-switcher-pro">
-                                                    <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
-                                                        <i class="icon nalika-menu-task"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Mobile Menu start -->
-
-                    <!-- Mobile Menu end -->
-                    <div class="breadcome-area">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="breadcome-list">
-                                        <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                <div class="breadcomb-wp">
-                                                    <div class="breadcomb-icon">
-                                                        <i class="icon nalika-home"></i>
-                                                    </div>
-                                                    <div class="breadcomb-ctn">
-                                                        <h2>Log Consola</h2>
-                                                        <p>Bienvenido a la consola Paypad</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                <div class="breadcomb-report">
-                                                    <a  href="@Url.Action("LogOut","Account")" data-toggle="tooltip" data-placement="left" title="Download Report" class="btn"><i class="icon nalika-download"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-
-            @RenderBody()
-
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div class="footer-copyright-area">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="footer-copy-right">
-                                    <p>Copyright © @DateTime.Now.Year <a class="text-success" href="http:\\www.e-city.mx" target="_blank">E-City</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-
-        </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <footer class="main-footer">
+            <strong>Copyright &copy; @DateTime.Now.Year <a href="http:\\www.e-city.mx" target="_blank">E-City</a>.</strong> All rights
+            reserved.
+        </footer>
+    }
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

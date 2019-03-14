@@ -2,22 +2,47 @@
 @{
                 /**/
 
+                /**/
 }
 
 @if (Model != null)
 {
-    <div class="nalika-profile">
-        <div class="profile-dtl">
-            <h2><span>@Model.USERNAME</span></h2>
-        </div>
-        <div class="profile-social-dtl">
-            <ul class="dtl-social">
-                @*<li><a href="#"><i class="icon nalika-facebook"></i></a></li>
-                    <li><a href="#"><i class="icon nalika-twitter"></i></a></li>
-                    <li><a href="#"><i class="icon nalika-linkedin"></i></a></li>*@
-            </ul>
-        </div>
-    </div>
+
+
+
+    <li class="dropdown user user-menu">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            @if (Model.IMAGE != null)
+            {
+                var base64 = Convert.ToBase64String(Model.IMAGE);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                <img src="@imgSrc" class="user-image" alt="User Image">
+            }
+
+            <span class="hidden-xs">@Model.USERNAME</span>
+        </a>
+        <ul class="dropdown-menu">
+            <!-- User image -->
+            <li class="user-header">
+                @if (Model.IMAGE != null)
+                {
+                    var base64 = Convert.ToBase64String(Model.IMAGE);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                    <img src="@imgSrc" class="img-circle" alt="User Image">
+                }
+
+                <p>
+                    @Model.NAME - @Model.ROL_NAME
+                </p>
+            </li>
+            <!-- Menu Footer-->
+            <li class="user-footer">
+                <div class="pull-right">
+                    <a href="@Url.Action("LogOut","Account")" class="btn btn-danger btn-flat">Cerrar Sesión</a>
+                </div>
+            </li>
+        </ul>
+    </li>
 }
 
 

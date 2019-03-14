@@ -83,7 +83,7 @@ namespace PaypadConsoleLog.Controllers
             paypad.ACTION_ID = id;
             paypad.USER_ID = user.USER_ID;
             paypad.DATE_CREATION = DateTime.Now;
-            paypad.DATE_ACTION = DateTime.Now;            
+            paypad.DATE_ACTION = DateTime.Now;
             return View(paypad);
         }
 
@@ -103,7 +103,7 @@ namespace PaypadConsoleLog.Controllers
                 return View(paypadActionLog);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("GetPaypadActionLogForPaypad", new { id = paypadActionLog.PAYPAD_ID });
         }
 
     }
