@@ -6,6 +6,7 @@ using PayPadAdministrator.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace PayPadAdministrator.Controllers
 {
@@ -35,6 +36,30 @@ namespace PayPadAdministrator.Controllers
             }
             
             return View(roles);
+        }
+
+        public async Task<ActionResult> EditRole(int id)
+        {
+            List<Role> roles = new List<Role>();
+            var request = new GetRequest
+            {
+                Parameter = id.ToString(),
+                Type = 2
+            };
+
+            var response = await apiService.InsertPost(request, "GetRoles");
+            if (response.CodeError == 200)
+            {
+                roles = JsonConvert.DeserializeObject<List<Role>>(response.Data.ToString());
+            }
+
+            var role = roles.ToList().FirstOrDefault();
+            if (role == null)
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
+            return View(role);
         }
 
         public ActionResult CreateRole()
