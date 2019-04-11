@@ -22,5 +22,6 @@ namespace PayPadAdministrator.Models
         public string TRANSACT { get; set; }
         public int? TRANSACT_OPERATION_TYPE_ID { get; set; }
         public string STATE { get; set; }
+        public string OBSERVATION { get; set; }
     }
 }
