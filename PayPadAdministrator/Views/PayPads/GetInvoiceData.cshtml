@@ -1,0 +1,130 @@
+﻿@model PayPlusModels.SP_GET_INVOICE_DATA_Result
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    @using (Html.BeginForm("UpdateInvoiceData", "PayPads", new { }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>DATOS FACTURA ACTUAL</h4>
+            <hr />
+            @Html.HiddenFor(model => model.CUSTOMER_ID)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.PREFIJO, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PREFIJO, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PREFIJO, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RESOLUCION, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RESOLUCION, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.RESOLUCION, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FECHA_RESOLUCION, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FECHA_RESOLUCION, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                    @Html.ValidationMessageFor(model => model.FECHA_RESOLUCION, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RANGO_DESDE, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RANGO_DESDE, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.RANGO_DESDE, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RANGO_HASTA, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RANGO_HASTA, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.RANGO_HASTA, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RANGO_ACTUAL, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RANGO_ACTUAL, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.RANGO_ACTUAL, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MINIMO_DISPONIBLE, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MINIMO_DISPONIBLE, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MINIMO_DISPONIBLE, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" onclick="UpdateInvoiceDada(@ViewBag.CustomerID)" value="Actualizar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</body>
+
+</html>
+
+<script type="text/javascript">
+
+
+    function UpdateInvoiceDada(CustomerID) {
+      
+        var DataUpdate = {
+            PREFIJO: $("#PREFIJO").val(),
+            RESOLUCION: $("#RESOLUCION").val(),
+            FECHA_RESOLUCION: $("#FECHA_RESOLUCION").val(),
+            RANGO_DESDE: $("#RANGO_DESDE").val(),
+            RANGO_HASTA: $("#RANGO_HASTA").val(),
+            RANGO_ACTUAL: $("#RANGO_ACTUAL").val(),
+            MINIMO_DISPONIBLE: $("#MINIMO_DISPONIBLE").val(),
+            CUSTOMER_ID: CustomerID
+        };
+
+        var request = {
+            data: DataUpdate
+        }
+        debugger
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateInvoiceData", "PayPads")',
+            dataType: 'json',
+            data: DataUpdate,
+            success: function (data) {
+                if (data.CodeError == 200) {
+                    ModalMessageSuccess("Exitoso", data.Message);
+                    location.reload();
+                } else {
+                    ModalMessageError("Error", data.Message);
+                }
+            },
+            error: function (ex) {
+                ModalMessageError("Error", 'Failed ' + ex.responseText);
+            }
+        });
+        }
+</script>
+
+

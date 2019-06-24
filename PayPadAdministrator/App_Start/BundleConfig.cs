@@ -9,7 +9,7 @@ namespace PayPadAdministrator
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -20,7 +20,8 @@ namespace PayPadAdministrator
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                   "~/Scripts/bootstrap.min.js",
+                //"~/Scripts/umd/popper.js",   
+                   "~/Scripts/js/bootstrap.min.js",
                   "~/Scripts/detect.js",
                   "~/Scripts/fastclick.js",
                   "~/Scripts/jquery.slimscroll.js",
@@ -51,6 +52,8 @@ namespace PayPadAdministrator
                   "~/Scripts/plugins/counterup/jquery.counterup.min.js",
                   "~/Scripts/ModalGeneric.js",
                   "~/Scripts/jquery.table2excel.js",
+                  "~/Scripts/jspdf.debug.js",
+                  "~/Scripts/html2canvas.js",
                   "~/Scripts/PayPad.js"
                   ));
 
@@ -87,7 +90,8 @@ namespace PayPadAdministrator
                 "~/Scripts/plugins/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css",
                 "~/Scripts/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
                 "~/Scripts/plugins/clockpicker/dist/jquery-clockpicker.min.css",
-                "~/Scripts/plugins/bootstrap-daterangepicker/daterangepicker.css"
+                "~/Scripts/plugins/bootstrap-daterangepicker/daterangepicker.css",
+                "~/Scripts/Datetimepicker/bootstrap-datetimepicker.css"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/DatePicker").Include(
@@ -97,6 +101,7 @@ namespace PayPadAdministrator
                   "~/Scripts/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
                   "~/Scripts/plugins/clockpicker/dist/jquery-clockpicker.min.js",
                   "~/Scripts/plugins/bootstrap-daterangepicker/daterangepicker.js",
+                  "~/Scripts/Datetimepicker/bootstrap-datetimepicker.js",
                   "~/Scripts/DatePickersFuntions.js"
                   ));
 

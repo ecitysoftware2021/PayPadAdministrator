@@ -1,4 +1,4 @@
-﻿@model PayPadAdministrator.Models.RequestReport
+﻿@model PayPlusModels.RequestReport
 @{
     ViewBag.Title = "Dashboard";
 }
@@ -130,10 +130,12 @@
                                 <tr>
                                     <th data-field="id">ID</th>
                                     <th data-field="tramite">Trámite</th>
+                                    <th data-field="producto">Producto</th>
+                                    <th data-field="documento">Documento</th>
                                     <th data-field="fecha">Fecha</th>
                                     <th data-field="total">Total</th>
-                                    <th data-field="totalIng">Total Ingresado</th>
-                                    <th data-field="totalDvu">Total Devuelto</th>
+                                    <th data-field="totalIng">Ingresado</th>
+                                    <th data-field="totalDvu">Devuelto</th>
                                     <th data-field="estado">Estado</th>
                                     <th data-field="estado">Administración</th>
                                 </tr>
@@ -182,9 +184,6 @@
                 }
             });
         });
-
-
-
 
         function GetTransactionsHome(){
 
@@ -264,17 +263,20 @@ function OrganizeData(transactions) {
         initial++;
 
         var state = "<span class='label label-" + text + "'>" + data.STATE +"</span>";
-        var admin = "<a href='/Reports/GetDetailsFromTransactions/"+data.TRANSACTION_ID+"'"+
+        var admin = "<a href='/AdminEcityPad/Reports/GetDetailsFromTransactions/"+data.TRANSACTION_ID+"'"+
                     "data-placement='top' data-toggle='tooltip' class='tooltips dialog-window' data-original-title='Detalle'>"+
                     "<i class='fa fa-server'></i>"+
-            "</a> "+
-           " <a href = '/Reports/GetVideo?transactionId="+data.TRANSACTION_ID+"'"+
-            "data-placement='top' data-toggle='tooltip' class='tooltips dialog-window' data-original-title='Video'>" +
-            "<i class='fa fa-video-camera'></i>" +
-                    "</a>";
+            "</a> ";
+        //+
+         //  " <a href = '/AdminEcityPad/Reports/GetVideo?transactionId="+data.TRANSACTION_ID+"'"+
+          //  "data-placement='top' data-toggle='tooltip' class='tooltips dialog-window' data-original-title='Video'>" +
+          //  "<i class='fa fa-video-camera'></i>" +
+           //         "</a>";
         datetable.row.add( [
             data.TRANSACTION_ID,
             data.TRANSACT,
+            data.PRODUCT,
+            data.DOCUMENT,
             ConvertDate( data.DATE_BEGIN),
             ConvertCurrency(data.TOTAL_AMOUNT),
             ConvertCurrency(data.INCOME_AMOUNT),
@@ -293,7 +295,7 @@ function OrganizeData(transactions) {
         time: 1200
     });
 
-}
+   }
 
     </script>
 }

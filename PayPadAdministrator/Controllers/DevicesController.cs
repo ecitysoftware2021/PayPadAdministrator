@@ -1,15 +1,15 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
-using PayPadAdministrator.CustomAuthentication;
 using PayPadAdministrator.Helpers;
-using PayPadAdministrator.Models;
+using PayPlusModels;
+using PayPlusModels.CustomAuthentication;
 using PayPadAdministrator.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
+using PayPlusModels.Classes;
 
 namespace PayPadAdministrator.Controllers
 {
@@ -140,7 +140,7 @@ namespace PayPadAdministrator.Controllers
                 return View(device);
             }
 
-            if (device.ImagePathFile == null)
+            if (device.ImagePathFile != null)
             {
                 device.IMAGE = Utilities.GenerateByteArray(device.ImagePathFile.InputStream);
                 device.ImagePathFile = null;

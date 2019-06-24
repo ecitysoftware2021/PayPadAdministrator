@@ -1,0 +1,49 @@
+﻿@model IEnumerable<PayPlusModels.PayPad>
+
+@{
+    /**/
+
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="portfolioContainer">
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-6 col-lg-3 col-md-4 mobiles">
+                <div class="product-list-box thumb">
+                    @if (item.IMAGE != null)
+                    {
+                        var base64 = Convert.ToBase64String(item.IMAGE);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        <a href="@imgSrc" class="image-popup" title="@item.NAME">
+                            <img src="@imgSrc" class="thumb-img" alt="work-thumbnail">
+                        </a>
+                    }
+
+                    <div class="detail">
+                        <h4 class="m-t-0 m-b-5"><a href="" class="text-dark">@item.NAME</a> </h4>
+                        <h5 class="m-0"><span class="text-custom">@item.PAYPAD_ID</span> <span class="text-muted m-l-15"> @item.OFFICE_NAME</span></h5>
+                        <h5 class="m-0 text-dark"><i class="md md-business m-r-10"></i><small>@item.CUSTOMER_NAME</small></h5>
+                        <h5 class="m-0 text-dark"><i class="md md-business m-r-10"></i><small>@item.OFFICE_ADDRESS</small></h5>
+
+                        <ul class="social-links list-inline m-0">
+                            <li>
+                                <a href="@Url.Action("Index","Console", new {id = item.PAYPAD_ID })"
+                                   data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Ver Errores">
+                                    <i class="fa fa-television"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("GetPaypadActionLogForPaypad","Console", new {id = item.PAYPAD_ID })"
+                                   data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Ver Acciones ha ejecutar">
+                                    <i class="fa fa-file-code-o"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

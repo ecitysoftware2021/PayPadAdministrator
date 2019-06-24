@@ -1,0 +1,29 @@
+﻿@model IEnumerable<PayPlusModels.Action>
+
+@{
+    ViewBag.Title = "Actiones";
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua">
+                    <a href="@Url.Action("CreatePaypadActionLog",new { id = item.ACTION_ID})">
+                        <i class="fa fa-desktop"></i>
+                    </a>                    
+                </span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text"> @item.DESCRIPTION</span>
+                    <span class="info-box-number">@item.CODE_ACTION</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    }
+
+</div>

@@ -16,7 +16,8 @@
     }
 
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body>
     @if (User.Identity.IsAuthenticated)
@@ -111,6 +112,7 @@
     }
 
 
+    @Scripts.Render("~/bundles/jquery")
     @if (User.Identity.IsAuthenticated)
     {
         @Scripts.Render("~/bundles/bootstrap")

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PayPadAdministrator.Models.PayPad>
+﻿@model IEnumerable<PayPlusModels.PayPad>
 
 @{
     ViewBag.Title = "Pay +";
@@ -54,6 +54,41 @@
                                     <i class="fa fa-book"></i>
                                 </a>
                             </li>
+
+                            <li>
+                                <a href="@Url.Action("GetArchingData", new {paypadId = item.PAYPAD_ID,customerId = item.CUSTOMER_ID })"
+                                   data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Registrar Arqueo">
+                                    <i class="fa fa-dollar"></i>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("GetBalances", new {paypadId=item.PAYPAD_ID,customerId =item.CUSTOMER_ID })"
+                                   data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Ver Arqueos">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("GetUploads", new {paypadId=item.PAYPAD_ID,customerId =item.CUSTOMER_ID })"
+                                   data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Ver Cargues">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("GetChargeData", new { paypadId = item.PAYPAD_ID, customerId = item.CUSTOMER_ID })"
+                                   data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Registrar Cargue">
+                                    <i class="fa fa-line-chart"></i>
+                                </a>
+                            </li>
+                            @if (item.CUSTOMER_ID == 19)
+                            {
+                                <li>
+                                    <a href="@Url.Action("GetInvoiceData", new { customerId = item.CUSTOMER_ID })"
+                                       data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Datos Dian">
+                                        <i class="fa fa-external-link"></i>
+                                    </a>
+                                </li>
+                            }
                             @if (User.IsInRole("SuperAdmin"))
                             {
                                 <li>
@@ -61,7 +96,10 @@
                                 </li>
                             }
                             <li>
-                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingDevice", new {id = item.PAYPAD_ID })" data-original-title="Dispositivos"><i class="fa fa-cog"></i></a>
+                                @if (item.PAYPAD_ID != 13)
+                                {
+                                    <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingDevice", new { id = item.PAYPAD_ID })" data-original-title="Dispositivos"><i class="fa fa-cog"></i></a>
+                                }
                             </li>
                             <li>
                                 <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("GetAlarmForPaypad","Alarms",new { id = item.PAYPAD_ID})" data-original-title="Alarma"><i class="fa fa-calendar"></i></a>
@@ -99,6 +137,8 @@
                 }
             });
         });
+
+
     </script>
 }
 

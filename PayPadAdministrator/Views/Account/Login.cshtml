@@ -1,4 +1,4 @@
-﻿@using PayPadAdministrator.Models
+﻿@using PayPlusModels
 @model LoginViewModel
 @{
     ViewBag.Title = "Zona de administración";
@@ -12,8 +12,7 @@
         <div class="panel-heading">
             <img src="~/Content/images/login-logo.png" alt="" class="text-center" style="width: 110px;">
             <h3 class="text-center"> ZONA DE ADMINISTRACIÓN <strong class="text-custom"></strong> </h3>
-        </div>
-
+        </div>       
         <div class="panel-body">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal m-t-20", role = "form" }))
             {

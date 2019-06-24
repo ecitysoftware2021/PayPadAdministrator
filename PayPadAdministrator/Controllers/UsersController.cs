@@ -1,15 +1,15 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
-using PayPadAdministrator.CustomAuthentication;
 using PayPadAdministrator.Helpers;
-using PayPadAdministrator.Models;
+using PayPlusModels;
+using PayPlusModels.CustomAuthentication;
 using PayPadAdministrator.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
+using PayPlusModels.Classes;
 
 namespace PayPadAdministrator.Controllers
 {
@@ -25,6 +25,11 @@ namespace PayPadAdministrator.Controllers
         // GET: Users
         public async Task<ActionResult> Index()
         {
+            if (!User.IsInRole("SuperAdmin"))
+            {
+                return RedirectToAction("AccessDenied", "Errors");
+            }
+
             List<UserViewModel> users = new List<UserViewModel>();
             var response = await apiService.GetData(this,"GetAllUsers");
             if (response.CodeError == 200)

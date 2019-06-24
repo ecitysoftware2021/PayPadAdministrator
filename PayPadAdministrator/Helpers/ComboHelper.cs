@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
-using PayPadAdministrator.Models;
+using PayPlusModels;
 using PayPadAdministrator.Services;
 using System;
 using System.Collections;
@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using PayPlusModels.Classes;
 
 namespace PayPadAdministrator.Helpers
 {
@@ -44,7 +45,7 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<DeviceType>> GetDevicesType()
         {
-            List<DeviceType> deviceTypes = new List<DeviceType>();            
+            List<DeviceType> deviceTypes = new List<DeviceType>();
             var response = await apiService.GetData(Controller, "GetDeviceTypes");
             if (response.CodeError == 200)
             {
@@ -80,7 +81,7 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<PayPad>> GetAllsPaypads()
         {
-            List<PayPad> payPads = new List<PayPad>();            
+            List<PayPad> payPads = new List<PayPad>();
             var response = await apiService.GetData(Controller, "GetAllPayPads");
             if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
@@ -97,7 +98,7 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<TransactPaypadViewModel>> GetTransact(int payPadId)
         {
-            List<TransactPaypadViewModel> transacts = new List<TransactPaypadViewModel>();            
+            List<TransactPaypadViewModel> transacts = new List<TransactPaypadViewModel>();
             var response = await apiService.GetDataV2(Controller, string.Concat(Utilities.GetConfiguration("GetTransactsForPaypad"), payPadId));
             if (response.CodeError == 200)
             {
@@ -114,7 +115,7 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<PayPad>> GetAllsPaypadsForCustomer(int customerId)
         {
-            List<PayPad> payPads = new List<PayPad>();            
+            List<PayPad> payPads = new List<PayPad>();
             var response = await apiService.GetDataV2(Controller, string.Concat(Utilities.GetConfiguration("GetAllPayPadsForCustomer"), customerId));
             if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
@@ -131,7 +132,7 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<PayPad>> GetAllsPaypadsForUser(int userId)
         {
-            List<PayPad> payPads = new List<PayPad>();            
+            List<PayPad> payPads = new List<PayPad>();
             var response = await apiService.GetDataV2(Controller, string.Concat(Utilities.GetConfiguration("GetAllPayPadsForUserOffice"), userId));
             if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
@@ -148,7 +149,7 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<PayPad>> GetAllsPaypadsForSponsor(int customerId)
         {
-            List<PayPad> payPads = new List<PayPad>();            
+            List<PayPad> payPads = new List<PayPad>();
             var response = await apiService.GetDataV2(Controller, string.Concat(Utilities.GetConfiguration("GetAllPayPadsForSponsor"), customerId));
             if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
             {
@@ -240,7 +241,7 @@ namespace PayPadAdministrator.Helpers
 
         public static async Task<List<Currency>> GetCurrencies()
         {
-            List<Currency> currencies = new List<Currency>();            
+            List<Currency> currencies = new List<Currency>();
             var response = await apiService.GetData(Controller, "GetCurrencies");
             if (response.CodeError == 200)
             {
@@ -307,7 +308,7 @@ namespace PayPadAdministrator.Helpers
         public static async Task<List<Alarm>> GetAlarms(int customerId)
         {
             List<Alarm> alarms = new List<Alarm>();
-            var url = string.Concat(Utilities.GetConfiguration("GetAlarmsForCustomer"), customerId);            
+            var url = string.Concat(Utilities.GetConfiguration("GetAlarmsForCustomer"), customerId);
             var response = await apiService.GetDataV2(Controller, url);
             if (response.CodeError == 200)
             {
@@ -320,7 +321,54 @@ namespace PayPadAdministrator.Helpers
                 USERNAME = "Seleccione una alarma"
             });
 
-            return alarms.OrderBy(a=>a.ALARM_ID).ToList();
+            return alarms.OrderBy(a => a.ALARM_ID).ToList();
+        }
+
+        public static async Task<List<User>> GetAllsUsersForCustomer(int customerid)
+        {
+            List<User> users = new List<User>();
+            var user = new User
+            {
+                CUSTOMER_ID = customerid,
+                ROLE_ID = 2
+            };
+            var response = await apiService.InsertPost(user, "GetUserForCustomerAndRol");
+            if (response.CodeError == 200 && !string.IsNullOrEmpty(response.Data.ToString()))
+            {
+                users = JsonConvert.DeserializeObject<List<User>>(response.Data.ToString());
+            }
+
+            //users.Add(new User
+            //{
+            //    USER_ID = 0,
+            //    NAME = "Seleccione un Responsable"
+            //});
+            return users;
+        }
+
+        public static async Task<List<TransactionType>> GetTransactionType(int customerId)
+        {
+            List<TransactionType> types = new List<TransactionType>();
+            var data = new Office
+            {
+                CUSTOMER_ID = customerId
+            };
+
+            var response = await apiService.InsertPost(data, "GetOfficesForClient");
+            if (response.CodeError == 200)
+            {
+                if (!string.IsNullOrEmpty(response.Data.ToString()))
+                {
+                    types = JsonConvert.DeserializeObject<List<TransactionType>>(response.Data.ToString());
+                }
+            }
+
+            types.Add(new TransactionType
+            {
+                OFFICE_ID = 0,
+                NAME = "Seleccione una sucursal"
+            });
+            return types;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using PayPadAdministrator.Classes;
 using PayPadAdministrator.Services;
+using PayPlusModels.Classes;
 using System;
 using System.Collections.Generic;
 using System.IO;

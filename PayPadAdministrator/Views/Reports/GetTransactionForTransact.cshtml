@@ -1,4 +1,4 @@
-﻿@model PayPadAdministrator.Models.RequestReport
+﻿@model PayPlusModels.RequestReport
 @{
     ViewBag.Title = "Transacciones por Trámite";
 }
@@ -43,8 +43,7 @@
 
                             <div class="form-group m-b-0">
                                 <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="button" onclick="GenerateReport()" class="btn btn-info waves-effect waves-light">Generar</button>
-                                    <button type="button" id="btnDownload" class="btn btn-info waves-effect waves-light">Descargar</button>
+                                    <button type="button" onclick="GenerateReport()" class="btn btn-info waves-effect waves-light">Generar</button>                                    
                                     <a href="javascript:history.back();" class="btn btn-default waves-effect waves-light">
                                         <i class="fa fa-mail-reply m-r-5"></i> <span>Átras</span>
                                     </a>
@@ -59,8 +58,62 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-6 col-lg-3">
+        <div class="widget-bg-color-icon card-box fadeInDown animated">
+            <div class="bg-icon bg-icon-info pull-left">
+                <i class="md md-attach-money text-info"></i>
+            </div>
+            <div class="text-right">
+                <h3 class="text-dark"><b class="counter" id="TotalAmount">0</b></h3>
+                <p class="text-muted">Total Recaudado Pay+</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="widget-bg-color-icon card-box">
+            <div class="bg-icon bg-icon-purple pull-left">
+                <i class="md md-equalizer text-purple"></i>
+            </div>
+            <div class="text-right">
+                <h3 class="text-dark"><b class="counter" id="initial">0</b></h3>
+                <p class="text-muted">Total Transacciones Realizadas</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="widget-bg-color-icon card-box">
+            <div class="bg-icon bg-icon-success pull-left">
+                <i class="md md-verified-user text-success"></i>
+            </div>
+            <div class="text-right">
+                <h3 class="text-dark"><b class="counter" id="approved">0</b></h3>
+                <p class="text-muted">Trasacciones Aprobadas</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="widget-bg-color-icon card-box">
+            <div class="bg-icon bg-icon-danger pull-left">
+                <i class="md md-not-interested text-danger"></i>
+            </div>
+            <div class="text-right">
+                <h3 class="text-dark"><b class="counter" id="cancelled">0</b></h3>
+                <p class="text-muted">Transacciones Canceladas</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
 <div class="row" id="transactionsDiv">
-    <div class="col-sm-12">
+    <div class="col-md-12">
         <div class="card-box">
             <div class="row">
                 <table 
@@ -68,16 +121,18 @@
                        class="table-bordered display nowrap">
                     <thead>
                         <tr>
-                            <th>TransactionId</th>
+                            <th>ID</th>
                             <th>Pay+</th>
                             <th>Trámites</th>
+                            <th>Documento</th>
                             <th>Fecha de inicio</th>
-                            <th>Fecha final</th>
+                            @*<th>Fecha final</th>*@
                             <th>Total</th>
                             <th>Total ingresado</th>
                             <th>Total devuelto</th>
                             <th>Estado</th>
-                            <th>Descripcion</th>                            
+                            @*<th>Descripcion</th>*@
+                            <th>Administración</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -106,29 +161,22 @@
             });
         }
 
-        $("#btnDownload").on("click", function (e) {
+        $("body").on("click", "a.dialog-window", null, function (e) {
             e.preventDefault();
-            var name = "Transaccion" + $("#StartDate").val() + "Hasta" + $("#FinishDate").val();
-            name = name.replace(/ /g, "");
+            var $link = $(this);
+            var title = "Detalle de transacción";
+            $('#Details .modal-title').html(title);
+            var url = $(this).attr('href');
+            if (url.indexOf('#') == 0) {
+                $('#Details').modal('show');
+            }
+            else {
+                $.get(url, function (data) {
+                    $('#Details .te').html(data);
+                    $('#Details').modal();
+                }).success(function () { $('input:text:visible:first').focus(); });
 
-            $("#tblTransactions th").each(function () {
-                // first copy the attributes to remove
-                // if we don't do this it causes problems
-                // iterating over the array we're removing
-                // elements from
-                var attributes = $.map(this.attributes, function (item) {
-                    return item.name;
-                });
-
-                // now use jQuery to remove the attributes
-                var img = $(this);
-                $.each(attributes, function (i, item) {
-                    img.removeAttr(item);
-                });
-            });
-
-            $("#tblTransactions").table2excel({ filename: name });
-
+            }
         });
 
         $("#PayPadId").change(function () {
@@ -200,31 +248,99 @@
                 }
             });
         }
+        function ConvertCurrency(value) {
+            if (value == null || value == "") {
+                value = 0;
+            }
+
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0
+            });
+
+            return formatter.format(value).replace("$", "");
+        }
 
         function FillTable(data) {
             datetable.clear().draw();
+            var total = 0;
+            var approved = 0;
+            var initial = 0;//se cambio por total de las transacciones
+            var cancelled = 0;
 
             $.each(data.Data, function (i, data) {
+                debugger
+                var text = "info";
+                if (data.STATE == "Aprobada") {
+                    approved++;
+                    //if (data.TRANSACT_OPERATION_TYPE_ID == 2) {
+                        total += data.TOTAL_AMOUNT;
+                    //}
+                    text = "success";
+                } else if (data.STATE == "Cancelada") {
+                    cancelled++;
+                    text = "danger";
+                }
+
+                initial++;
+
+                var state = "<span class='label label-" + text + "'>" + data.STATE + "</span>";
+                var admin = "<a href='/Reports/GetDetailsFromTransactions/" + data.TRANSACTION_ID + "'" +
+                    "data-placement='top' data-toggle='tooltip' class='tooltips dialog-window' data-original-title='Detalle'>" +
+                    "<i class='fa fa-server'></i>" +
+                    "</a> ";
+                //+
+                //    " <a href = '/Reports/GetVideo?transactionId=" + data.TRANSACTION_ID + "'" +
+                //    "data-placement='top' data-toggle='tooltip' class='tooltips dialog-window' data-original-title='Video'>" +
+                //    "<i class='fa fa-video-camera'></i>" +
+                //    "</a>";
+
                 datetable.row.add([
                     data.TRANSACTION_ID,
                     data.PAYPAD_NAME,
                     data.TRANSACT,
+                    data.DOCUMENT,
                     ConvertDateV2(data.DATE_BEGIN),
-                    ConvertDateV2(data.DATE_END),
+                    //ConvertDateV2(data.DATE_END),
                     data.TOTAL_AMOUNT,
                     data.INCOME_AMOUNT,
                     data.RETURN_AMOUNT,
-                    data.STATE_TRANSACTION,
-                    data.DESCRIPTION
+                    state,
+                    //data.DESCRIPTION,
+                    admin
                 ]).draw(false);
+
+
             });
 
             $("#btnDownload").removeAttr("disabled");
             $("#transactionsDiv").css("display", "block");
             //$("#tblTransactions tbody").html(content);
 
+            $("#TotalAmount").html(ConvertCurrency(total));
+            $("#approved").html(approved);
+            $("#initial").html(initial);
+            $("#cancelled").html(cancelled);
+            $('.counter').counterUp({
+                delay: 100,
+                time: 1200
+            });
+
         }
     </script>
 }
 
 
+    <div class="modal fade" id="Details" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog" style="width: 970px !important;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body"><div class="te">Please wait...</div></div>
+            </div>
+        </div>
+    </div>

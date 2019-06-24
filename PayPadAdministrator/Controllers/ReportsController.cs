@@ -1,16 +1,14 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
-using PayPadAdministrator.CustomAuthentication;
 using PayPadAdministrator.Helpers;
-using PayPadAdministrator.Models;
+using PayPlusModels;
+using PayPlusModels.CustomAuthentication;
 using PayPadAdministrator.Services;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
+using PayPlusModels.Classes;
+using System.Linq;
 
 namespace PayPadAdministrator.Controllers
 {
@@ -91,6 +89,23 @@ namespace PayPadAdministrator.Controllers
             }
 
             var transactions = JsonConvert.DeserializeObject<TransactionViewModel>(response.Data.ToString());
+            List<TransactionDetail> group = new List<TransactionDetail>();
+            foreach (var item in transactions.TransactionDetails)
+            {
+                //var dato = group.Where(g => g.OPERATION == item.OPERATION && g.CURRENCY_VALUE == item.CURRENCY_VALUE);
+                if (!group.Exists(gr => gr.OPERATION == item.OPERATION && gr.CURRENCY_VALUE == item.CURRENCY_VALUE))
+                {
+                    item.QUANTITY = 1;
+                    group.Add(item);
+                }
+                else
+                {
+                    group.Find(gr => gr.OPERATION == item.OPERATION && gr.CURRENCY_VALUE == item.CURRENCY_VALUE).QUANTITY++;
+                }
+            }
+            transactions.TransactionDetails = group;
+
+
             return PartialView(transactions);
         }
 

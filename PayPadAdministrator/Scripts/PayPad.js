@@ -1,4 +1,5 @@
-﻿function Dateformat(date) {
+﻿
+function Dateformat(date) {
     var year = date.split(',')[1];
     var mes = date.split(',')[0].split(' ')[1];
     var day = date.split(',')[0].split(' ')[0];
@@ -38,7 +39,7 @@ function GetDateFormatHour(date) {
 }
 
 
-$(window).load(function () {
+$(window).on('load',function () {
     var $container = $('.portfolioContainer');
     $container.isotope({
         filter: '*',

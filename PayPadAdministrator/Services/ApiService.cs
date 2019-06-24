@@ -1,7 +1,8 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
 using PayPadAdministrator.Helpers;
-using PayPadAdministrator.Models;
+using PayPlusModels;
+using PayPlusModels.Classes;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -175,7 +176,7 @@ namespace PayPadAdministrator.Services
             }
         }
 
-        public async Task<Response> GetDataV2(Controller controller,string url)
+        public async Task<Response> GetDataV2(Controller controller, string url)
         {
             try
             {

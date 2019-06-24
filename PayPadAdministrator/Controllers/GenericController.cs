@@ -1,15 +1,15 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
 using PayPadAdministrator.Helpers;
-using PayPadAdministrator.Models;
+using PayPlusModels;
 using PayPadAdministrator.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
+using PayPlusModels.Classes;
 
 namespace PayPadAdministrator.Controllers
 {
@@ -95,6 +95,19 @@ namespace PayPadAdministrator.Controllers
             return Json(response);
         }
 
+        public async Task<JsonResult> GetBalance(int userId, int paypadId, DateTime date)
+        {
+            var balancingModule = new BalancingModel
+            {
+                PAYPAD_ID = paypadId,
+                USER_ID = userId,
+                DATE = date
+            };
+
+            var response = await apiService.InsertPost(balancingModule, "GetBalance");
+            return Json(response);
+        }
+
         public async Task<JsonResult> UpdateModuleToCustomer(int moduleId, int customerId, bool state)
         {
             var moduleCustomer = new ModuleCustomer
@@ -163,8 +176,15 @@ namespace PayPadAdministrator.Controllers
             {
                 transactions = JsonConvert.DeserializeObject<List<TransactionHomeViewModel>>(response.Data.ToString());
             }
-
-            response.Data = transactions.OrderByDescending(t=>t.DATE_BEGIN).ToList();
+            List<TransactionHomeViewModel> transactionsHome = new List<TransactionHomeViewModel>();
+            foreach (var item in transactions)
+            {
+                if (transactionsHome.Where(t => t.TRANSACTION_ID == item.TRANSACTION_ID).Count() < 1)
+                {
+                    transactionsHome.Add(item);
+                }
+            }
+            response.Data = transactionsHome.OrderByDescending(t => t.DATE_BEGIN);
             return Json(response);
         }
 
@@ -179,7 +199,17 @@ namespace PayPadAdministrator.Controllers
                 transactions = JsonConvert.DeserializeObject<List<TransactionForTransactViewModel>>(response.Data.ToString());
             }
 
-            response.Data = transactions.OrderByDescending(t => t.DATE_BEGIN).ToList();
+            List<TransactionForTransactViewModel> transactionsR = new List<TransactionForTransactViewModel>();
+            foreach (var item in transactions)
+            {
+                if (transactionsR.Where(t => t.TRANSACTION_ID == item.TRANSACTION_ID).Count() < 1)
+                {
+                    transactionsR.Add(item);
+                }
+            }
+            response.Data = transactionsR.OrderByDescending(t => t.DATE_BEGIN);
+
+            //response.Data = transactions.OrderByDescending(t => t.DATE_BEGIN).ToList();
             return Json(response);
         }
 
@@ -193,15 +223,15 @@ namespace PayPadAdministrator.Controllers
 
         public async Task<JsonResult> GetDashboardLog(int userId)
         {
-            var url = string.Concat(Utilities.GetConfiguration("GetLogDashboardForUser"),"?userId=", userId);
-            var response = await apiService.GetDataV2(this,url);
+            var url = string.Concat(Utilities.GetConfiguration("GetLogDashboardForUser"), "?userId=", userId);
+            var response = await apiService.GetDataV2(this, url);
             List<DasboardLogViewModel> dasboardLogs = new List<DasboardLogViewModel>();
             if (response.CodeError == 200)
             {
                 dasboardLogs = JsonConvert.DeserializeObject<List<DasboardLogViewModel>>(response.Data.ToString());
             }
 
-            response.Data = dasboardLogs.OrderByDescending(d=>d.DATE).ToList();
+            response.Data = dasboardLogs.OrderByDescending(d => d.DATE).ToList();
             return Json(response);
         }
 

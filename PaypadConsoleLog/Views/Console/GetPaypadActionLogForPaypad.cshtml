@@ -1,0 +1,141 @@
+﻿@model IEnumerable<PayPlusModels.PaypadActionLog>
+
+@{
+                /**/
+
+                ViewBag.Title = "Acciones log en paypad";
+}
+
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">@ViewBag.Title</h3>
+    </div>
+    <div class="box-body">
+        <div class="table-responsive">
+            <table class="table" id="tableConsole">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PAYPAD_ACTION_LOG_ID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PAYPAD_NAME)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DESCRIPTION_ACTION)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CODE_ACTION)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DEVICE_NAME)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DESCRIPTION)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DATE_CREATION)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DATE_ACTION)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DATE_EXECUTE)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.USERNAME)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.STATE)
+                        </th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PAYPAD_ACTION_LOG_ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PAYPAD_NAME)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DESCRIPTION_ACTION)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CODE_ACTION)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DEVICE_NAME)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DESCRIPTION)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DATE_CREATION)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DATE_ACTION)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DATE_EXECUTE)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.USERNAME)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.STATE)
+                            </td>
+                            @*<td>
+                                <a href="#"
+                                   data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" gtitle="" data-original-title="Actiones">
+                                    <i class="fa fa-server"></i>
+                                </a>
+                            </td>*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        var datetable = "";
+        $(document).ready(function () {
+
+            datetable = $('#tableConsole').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excel', 'pdf'
+                ],
+                order: [[0, "desc"]]
+            });
+
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                e.preventDefault();
+                var $link = $(this);
+                var title = $(this).attr('gtitle');
+                $('#Details .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#Details').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#Details .te').html(data);
+                        $('#Details').modal();
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+            });
+        });
+    </script>
+}

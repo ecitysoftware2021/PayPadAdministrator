@@ -1,13 +1,11 @@
 ﻿using PayPadAdministrator.Classes;
-using PayPadAdministrator.Models;
+using PayPlusModels;
 using PayPadAdministrator.Services;
-using PayPadAdministrator.CustomAuthentication;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using Newtonsoft.Json;
+using PayPlusModels.Classes;
 
 namespace PayPadAdministrator.Helpers
 {

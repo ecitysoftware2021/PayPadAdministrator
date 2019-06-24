@@ -1,0 +1,88 @@
+﻿@model  PayPlusModels.BalancePaypadViewModel
+
+@{
+    ViewBag.Title = "Arqueo";
+}
+
+@Styles.Render("~/Content/css")
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="m-t-0 header-title"><b>@ViewBag.Title</b></h4>
+            <br />
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NAME, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control select2" })
+                        @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DATE, htmlAttributes: new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.DATE, new { htmlAttributes = new { @class = "form-control", @placeholder = "Fecha de acción" } })
+                    </div>
+                </div>
+                <div class="form-group m-b-0">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button type="button" onclick="GetTotalMoney(@ViewBag.PayPadId)" class="btn btn-info waves-effect waves-light">Arquear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $('#DATE').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm',
+        minDate: '2019-01-01 04:49'
+    });
+
+    function GetTotalMoney(paypadId) {
+
+
+         if ($("#UserId").val() == "" || $("#UserId").val() == "0"){
+                ModalMessageError("Error", "Debe ingresar el nombre del responsable");
+                return;
+            }
+
+            if($("#DATE").val() == "" ){
+                ModalMessageError("Error", "La fecha debe tener valor");
+                return;
+        }
+
+           var request = {
+               userId : $("#UserId").val(),
+               date: $("#DATE").val(),
+               paypadId: paypadId,
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetBalance", "Generic")',
+                dataType: 'json',
+                data: request,
+                success: function (data) {
+                    if (data.CodeError == 200) {
+                        ModalMessageSuccess("Exitoso", data.Message);
+                         //OrganizeData(data.Data);
+                    } else {
+                        ModalMessageError("Error", data.Message);
+                    }
+                },
+                error: function (ex) {
+                    ModalMessageError("Error", 'Failed ' + ex.responseText);
+                }
+            });
+        }
+</script>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

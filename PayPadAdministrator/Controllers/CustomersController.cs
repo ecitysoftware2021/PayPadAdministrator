@@ -1,16 +1,14 @@
 ﻿using Newtonsoft.Json;
 using PayPadAdministrator.Classes;
-using PayPadAdministrator.CustomAuthentication;
 using PayPadAdministrator.Helpers;
-using PayPadAdministrator.Models;
+using PayPlusModels;
+using PayPlusModels.CustomAuthentication;
 using PayPadAdministrator.Services;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
+using PayPlusModels.Classes;
 
 namespace PayPadAdministrator.Controllers
 {
@@ -25,7 +23,7 @@ namespace PayPadAdministrator.Controllers
         }
 
         public async Task<ActionResult> Index()
-        {
+        {            
             List<Customer> clients = new List<Customer>();
             if (User.IsInRole("SuperAdmin"))
             {
