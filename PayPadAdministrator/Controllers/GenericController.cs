@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using PayPlusModels.Classes;
+using PayPadAdministrator.Models;
 
 namespace PayPadAdministrator.Controllers
 {
@@ -213,10 +214,29 @@ namespace PayPadAdministrator.Controllers
             return Json(response);
         }
 
+        //public async Task<JsonResult> GetTransactionCamara(RequestReport model)
+        //{
+        //    model.StartDate = DateTime.ParseExact(model.DateStartString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+        //    model.FinishDate = DateTime.ParseExact(model.DateFinishString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+        //    model.StateId = 2;
+        //    List<ResponseData> transactions = new List<ResponseData>();
+        //    var response = await apiService.InsertPost(model, "GetTransactionsCM");
+        //    if (response.CodeError == 200)
+        //    {
+        //        transactions = JsonConvert.DeserializeObject<List<ResponseData>>(response.Data.ToString());
+        //    }
+
+
+        //    response.Data = transactions.OrderByDescending(t => t.Fecha);
+            
+        //    return Json(response);
+        //}
+
         public async Task<JsonResult> GetTransactionCM(RequestReport model)
         {
             model.StartDate = DateTime.ParseExact(model.DateStartString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             model.FinishDate = DateTime.ParseExact(model.DateFinishString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            model.StateId = 2;
             var response = await apiService.InsertPost(model, "GetTransactionCM");
             return Json(response);
         }

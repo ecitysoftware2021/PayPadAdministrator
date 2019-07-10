@@ -75,11 +75,20 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("GetChargeData", new { paypadId = item.PAYPAD_ID, customerId = item.CUSTOMER_ID })"
+                                <a href="@Url.Action("GetChargeData", new { paypadId = item.PAYPAD_ID, customerId = item.CUSTOMER_ID, extraCharge=false })"
                                    data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Registrar Cargue">
                                     <i class="fa fa-line-chart"></i>
                                 </a>
                             </li>
+                            @if (item.ENABLE_EXTRA_CHARGE.Value)
+                            {
+                                <li>
+                                    <a href="@Url.Action("GetChargeData", new { paypadId = item.PAYPAD_ID, customerId = item.CUSTOMER_ID, extraCharge=true })"
+                                       data-placement="top" data-toggle="tooltip" class="tooltips dialog-window" data-original-title="Cargue Extra">
+                                        <i class="fa fa-battery-4"></i>
+                                    </a>
+                                </li>
+                            }
                             @if (item.CUSTOMER_ID == 19)
                             {
                                 <li>
@@ -95,15 +104,15 @@
                                     <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingTransact", new {id = item.PAYPAD_ID })" data-original-title="Asignar Trámite"><i class="fa fa-server"></i></a>
                                 </li>
                             }
-                            <li>
-                                @if (item.PAYPAD_ID != 13)
-                                {
-                                    <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingDevice", new { id = item.PAYPAD_ID })" data-original-title="Dispositivos"><i class="fa fa-cog"></i></a>
-                                }
-                            </li>
-                            <li>
-                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("GetAlarmForPaypad","Alarms",new { id = item.PAYPAD_ID})" data-original-title="Alarma"><i class="fa fa-calendar"></i></a>
-                            </li>
+                            @*<li>
+                                    @if (item.PAYPAD_ID != 13)
+                                    {
+                                        <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("AssingDevice", new { id = item.PAYPAD_ID })" data-original-title="Dispositivos"><i class="fa fa-cog"></i></a>
+                                    }
+                                </li>*@
+                            @*<li>
+                                    <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@Url.Action("GetAlarmForPaypad","Alarms",new { id = item.PAYPAD_ID})" data-original-title="Alarma"><i class="fa fa-calendar"></i></a>
+                                </li>*@
                         </ul>
                     </div>
                 </div>

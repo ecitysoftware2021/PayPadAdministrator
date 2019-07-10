@@ -54,6 +54,9 @@ namespace PayPlusModels
         [Display(Name = "Cliente")]
         public int CUSTOMER_ID { get; set; }
 
+        [Display(Name = "Permite Caegue Extra")]
+        public Nullable<bool> ENABLE_EXTRA_CHARGE { get; set; }
+
         [NotMapped]
         [Display(Name = "Imagen")]
         public HttpPostedFileBase ImagePathFile { get; set; }

@@ -49,7 +49,8 @@ namespace PayPadAdministrator.Services
                 var content = new StringContent(json, Encoding.UTF8, "Application/json");
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlApi);
-                var url = "ApiAdministrator/api/Users/Login";
+                var url = Utilities.GetConfiguration("LoginDash");
+
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var response = await client.PostAsync(url, content);
                 if (!response.IsSuccessStatusCode)
@@ -94,7 +95,7 @@ namespace PayPadAdministrator.Services
             {
                 return null;
             }
-        }       
+        }
 
         public async Task<Response> InsertPost<T>(T model, string controller)
         {
@@ -219,7 +220,8 @@ namespace PayPadAdministrator.Services
         {
             try
             {
-                var url = string.Concat(urlApi, "ApiAdministrator/api/Users/GetUserForUserName?userName=", name);
+                
+                var url = string.Concat(urlApi,Utilities.GetConfiguration("GetUserForUserName") , name);
                 var client = new RestClient(url);
                 var request = new RestRequest(Method.GET);
                 string token = string.Empty;

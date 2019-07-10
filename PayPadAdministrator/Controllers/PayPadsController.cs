@@ -318,18 +318,20 @@ namespace PayPadAdministrator.Controllers
         /// <param name="paypadId"></param>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        public async Task<ActionResult> GetChargeData(int paypadId, int customerId)
+        public async Task<ActionResult> GetChargeData(int paypadId, int customerId, bool extraCharge)
         {
             var users = await ComboHelper.GetAllsUsersForCustomer(customerId);
             users = users.Where(u => u.USERNAME == User.Identity.Name).ToList();
             ViewBag.UserId = new SelectList(users, nameof(PayPlusModels.User.USER_ID), nameof(PayPlusModels.User.NAME), 0);
             ViewBag.PayPadId = paypadId;
+            ViewBag.Extra = extraCharge;
             List<SP_GET_CHARGE_DATA_Result> viewModel = new List<SP_GET_CHARGE_DATA_Result>();
 
             var responsePaypad = await apiService.GetDataV2(this, string.Concat(Utilities.GetConfiguration("GetChargeData"), paypadId));
             if (responsePaypad.CodeError == 200)
             {
                 viewModel = JsonConvert.DeserializeObject<List<SP_GET_CHARGE_DATA_Result>>(responsePaypad.Data.ToString());
+
             }
 
             return View(viewModel);
@@ -353,7 +355,7 @@ namespace PayPadAdministrator.Controllers
             var url = string.Concat(Utilities.GetConfiguration("GetChargeState"), payPad.pAYPAD_ID, "&operacion=", 2);
             var stateArching = await apiService.GetDataV2(this, url);
             Response response;
-            if (stateArching.CodeError == 200)
+            if (stateArching.CodeError == 200 || payPad.ExtraCharge)
             {
                 response = await apiService.InsertPost(payPad, "SetUpdateCharge");
             }

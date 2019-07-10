@@ -29,11 +29,10 @@ namespace PayPlusModels
         [Display(Name = "Total Baúl")]
         public string TOTAL_CASHBOX { get { return string.Format("{0:C0}", (CASHBOX_QUANTITY * CURRENCY_VALUE)); } }
         [Display(Name = "Cantidad Disponible")]
-        [MaxLength(5000)]
-        public string STACKER_QUANTITY { get; set; }
+        public int STACKER_QUANTITY { get; set; }
 
         [Display(Name = "Total Disponible")]
-        public string TOTAL_STACKER { get { return string.Format("{0:C0}", (int.Parse(STACKER_QUANTITY) * CURRENCY_VALUE)); } }
+        public string TOTAL_STACKER { get { return string.Format("{0:C0}", (STACKER_QUANTITY * CURRENCY_VALUE)); } }
 
 
         [Display(Name = "Mínimo Cantidad Disponible")]

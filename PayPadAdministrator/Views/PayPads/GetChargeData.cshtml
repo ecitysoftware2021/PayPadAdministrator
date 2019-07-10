@@ -15,7 +15,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-  
+
 </head>
 <body>
     <table class="table table-striped table-bordered display nowrap">
@@ -57,19 +57,18 @@
 
             </tr>
         }
-            <tr>
+        <tr>
 
-                <td>
-                    @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control select2" })
-                </td>
-                <td>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="ckActiveArching">
-                        <label class="form-check-label" for="materialUnchecked">¿Activar Modo Cargue?</label>
-                    </div>
-                    @* @Html.CheckBox("ckActiveArching", false, htmlAttributes = new { @class = "form-control tochpinPrueba",@text="hola" })*@
-                </td>
-            </tr>
+            <td>
+                @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control select2" })
+            </td>
+            <td>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="ckActiveArching">
+                    <label class="form-check-label" for="materialUnchecked">¿Activar Modo Cargue?</label>
+                </div>
+            </td>
+        </tr>
         <tr>
             <td colspan="2" align="center">
                 <button type="button" onclick="SetCharge(@ViewBag.PayPadId)" class="btn btn-info waves-effect waves-light">Guardar</button>
@@ -84,10 +83,11 @@
 <script type="text/javascript">
 
 
-    function SetCharge(paypadId) {
+    function SetCharge() {
         var state = true;
         var DataDenominations=new Array();
         var userId = $("#UserId").find('option:selected').val()
+        
         debugger
             $("input[type='number']").each(function () {
                 if ($(this).val() == "") {
@@ -113,12 +113,13 @@
             ModalMessageError("Error", "Debe seleccionar un usuario responsable");
             return;
         }
-        
+
            var request = {
                DataDenominations: DataDenominations,
-               pAYPAD_ID: paypadId,
+               pAYPAD_ID: arguments[0],
                uSER_ID: userId,
-               ActiveArching: $("#ckActiveArching").is(':checked')
+               ActiveArching: $("#ckActiveArching").is(':checked'),
+               ExtraCharge: @Html.Raw(Json.Encode(ViewBag.Extra))
             }
 
             $.ajax({

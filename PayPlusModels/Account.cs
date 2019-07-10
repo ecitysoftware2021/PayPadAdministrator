@@ -261,6 +261,8 @@ namespace PayPlusModels
         public int uSER_ID { get; set; }
 
         public bool ActiveArching { get; set; }
+
+        public bool ExtraCharge { get; set; }
     }
 
     public class DataDenominations
